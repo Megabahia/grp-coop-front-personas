@@ -1,0 +1,200 @@
+<div class="content-wrapper">
+  <div class="content-header row">
+    <div class="col-12 mb-2">
+      <div class="row breadcrumbs-top">
+        <div class="col-12">
+          <h2 class="content-header-title float-left mb-0">Pagar con super monedas</h2>
+          <div class="breadcrumb-wrapper">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a class="text-primary" href="index.html">Inicio</a>
+              </li>
+              <li class="breadcrumb-item"><a class="text-primary" href="mis-premios.html">Pagar con super monedas</a>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content-body">
+    <!-- users list start -->
+    <div class="card">
+      <h5 class="card-header">Filtros de búsqueda</h5>
+      <div class="card-body">
+        <div class="row">
+
+          <div class="col-md-4">
+            <input type="text" class="form-control form-control-sm" placeholder="Nombre de la empresa"
+              [(ngModel)]="nombreComercial">
+          </div>
+          <div class="col-md-2">
+            <a class="btn btn-primary" (click)="obtenerListaEmpresa()">
+              <i data-feather='search'></i>
+            </a>
+          </div>
+
+
+
+
+        </div>
+      </div>
+    </div>
+    <!-- users list ends -->
+    <div class="card">
+      <div class="card-datatable table-responsive pt-0">
+        <div class="row m-75">
+          <div class="col-lg-12 col-xl-6">
+            <label>Mostrar</label>
+            <select class="form-control-sm" [(ngModel)]="page_size" (change)="obtenerListaEmpresa()">
+              <option value="10">10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+
+          </div>
+        </div>
+        <table class="user-list-table table table-striped">
+          <thead class="thead-light">
+            <tr>
+              <th>Empresa</th>
+              <th>Logo</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let empresa of listaEmpresas">
+              <td>{{empresa.nombreComercial}}</td>
+              <td><img [src]="empresa.imagen" width="60"></td>
+              <td>
+                <a href="javascript:void(0)" class="avatar bg-primary mr-1"
+                  (click)="toggleSidebar('guardarCompraSupermonedas',empresa._id)">
+                  <div class="avatar-content" data-toggle="tooltip" data-placement="bottom"
+                    title="Comprar con super monedas">
+                    <i data-feather='dollar-sign'></i>
+                  </div>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ngb-pagination #paginator [collectionSize]="collectionSize" [(page)]="page" [(pageSize)]="page_size"
+        [maxSize]="5" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+    </div>
+  </div>
+</div>
+<core-sidebar class="modal modal-slide-in sidebar-todo-modal fade" name="guardarCompraSupermonedas"
+  overlayClass="modal-backdrop">
+  <div class="slideout-content">
+    <!-- Modal to add new user starts-->
+    <div class="modalsd modal-slide-in sdfade new-user-modal" id="modals-slide-in">
+      <div class="modal-dialog">
+        <form class="add-new-user modal-content pt-0" [formGroup]="compraSuperMonedasForm">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+            (click)="toggleSidebar('guardarCompraSupermonedas',0)">
+            ×
+          </button>
+          <div class="modal-header mb-1">
+            <h5 class="modal-title" id="exampleModalLabel">Comprar con super monedas</h5>
+          </div>
+          <div class="modal-body flex-grow-1">
+
+            <div class="form-group">
+              <label>Nombre del establecimento</label>
+              <input class="form-control" name="nombreTienda" type="text" [(ngModel)]="nombreTienda"
+                [ngModelOptions]="{standalone: true}" disabled>
+            </div>
+            <div class="form-group">
+              <label>Monto</label>
+              <input class="form-control" name="monto" formControlName="monto" type="text"
+                [(ngModel)]="pagoMonto.monto">
+              <div *ngIf="cobrarSuperMonedasSubmitted && cobSupForm.monto.errors" class="invalid-feedback"
+                style="display: block;">
+                <div *ngIf="cobSupForm.monto.errors.required">Monto es requerido
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-primary mr-1" [disabled]="cargandoCompraSupermonedas" (click)="enviarMonto()"> <span
+                *ngIf="cargandoCompraSupermonedas" class="spinner-border spinner-border-sm mr-1"></span>Generar
+              Comprobante</button>
+            <button (click)="toggleSidebar('guardarCompraSupermonedas','')" class="btn btn-outline-secondary"
+              data-dismiss="modal">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Modal to add new user Ends-->
+  </div>
+</core-sidebar>
+<ng-template #comprobanteCompraSuperMonedasMdl let-modal>
+  <div id="print-section">
+    <div class="modal-header">
+      <h4 class="modal-title">Comprobante de compra con super monedas</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss( 'Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row p-2">
+        <div class="col-md-6">
+          <div class="card plan-card border-primary">
+            <div class="card-body">
+              <div class="item-heading">
+                <h6 class="text-truncate mb-0 text-info text-center">{{nombreTienda}}</h6>
+              </div>
+              <div class="img-container w-50 mx-auto py-50">
+                <img [src]="imagenTienda" class="img-fluid" alt="image" />
+              </div>
+              <hr />
+              <div class="item-meta">
+                <h6 class="mt-1">Monto super monedas:</h6>
+                <h6 class="mt-1 text-info">
+                  <div class="iso-moneda"></div>
+                  super monedas (equivalente a: ${{pagoMonto.monto}})
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <p class="text-primary">Descarga o imprime este documento y acércate al local para que puedas cajear tu
+            producto.</p>
+
+          <hr />
+          <div class="text-center">
+            <div>
+              <ngx-barcode [bc-value]="pagoMonto.codigoCobro" [bc-display-value]="true" [bc-width]="0.75"
+                [bc-element-type]="img" [bc-font-size]="15"></ngx-barcode>
+            </div>
+            <br><br>
+            <small class="d-block">Código QR de canje</small>
+            <qrcode [elementType]="elementType" [qrdata]="pagoMonto.codigoCobro" [width]="256"
+              [errorCorrectionLevel]="'M'"></qrcode>
+          </div>
+          <div class="text-center">
+            <button class="btn btn-primary" type="button" [useExistingCss]="true" printSectionId="print-section"
+              ngxPrint>Imprimir</button>
+            <button class="btn btn-info" type="button" (click)="exportHtmlToPDF()">Descargar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+    </div>
+  </div>
+</ng-template>
+<ng-template #mensajeModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalCenterTitle">Mensaje</h5>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <div [innerHTML]="mensaje"></div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="cerrarModal()">Cerrar</button>
+  </div>
+</ng-template>

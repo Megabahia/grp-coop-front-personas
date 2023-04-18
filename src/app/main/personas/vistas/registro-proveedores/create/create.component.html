@@ -1,0 +1,220 @@
+<div class="content-wrapper">
+
+    <div class="content-body">
+        <div id="user-profile">
+            <!-- profile header -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card p-2">
+                        <h4></h4>
+                    </div>
+                </div>
+            </div>
+            <!--/ profile header -->
+
+            <!-- profile info section -->
+            <section>
+                <div class="tab-content">
+
+
+                    <div class="tab-pane active" id="tab1" aria-labelledby="account-tab" role="tabpanel">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12 my-1">
+                                        <h4>Para solicitud de crédito por favor completa la siguiente información</h4>
+                                    </div>
+                                </div>
+                                <form [formGroup]="proveedorForm">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Tipo de persona</label>
+                                                <select class="form-control" name="tipoEmpresa"
+                                                        formControlName="tipoPersona">
+                                                    <option value="">- Seleccione -</option>
+                                                    <option value="Natural">Natural</option>
+                                                    <option value="Juridico">Jurídico</option>
+                                                </select>
+                                                <div *ngIf="submitted && proveedor.tipoPersona.errors"
+                                                     class="invalid-feedback"
+                                                     style="display: block;">
+                                                    <div *ngIf="proveedor.tipoPersona.errors.required">Ruc es
+                                                        requerido
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>RUC / cédula del proveedor</label>
+                                                <input class="form-control" name="nombreEmpresa"
+                                                       formControlName="identificacion" type="text">
+                                                <div *ngIf="submitted && proveedor.identificacion.errors"
+                                                     class="invalid-feedback"
+                                                     style="display: block;">
+                                                    <div *ngIf="proveedor.identificacion.errors.required">
+                                                        Ruc es requerido
+                                                    </div>
+                                                    <div *ngIf="!proveedor.identificacion.errors.rucValido">
+                                                        Ruc invalido
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Nombre del representante legal (proveedor)</label>
+                                                <input class="form-control" name="nombreRepresentante"
+                                                       formControlName="nombreRepresentante"
+                                                       type="text">
+                                                <div *ngIf="submitted && proveedor.nombreRepresentante.errors"
+                                                     class="invalid-feedback"
+                                                     style="display: block;">
+                                                    <div *ngIf="proveedor.nombreRepresentante.errors.required">Nombre de
+                                                        la
+                                                        empresa es requerido
+                                                    </div>
+                                                    <div *ngIf="proveedor.nombreRepresentante.errors.pattern">
+                                                        Ingreso solo letras
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Nombre comercial del proveedor</label>
+                                                <input class="form-control" name="nombreComercial"
+                                                       formControlName="nombreComercial"
+                                                       type="text">
+                                                <div *ngIf="submitted && proveedor.nombreComercial.errors"
+                                                     class="invalid-feedback"
+                                                     style="display: block;">
+                                                    <div *ngIf="proveedor.nombreComercial.errors.required">Tipo de
+                                                        empresa es
+                                                        requerido
+                                                    </div>
+                                                    <div *ngIf="proveedor.nombreComercial.errors.pattern">
+                                                        Ingreso solo letras
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <hr>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 my-1">
+                                            <h4>Cuenta bancaria del proveedor</h4>
+                                        </div>
+                                    </div>
+                                    <a (click)="agregarCuenta()" class="btn btn-primary mb-2">
+                                        Agregar nuevo
+                                    </a>
+                                    <div *ngIf="submitted && proveedorForm.get('cuentas').errors"
+                                         class="invalid-feedback" style="display: block;">
+                                        <div *ngIf="proveedorForm.get('cuentas').errors">
+                                            <h4 class="text text-danger">Se necesita una cuenta es requerido</h4>
+                                        </div>
+                                    </div>
+                                    <div class="add-lessons-form" >
+                                        <ng-container formArrayName="cuentas">
+                                            <ng-container *ngFor="let cuenta of proveedorForm.get('cuentas')['controls']; let i = index">
+                                                <div class="row" [formGroup]="cuenta">
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label for="tipoCuenta[{{i}}]">Tipo de cuenta</label>
+                                                            <select class="form-control" name="tipoCuenta"
+                                                                    formControlName="tipoCuenta">
+                                                                <option value="">- Seleccione -</option>
+                                                                <option *ngFor="let tipoCuenta of tipoCuentas" value="{{tipoCuenta.nombre}}">{{tipoCuenta.nombre}}</option>
+                                                            </select>
+                                                            <div *ngIf="submitted && cuenta.controls?.tipoCuenta.errors?.required"
+                                                                 class="invalid-feedback" style="display: block;">
+                                                                <div *ngIf="cuenta.controls?.tipoCuenta.errors.required">
+                                                                    Dirección es requerido
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label for="banco[{{i}}]">Elija el Banco</label>
+                                                            <select class="form-control select2" formControlName="banco">
+                                                                <option value="">- Seleccione -</option>
+                                                                <option *ngFor="let banco of bancos" value="{{banco.nombre}}">{{banco.nombre}}</option>
+                                                            </select>
+                                                            <div *ngIf="submitted && cuenta.controls?.banco.errors"
+                                                                 class="invalid-feedback" style="display: block;">
+                                                                <div *ngIf="cuenta.controls?.banco.errors.required">
+                                                                    Dirección del negocio o empresa en la que trabaja es
+                                                                    requerido
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label for="cuenta[{{i}}]">Número de cuenta</label>
+                                                            <input type="text" class="form-control"
+                                                                   formControlName="cuenta">
+                                                            <div *ngIf="submitted && cuenta.controls?.cuenta.errors"
+                                                                 class="invalid-feedback" style="display: block;">
+                                                                <div *ngIf="cuenta.controls?.cuenta.errors.required">
+                                                                    Tiempo de trabajo en el negocio o empresa en la que
+                                                                    trabaja
+                                                                    es
+                                                                    requerido
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label for="titular[{{i}}]">Nombre del titular de la cuenta</label>
+                                                            <input type="text" class="form-control"
+                                                                   formControlName="titular">
+                                                            <div *ngIf="submitted && cuenta.controls?.titular.errors"
+                                                                 class="invalid-feedback" style="display: block;">
+                                                                <div *ngIf="cuenta.controls?.titular.errors.required">
+                                                                    Cargo
+                                                                    que desempeña
+                                                                    es requerido
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1 my-2">
+                                                        <a (click)="deleteCuenta(i)" class="btn btn-danger">
+                                                            X
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 d-flex flex-sm-row flex-column mt-2">
+                                            <a href="javascript:void(0)"
+                                               class="btn btn-primary mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-float waves-light"
+                                               (click)="guardar()">Continuar</a>
+                                            <a href="javascript:void(0)"
+                                               class="btn btn-secondary mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-float waves-light"
+                                               (click)="cancelar()">Cancelar</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--/ profile info section -->
+        </div>
+    </div>
+</div>

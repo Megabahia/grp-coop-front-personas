@@ -1,0 +1,88 @@
+<!-- Error page-->
+<div>
+    <section class="text-LP">
+        <div class="container pb-5">
+            <div class="row justify-content-center align-items-center mb-3">
+                <div class="col-md-12 text-center">
+                    <img src="/assets/images/logo/creditopagos.png" alt="brand-logo" width="300px"/>
+                    <h1 class="yellow2 text-bold">CrediCompra - Crédito Pagos</h1>
+                </div>
+            </div>
+            <div class="align-items-center " style="text-align: center;">
+                <div class="col-md-12 text-center">
+                    <h2 class="user-name font-weight text-center"> ¡FELICIDADES! </h2>
+                    <br>
+
+                    <h3 class="user-name text-center">
+                        {{usuario}}
+                        <br>
+                        Usted tiene una Línea de Crédito Preaprobada de {{monto}} para que realice pagos a sus
+                        proveedores con un Crédito otorgado por una Cooperativa de Ahorro y Crédito regulada.
+                    </h3>
+                    <br>
+                    <h3 class="user-name font-weight-bolder text-center">
+                        Para acceder a su Línea de Crédito realice los siguientes pasos:
+                    </h3>
+                    <br>
+
+                    <h3 class="user-name  text-center">
+                        1. Complete sus datos a través de la Solicitud de Línea de Crédito.
+                        Recuerde que primero debe crear su cuenta (en la siguiente pantalla)
+                    </h3>
+                    <br>
+
+                    <h3 class="user-name text-center">
+                        2.- Registre y pague a sus proveedores de manera fácil y rápida. Listo!
+                    </h3>
+                    <br>
+                </div>
+                <div class="align-items-center ">
+
+                    <div class="col-md-12 text-center">
+                        <a class=" btn btn-primary "
+                           (click)="actionContinue()"
+                           style="color: black !important;"
+                        >
+                            Continuar
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="row mx-2 text-center d-flex justify-content-center">
+                <div class="col col-12 mx-3 mt-4 text-center">
+                    <p>
+                        Si necesita ayuda o requiere información personalizada contáctenos a nuestro WhatsApp.
+                    </p>
+                    <a class="btn pb-1 btn-social bg-whatsapp text-white"
+                       href="https://n9.cl/t1zbf" target="_blank">
+                        <i class="fa fa-whatsapp"></i>      Whatsapp          
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<div class="text-center">
+    <span class="azul2"><b>Powered by</b></span>
+    <br>
+    <img src="../assets/images/logo/logo.png" height="50px">
+</div>
+
+<ng-template #mensajeModal let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Mensaje</h5>
+        <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+        <div [innerHTML]="mensaje"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="cerrarModal()">Cerrar</button>
+    </div>
+</ng-template>

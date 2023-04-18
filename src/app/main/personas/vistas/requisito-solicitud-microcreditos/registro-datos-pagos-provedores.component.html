@@ -1,0 +1,56 @@
+<div class="content-wrapper">
+    <div class="content-header row">
+    </div>
+    <div class="content-body">
+        <!-- Error page-->
+        <div class="misc-wrapper">
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="misc-inner">
+                        <div class="text-center">
+                            <a href="javascript:void(0);">
+                                <img src="assets/images/logo/red-credito.png" alt="brand-logo" width="300"/>
+                            </a>
+                        </div>
+                    </div>
+                    <div class=" mb-2 text-center">
+                        <h4>
+                            PARA ACCEDER A UN CRÉDITO PARA PAGO A PROVEEDORES, POR FAVOR REGISTRE LOS SIGUIENTES DATOS:
+                        </h4>
+                    </div>
+                    <div class="content-body">
+                        <section class="app-user-list">
+                            <div class="card">
+                                <div class="card-body text-center">
+
+                                    <div class="row mx-2">
+                                        <div class="col-12 col-lg-6 floar:">
+                                            <h4 for="exampleInputEmail1" class="form-label pull-right">INGRESOS
+                                                MENSUALES DE LA EMPRESA:</h4>
+                                        </div>
+                                        <div class="col col-12 col-lg-6">
+                                            <input type="number" class="form-control" id="exampleInputEmail1"
+                                                   [(ngModel)]="monto" aria-describedby="emailHelp">
+                                        </div>
+                                        <div class="col col-12 text-center mt-5">
+                                          <button [disabled]="monto === null ? true : false" [routerLink]="'/personas/solucitudCredito'" class="btn btn-primary" style="color: black !important;">Continuar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="swiper-responsive-breakpoints swiper-container px-4 py-2">
+                        <div class="swiper-wrapper mb-2">
+                        </div>
+                        <!-- Add Arrows -->
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- / Error page-->
+    </div>
+</div>

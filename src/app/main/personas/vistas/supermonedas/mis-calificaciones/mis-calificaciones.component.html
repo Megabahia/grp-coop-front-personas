@@ -1,0 +1,324 @@
+<div class="content-wrapper">
+  <div class="content-header row">
+    <div class="col-12 mb-2">
+      <div class="row breadcrumbs-top">
+        <div class="col-12">
+          <h2 class="content-header-title float-left mb-0">Calificar compras</h2>
+          <div class="breadcrumb-wrapper">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a class="text-primary" href="index.html">Inicio</a>
+              </li>
+              <li class="breadcrumb-item"><a class="text-primary" href="mis-facturas.html">Calificar
+                  compras</a>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content-body">
+    <!-- users list start -->
+    <section class="app-user-list">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="text-primary d-block">Califica aquí tus compras, por cada compra que califiques reciben
+            {{ganarMonedas ? ganarMonedas.valor:0}} super monedas.</h4>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h6 class="d-block">Filtros de búsqueda</h6>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i data-feather='calendar'></i></span>
+                  </div>
+                  <input type="text" class="form-control form-control-sm flatpickr-range flatpickr-input"
+                    placeholder="- Rango de fechas">
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- users filter end -->
+      <!-- list section start -->
+      <div class="card">
+
+        <div class="row m-75">
+          <div class="col-lg-12 col-xl-6">
+            <label>Mostrar</label>
+            <select class="form-control-sm">
+              <option value="10">10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+
+          </div>
+        </div>
+        <div class="card-datatable table-responsive pt-0">
+          <table class="user-list-table table table-striped">
+            <thead class="thead-light">
+              <tr>
+                <th>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="customCheck2" />
+                    <label class="custom-control-label" for="customCheck2"></label>
+                  </div>
+                </th>
+                <th>Fecha de carga</th>
+                <th>Factura No.</th>
+                <th>Archivo</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let factura of facturas">
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="customCheck2" />
+                    <label class="custom-control-label" for="customCheck2"></label>
+                  </div>
+                </td>
+                <td>{{transformarFecha(factura.created_at)}}</td>
+                <td>{{factura.numeroFactura}}</td>
+
+                <td>
+                  <a class="text-primary" target="_blank"
+                    href="{{factura.urlArchivo ? factura.urlArchivo: (factura.urlFoto ? factura.urlFoto:'')}}">{{factura.urlArchivo
+                    ?
+                    visualizarNombreArchivo(factura.urlArchivo): (factura.urlFoto ?
+                    visualizarNombreArchivo(factura.urlFoto):'') }}</a>
+
+                </td>
+                <td>
+                  <div class="badge {{factura.estado == 'Calificado' ? 'badge-secondary':'badge-warning'}}">
+                    {{factura.estado}}</div>
+                </td>
+                <td>
+                  <a class="avatar bg-primary mr-1" data-target="#calificar" data-toggle="modal"
+                    *ngIf="factura.estado != 'Calificado'" (click)="toggleSidebar('calificar',factura._id)">
+                    <div class="avatar-content" data-toggle="tooltip" data-placement="bottom" title="Calificar">
+                      <i data-feather='star'></i>
+                    </div>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Modal to add new user starts-->
+        <ngb-pagination #paginator [collectionSize]="collectionSize" [(page)]="page" [(pageSize)]="page_size"
+          [maxSize]="5" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+        <div class="modal modal-slide-in new-user-modal fade" id="calificar">
+          <div class="modal-dialog">
+            <div class="modal-content pt-0">
+
+            </div>
+          </div>
+        </div>
+
+        <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
+          <div class="modal-dialog">
+            <div class="modal-content pt-0">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+              <div class="modal-header mb-1">
+                <h5 class="modal-title" id="exampleModalLabel">Nueva factura</h5>
+              </div>
+              <div class="modal-body flex-grow-1">
+
+                <div class="form-group">
+                  <label for="customFile1">Adjuntar archivos (PDF y XML)</label>
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="customFile1" required />
+                    <label class="custom-file-label" for="customFile1">Escojer</label>
+                  </div>
+                </div>
+
+
+
+
+                <button class="btn btn-primary mr-1" data-toggle="modal" data-target="#exito" data-dismiss="modal"
+                  aria-label="Close">Guardar</button>
+                <button type="reset" data-dismiss="modal">Cancelar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal to add new user Ends-->
+      </div>
+      <!-- list section end -->
+    </section>
+    <!-- users list ends -->
+  </div>
+</div>
+<core-sidebar class="modal modal-slide-in sidebar-todo-modal fade" name="calificar" overlayClass="modal-backdrop">
+  <div class="slideout-content">
+    <!-- Modal to add new user starts-->
+    <div class="modalsd modal-slide-in sdfade new-user-modal" id="modals-slide-in">
+      <div class="modal-dialog">
+        <form class="add-new-user modal-content pt-0" [formGroup]="facFisiForm">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+            (click)="toggleSidebar('calificar', '')">×</button>
+          <div class="modal-header mb-1">
+            <h5 class="modal-title" id="exampleModalLabel">Calificar compra</h5>
+          </div>
+          <div class="modal-body flex-grow-1">
+            <div class="form-group">
+              <label>Nombre del local:</label>
+              <input class="form-control" type="text" formControlName="razonSocial"
+                [(ngModel)]="facturaFisica.razonSocial">
+              <div *ngIf="submittedFactura && FFForm.razonSocial.errors" class="invalid-feedback"
+                style="display: block;">
+                <div *ngIf="FFForm.razonSocial.errors.required">Razón social es requerido</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="username">País del local</label>
+              <select class="form-control select2" formControlName="pais" [(ngModel)]="facturaFisica.pais"
+                (change)="obtenerProvinciaOpciones()">
+                <option value="">- Seleccione -</option>
+                <option *ngFor="let paisOp of paisOpciones" value="{{paisOp.nombre}}">{{paisOp.nombre}}
+                </option>
+              </select>
+              <div *ngIf="submittedFactura && FFForm.pais.errors" class="invalid-feedback" style="display: block;">
+                <div *ngIf="FFForm.pais.errors.required">País es requerido</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="username">Provincia del local</label>
+              <select class="form-control select2" formControlName="provincia" [(ngModel)]="facturaFisica.provincia"
+                (change)="obtenerCiudadOpciones() ">
+                <option value="">- Seleccione -</option>
+                <option *ngFor="let provinciaOp of provinciaOpciones" value="{{provinciaOp.nombre}}">
+                  {{provinciaOp.nombre}}</option>
+
+              </select>
+              <div *ngIf="submittedFactura && FFForm.provincia.errors" class="invalid-feedback" style="display: block;">
+                <div *ngIf="FFForm.provincia.errors.required">Provincia es requerido</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="username">Ciudad del local</label>
+              <select class="form-control select2" formControlName="ciudad" [(ngModel)]="facturaFisica.ciudad">
+                <option value="">- Seleccione -</option>
+                <option *ngFor="let ciudadOp of ciudadOpciones" value="{{ciudadOp.nombre}}">
+                  {{ciudadOp.nombre}}</option>
+
+              </select>
+              <div *ngIf="submittedFactura && FFForm.ciudad.errors" class="invalid-feedback" style="display: block;">
+                <div *ngIf="FFForm.ciudad.errors.required">Ciudad es requerido</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Categoría de producto:</label>
+              <select class="form-control select2" formControlName="categoria" [(ngModel)]="facturaFisica.categoria">
+                <option value="">- Seleccione -</option>
+                <option *ngFor="let categoriaEmpresaOp of categoriaEmpresaOpciones"
+                  value="{{categoriaEmpresaOp.nombre}}">{{categoriaEmpresaOp.nombre}}</option>
+
+              </select>
+              <div *ngIf="submittedFactura && FFForm.categoria.errors" class="invalid-feedback" style="display: block;">
+                <div *ngIf="FFForm.categoria.errors.required">Categoría es requerido</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="row align-items-end">
+                <div class="col-md-6">
+                  <label>Monto:</label>
+                  <input class="form-control" type="text" formControlName="importeTotal"
+                    [(ngModel)]="facturaFisica.importeTotal">
+                  <div *ngIf="submittedFactura && FFForm.importeTotal.errors" class="invalid-feedback"
+                    style="display: block;">
+                    <div *ngIf="FFForm.importeTotal.errors.required">Monto es requerido</div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <a class="btn btn-sm btn-success" type="button" target="_blank" data-toggle="modal"
+                    [href]="imagen">Previsualizar
+                    factura</a>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>¿Cómo le pareció la atención en el local?</label>
+              <select class="form-control" formControlName="atencion" [(ngModel)]="facturaFisica.atencion">
+                <option value="">- Seleccione -</option>
+                <option>Excelente</option>
+                <option>Buena</option>
+                <option>Mala</option>
+                <option>Pésima</option>
+              </select>
+              <div *ngIf="submittedFactura && FFForm.atencion.errors" class="invalid-feedback" style="display: block;">
+                <div *ngIf="FFForm.atencion.errors.required">Atención es requerida</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Calificación</label>
+              <select class="form-control" formControlName="calificacion" [(ngModel)]="facturaFisica.calificacion">
+                <option value="">- Seleccione -</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+              </select>
+              <div *ngIf="submittedFactura && FFForm.calificacion.errors" class="invalid-feedback"
+                style="display: block;">
+                <div *ngIf="FFForm.calificacion.errors.required">Calificación es requerida</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Observaciones:</label>
+              <textarea class="form-control" rows="3" placeholder="Escribir..." formControlName="observaciones"
+                [(ngModel)]="facturaFisica.observaciones"></textarea>
+              <div *ngIf="submittedFactura && FFForm.observaciones.errors" class="invalid-feedback"
+                style="display: block;">
+                <div *ngIf="FFForm.observaciones.errors.required">Observaciones es requeridas</div>
+              </div>
+            </div>
+            <button class="btn btn-primary mr-1" data-toggle="modal" data-target="#mensaje" data-dismiss="modal"
+              aria-label="Close" (click)="guardarFacturaFisica()" [disabled]="loading"> <span *ngIf="loading"
+                class="spinner-border spinner-border-sm mr-1"></span>Guardar</button>
+            <button type="reset" class="btn btn-outline-secondary" (click)="toggleSidebar('calificar', '')"
+              data-dismiss="modal">Cancelar</button>
+
+
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Modal to add new user Ends-->
+  </div>
+
+</core-sidebar>
+<ng-template #mensajeModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalCenterTitle">Mensaje</h5>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <div [innerHTML]="mensaje"></div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="cerrarModal()">Cerrar</button>
+  </div>
+</ng-template>

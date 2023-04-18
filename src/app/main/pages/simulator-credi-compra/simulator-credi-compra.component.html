@@ -1,0 +1,162 @@
+<div class="col">
+    <section class="head-LP text-LP">
+        <div class="container pb-5">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-12 text-center">
+                    <img class="appear" src="assets/images/logo/creditopagos.png" alt="brand-logo" width="250"/>
+                    <h2 class="mt-2 azul2  text-bold">ESTÁS EN EL PASO 1 DE 3 </h2>
+                </div>
+                <div class="col-md-12 text-center">
+                    <div class="row mx-2 justify-content-center align-items-center">
+                        <h4 class="font-weight-bolder">SIMULADOR DE LÍNEA DE CRÉDITO</h4>
+                    </div>
+                    <div class="row mx-2 justify-content-center align-items-center py-2">
+                        <p>
+                          Para realizar pagos a tus proveedores de manera fácil y rápida podrás acceder a una Línea
+                          de Crédito <b>desde ${{montoMinimo}} hasta ${{montoMaximo}} </b>
+                          otorgado por Cooperativas de Ahorro y Crédito reguladas.
+                          </p>
+                    </div>
+                    <div class="row mx-2">
+                        <form [formGroup]="infoCreditForm" (ngSubmit)="calcular()">
+                            <div class="row">
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group row">
+                                        <div class="col-sm-3 col-form-label">
+                                            <label>Registre el Monto de ingresos mensuales del negocio:</label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input type="number" formControlName="ingresosMensuales"
+                                                   id="ingresosMensuales"
+                                                   class="form-control" name="ingresosMensuales"
+                                                   oninput="this.value = Math.round(this.value);"/>
+                                            <div *ngIf="submittedSimulador && infoCredit.ingresosMensuales.errors"
+                                                 class="invalid-feedback" style="display: block;">
+                                                <div *ngIf="infoCredit.ingresosMensuales.errors.required">Ingresos
+                                                    mensuales es
+                                                    requerido
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group row">
+                                        <div class="col-sm-3 col-form-label">
+                                            <label>Estado civil del representante legal:</label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <select class="form-control select2" formControlName="estadoCivil"
+                                                    (change)="verificarEstadoCivil()">
+                                                <option value="">- Seleccione -</option>
+                                                <option [value]="item.nombre"
+                                                        *ngFor="let item of  listEstadoCivil">{{item.nombre}}</option>
+                                            </select>
+                                            <div *ngIf="submittedSimulador && infoCredit.estadoCivil.errors"
+                                                 class="invalid-feedback" style="display: block;">
+                                                <div *ngIf="infoCredit.estadoCivil.errors.required">Estado civil es
+                                                    requerido
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12" *ngIf="estadoCivil">
+                                    <div class="form-group row">
+                                        <div class="col-sm-3 col-form-label">
+                                            <label>Ingresos cónyuge</label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input type="number" id="ingresosConyuge" formControlName="ingresosConyuge"
+                                                   class="form-control" name="ingresosConyuge"
+                                                   oninput="this.value = Math.round(this.value);"/>
+                                            <div *ngIf="submittedSimulador && infoCredit.ingresosConyuge.errors"
+                                                 class="invalid-feedback" style="display: block;">
+                                                <div *ngIf="infoCredit.ingresosConyuge.errors.required">Ingresos cónyuge
+                                                    es requerido
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group row">
+                                        <div class="col-sm-3 col-form-label">
+                                            <label>Registre el Monto de Gastos e inversión mensual del negocio:</label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input type="number" formControlName="gastosMensuales"
+                                                   id="gastosMensuales"
+                                                   class="form-control" name="gastosMensuales"
+                                                   oninput="this.value = Math.round(this.value);"/>
+                                            <div *ngIf="submittedSimulador && infoCredit.gastosMensuales.errors"
+                                                 class="invalid-feedback" style="display: block;">
+                                                <div *ngIf="infoCredit.gastosMensuales.errors.required">Gastos
+                                                    mensuales es
+                                                    requerido
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <button type="submit" rippleEffect class="btn btn-primary mr-1"
+                                            style="color: black !important;"
+                                    >Calcular
+                                    </button>
+                                    <a href="https://creditopagos.com/"type="reset" rippleEffect class="btn btn-primary text-black"
+                                       style="color: black !important;"
+                                    >Cancelar
+                                    </a>
+                                    <br>
+                                    <h3 class="mt-5">
+                                        Si necesita ayuda o requiere información personalizada, contáctenos a nuestro WhatsApp.
+                                    </h3>
+                                    <br>
+                                    <a class="btn text-center  pb-1 btn-social bg-whatsapp text-white"
+                                       href="https://wa.link/ghjo6j" target="_blank">
+                                        <i class="fa fa-whatsapp"></i>      Whatsapp          
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!--<div class="footer-LP"></div>-->
+<div class="text-center">
+    <span style="color: black !important;"><b>Powered by</b></span>
+    <br>
+    <img src="../assets/images/logo/logo.png" height="50px">
+</div>
+
+<!-- Buynow Button-->
+<div class="buy-now">
+    <a href="https://wa.link/ghjo6j" target="_blank" class="text-bold color-black" style="color: black !important;">
+        Necesito ayuda
+        <img src="assets/images/iconos-flotantes/whatsapp.png" width="50">
+    </a
+    >
+</div>
+
+<ng-template #modalAviso let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Aviso</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss( 'Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div>
+            <h4>{{mensaje}}</h4>
+        </div>
+    </div>
+    <div class="modal-footer">
+            <button type="button" class="btn btn-light" (click)="modal.dismiss( 'Cross click')">Salir</button>
+    </div>
+</ng-template>

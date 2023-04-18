@@ -1,0 +1,63 @@
+<div class="row">
+    <section class="head-LP text-LP">
+        <div class="container pb-5">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-12 text-center">
+                    <img class="appear" src="assets/images/logo/creditopagos.png" alt="brand-logo" width="250"/>
+                </div>
+                <div class="col-md-12 text-center">
+                    <div class="row mx-2 justify-content-center align-items-center py-2">
+                        <div [innerHTML]="descripcion.valor "></div>
+                    </div>
+<!--                    <div class="row mx-2 justify-content-center align-items-center py-2">-->
+<!--                        <h3>{{requisitos.valor}}</h3>-->
+<!--                    </div>-->
+                    <div class="row mx-2 justify-content-center align-items-center py-2">
+                        <ul class="list-group">
+                            <li class="list-group-item" *ngFor="let item of requisitos.config">{{item}}</li>
+                        </ul>
+                    </div>
+                    <div class="row mx-2 justify-content-center align-items-center py-2">
+                        <div class="col-12">
+                            <p style="color: red;"><b>Aplique YA a su línea de crédito dando click en CONTINUAR</b></p>
+                            <br>
+                            <button type="submit" rippleEffect class="btn btn-primary mr-1" routerLink="/"
+                                    style="color: black !important;"
+                                    (click)="simulador()">Continuar
+                            </button>
+                            <a type="reset" rippleEffect class="btn btn-primary text-black" href="https://credicompra.com/"
+                               style="color: black !important;"
+                               (click)="cancelar()">Cancelar
+                            </a>
+                            <br>
+                            <h3 class="mt-5">
+                                Si necesita ayuda o requiere información personalizada, contáctenos a nuestro WhatsApp.
+                            </h3>
+                            <br>
+                            <a class="btn text-center  pb-1 btn-social bg-whatsapp text-white"
+                               href="https://wa.link/ghjo6j" target="_blank">
+                                <i class="fa fa-whatsapp"></i>      Whatsapp          
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!--<div class="footer-LP"></div>-->
+<div class="text-center">
+    <span style="color: black !important;"><b>Powered by</b></span>
+    <br>
+    <img src="../assets/images/logo/logo.png" height="50px">
+</div>
+
+<!-- Buynow Button-->
+<div class="buy-now">
+    <a href="https://wa.link/ghjo6j" target="_blank" class="text-bold color-black" style="color: black !important;">
+        Necesito ayuda
+        <img src="assets/images/iconos-flotantes/whatsapp.png" width="50">
+    </a
+    >
+</div>

@@ -1,0 +1,195 @@
+<!-- Error page-->
+
+
+
+<!-- Forgot Password v1 -->
+<div class="text-center mb-3">
+  <img src="assets/images/logo.svg" width="250">
+</div>
+<div class="card mb-0">
+  <div class="card-body">
+    <div class="card profile-header mb-2">
+      <!-- profile cover photo -->
+
+      <!--/ profile cover photo -->
+
+      <div class="position-relative mt-5">
+        <!-- profile picture -->
+        <div class="">
+          <div class="cat">
+            <img src="{{imagen ? imagen: 'assets/images/portrait/small/avatar-s-11.jpg'}}" class="rounded img-fluid"
+              alt="Card image" />
+          </div>
+          <!-- profile title -->
+        </div>
+
+      </div>
+      <h2>{{f.nombres.value}} {{f.apellidos.value}}</h2>
+      <div>
+        <label class="btn btn-info btn-sm mr-75 waves-effect waves-float waves-light" for="change-picture">
+          <span class="">Cambiar foto</span>
+          <input class="form-control" type="file" id="change-picture" hidden accept="image/png, image/jpeg, image/jpg"
+            (change)="subirImagen($event)" />
+        </label>
+      </div>
+
+      <form class="auth-login-form mt-2" [formGroup]="registerForm" (ngSubmit)="guardarRegistro()">
+        <!-- tabs pill -->
+        <div class="profile-header-nav">
+          <!-- navbar -->
+          <div class="row card-body">
+            <div class="col-md-12">
+              <p class="card-title " style="color:red">
+                Al completar su perfil usted GANARA {{ganarMonedas.valor}} Supermonedas para que haga uso en
+                canje de magníficos
+                PREMIOS!.</p>
+              <hr />
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="identificacion">Número de identificación</label>
+                <input formControlName="identificacion" type="text" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.identificacion.errors }">
+                <div *ngIf="submitted && f.identificacion.errors" class="invalid-feedback">
+                  <div *ngIf="f.identificacion.errors.required">Identificación es requerida</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="nombres">Nombres</label>
+                <input formControlName="nombres" type="text" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.nombres.errors }">
+                <div *ngIf="submitted && f.nombres.errors" class="invalid-feedback">
+                  <div *ngIf="f.nombres.errors.required">Nombres son requeridos</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="apellidos">Apellidos</label>
+                <input formControlName="apellidos" type="text" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.apellidos.errors }">
+                <div *ngIf="submitted && f.apellidos.errors" class="invalid-feedback">
+                  <div *ngIf="f.apellidos.errors.required">Apellidos son requeridos</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="genero">Género</label>
+                <select formControlName="genero" class="form-control" id="status"
+                  [ngClass]="{ 'is-invalid': submitted && f.genero.errors }">
+                  <option>- Seleccionar - </option>
+                  <option>Hombre</option>
+                  <option>Mujer</option>
+                  <option>No especificado</option>
+                </select>
+                <div *ngIf="submitted && f.genero.errors" class="invalid-feedback">
+                  <div *ngIf="f.genero.errors.required">El campo Genero es requerido</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="fechaNacimiento">Fecha de nacimiento</label>
+                <ng2-flatpickr [setDate]="fecha" formControlName="fechaNacimiento" [config]="startDateOptions"
+                  [ngClass]="{ 'is-invalid': submitted && f.fechaNacimiento.errors }" (input)="calcularEdad()">
+                </ng2-flatpickr>
+                <div *ngIf="submitted && f.fechaNacimiento.errors" class="invalid-feedback">
+                  <div *ngIf="f.fechaNacimiento.errors.required">Fecha es requerida</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="edad">Edad</label>
+                <input formControlName="edad" type="text" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.edad.errors }" disabled>
+                <div *ngIf="submitted && f.edad.errors" class="invalid-feedback">
+                  <div *ngIf="f.edad.errors.required">Fecha es requerida</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-8">
+              <div class="form-group">
+                <label for="whatsapp" class="font-weight-bold">Número WhatsApp <small class="text-info">(Importante
+                    para validar tu cuenta)</small></label>
+                <input formControlName="whatsapp" type="text"
+                  [ngClass]="{ 'is-invalid': submitted && f.whatsapp.errors }" class="form-control"
+                  placeholder="Ejemplo: 0987654321">
+                <div *ngIf="submitted && f.whatsapp.errors" class="invalid-feedback">
+                  <div *ngIf="f.whatsapp.errors.pattern">Solo se aceptan números</div>
+                  <div *ngIf="f.whatsapp.errors.required">Nro de WhatsApp requerido</div>
+                  <div *ngIf="f.whatsapp.errors.minlength || f.whatsapp.errors.maxlength || f.whatsapp.errors.min">
+                    Ingrese un número de 10 dígitos</div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-12 text-center">
+              <hr />
+              <button type="button" data-target="#whatsapp" data-toggle="modal"
+                class="btn btn-primary mt-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-float waves-light"
+                (click)="guardarRegistro()">Validar cuenta</button>
+              <button type="button"
+                class="btn btn-primary mt-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-float waves-light"
+                (click)="omitirContinuar()">Omitir y Continuar</button>
+            </div>
+          </div>
+          <!--/ navbar -->
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+<!-- /Forgot Password v1 -->
+
+
+<!-- / Error page-->
+
+<ng-template #whatsapp let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalCenterTitle">Mensaje</h5>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <ngb-alert [type]="'danger'" [dismissible]="false" *ngIf="error">
+      <div class="alert-body">
+        <p>{{ error }}</p>
+      </div>
+    </ngb-alert>
+    <p class="text-primary font-weight-bold">Ingresa el código que hemos enviado a tu número de WhatsApp y valida tu
+      cuenta</p>
+    <div class="form-group">
+      <input [(ngModel)]="codigo" class="form-control" type="text">
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a (click)="validarWhatsapp()" class="btn btn-primary">Validar</a>
+  </div>
+</ng-template>
+<ng-template #mensajeModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalCenterTitle">Mensaje</h5>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <div [innerHTML]="mensaje"></div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="cerrarModal()">Cerrar</button>
+  </div>
+</ng-template>

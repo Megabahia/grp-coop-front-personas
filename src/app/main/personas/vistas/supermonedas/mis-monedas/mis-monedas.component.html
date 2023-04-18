@@ -1,0 +1,86 @@
+<div class="content-wrapper">
+    <div class="content-header row">
+        <div class="col-12 mb-2">
+            <div class="row breadcrumbs-top">
+                <div class="col-12">
+                    <h2 class="content-header-title float-left mb-0">Mis super monedas</h2>
+                    <div class="breadcrumb-wrapper">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a class="text-primary" href="index.html">Inicio</a>
+                            </li>
+                            <li class="breadcrumb-item"><a class="text-primary" href="mis-premios.html">mis monedas</a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-body">
+        <!-- users list start -->
+        <section class="user-list">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card earnings-card">
+                        <div class="card-body">
+                            <h6>Saldo super monedas</h6>
+                            <hr />
+                            <h2 class="mt-1">
+                                <div class="iso-moneda"></div> {{cantidadMonedas}}
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-company-table">
+                <div class="card-datatable table-responsive pt-0">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Empresa</th>
+                                <th>Transacción</th>
+                                <th>Super Monedas</th>
+                                <th>Descripción</th>
+                                <th>Fecha</th>
+                                <th>Monedas disponibles</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let moneda of monedas">
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar rounded">
+                                            <div class="avatar-content">
+                                                <img src="assets/images/icons/toolbox.svg" alt="Toolbar svg" />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="font-weight-bolder">{{moneda.empresa}}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{moneda.tipo}}</td>
+                                <td class="text-nowrap">
+                                    <div class="d-flex flex-column">
+                                        <span class="font-weight-bolder mb-25">{{moneda.credito ?
+                                            '+' + moneda.credito: '-' + moneda.debito}}</span>
+                                    </div>
+                                </td>
+                                <td>{{moneda.descripcion}}</td>
+                                <td>{{transformarFecha(moneda.created_at)}}</td>
+                                <td>
+                                    <div class="iso-moneda"></div> {{moneda.saldo}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <ngb-pagination #paginator [collectionSize]="collectionSize" [(page)]="page" [(pageSize)]="page_size" [maxSize]="5" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+            </div>
+            <!-- list section end -->
+        </section>
+        <!-- users list ends -->
+    </div>
+</div>

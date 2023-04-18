@@ -1,0 +1,237 @@
+<div class="content-wrapper">
+
+    <div class="content-body">
+        <div id="user-profile">
+            <!-- profile header -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card p-2">
+                        <h4>Para solicitud de crédito por favor completa la siguiente información</h4>
+                    </div>
+                </div>
+            </div>
+            <!--/ profile header -->
+
+            <!-- profile info section -->
+            <section>
+                <div class="tab-content">
+
+
+                    <div class="tab-pane active" id="tab1" aria-labelledby="account-tab" role="tabpanel">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <form [formGroup]="personaForm">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">Fecha de creación del usuario</label>
+                                                <input type="text" class="form-control" value="{{informacionBasica.created_at}}" disabled />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">Número de cédula</label>
+                                                <input type="text" formControlName="identificacion" class="form-control" [(ngModel)]="informacionBasica.identificacion">
+                                                <div *ngIf="submittedPersona && persForm.identificacion.errors" class="invalid-feedback" style="display: block;">
+                                                    <div *ngIf="persForm.identificacion.errors.required">Información es requerida</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">Nombres</label>
+                                                <input type="text" formControlName="nombres" class="form-control" [(ngModel)]="informacionBasica.nombres">
+                                                <div *ngIf="submittedPersona && persForm.nombres.errors" class="invalid-feedback" style="display: block;">
+                                                    <div *ngIf="persForm.nombres.errors.required">Nombres son requeridos</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">Apellidos</label>
+                                                <input type="text" formControlName="apellidos" class="form-control" [(ngModel)]="informacionBasica.apellidos">
+                                                <div *ngIf="submittedPersona && persForm.apellidos.errors" class="invalid-feedback" style="display: block;">
+                                                    <div *ngIf="persForm.apellidos.errors.required">Apellidos son requeridos</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">Género</label>
+                                                <select formControlName="genero" class="form-control" id="status" [(ngModel)]="informacionBasica.genero">
+                                                    <option value="">- Seleccione -</option>
+                                                    <option *ngFor="let generoOp of tipoGeneroOpciones" value="{{generoOp.valor}}">
+                                                        {{generoOp.nombre}}</option>
+                    
+                                             </select>
+                                                <div *ngIf="submittedPersona && persForm.genero.errors" class="invalid-feedback" style="display: block;">
+                                                    <div *ngIf="persForm.genero.errors.required">Género es requerido</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">Fecha de nacimiento</label>
+                                                <ng2-flatpickr [setDate]="fecha" formControlName="fechaNacimiento" [config]="startDateOptions" (input)="calcularEdad()"></ng2-flatpickr>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">Edad</label>
+                                                <input formControlName="edad" type="text" class="form-control" [(ngModel)]="informacionBasica.edad" disabled>
+                                                <div *ngIf="submittedPersona && persForm.edad.errors" class="invalid-feedback" style="display: block;">
+                                                    <div *ngIf="persForm.edad.errors.required">Edad es requerida</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <hr>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="row">
+                                    <div class="col-md-12 my-1">
+                                        <h4>Datos de contacto</h4>
+                                    </div>
+                                </div>
+                                <form [formGroup]="datosContactoForm">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">País</label>
+                                                <select class="form-control select2" formControlName="pais" [(ngModel)]="informacionBasica.pais" (change)="obtenerProvinciaOpciones()">
+                                                    <option value="">- Seleccione -</option>
+                                                    <option *ngFor="let paisOp of paisOpciones" value="{{paisOp.nombre}}">{{paisOp.nombre}}</option>
+                                             </select>
+                                                <div *ngIf="submittedPersona && datosContForm.pais.errors" class="invalid-feedback" style="display: block;">
+                                                    <div *ngIf="datosContForm.pais.errors.required">País es requerido</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">Provincia</label>
+                                                <select class="form-control select2" formControlName="provincia" [(ngModel)]="informacionBasica.provincia" (change)="obtenerCiudadOpciones() ">
+                                                    <option value="">- Seleccione -</option>
+                                                    <option *ngFor="let provinciaOp of provinciaOpciones" value="{{provinciaOp.nombre}}">{{provinciaOp.nombre}}</option>
+                    
+                                             </select>
+                                                <div *ngIf="submittedPersona && datosContForm.provincia.errors" class="invalid-feedback" style="display: block;">
+                                                    <div *ngIf="datosContForm.provincia.errors.required">Provincia es requerido</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">Ciudad</label>
+                                                <select class="form-control select2" formControlName="ciudad" [(ngModel)]="informacionBasica.ciudad">
+                                                    <option value="">- Seleccione -</option>
+                                                    <option *ngFor="let ciudadOp of ciudadOpciones" value="{{ciudadOp.nombre}}">{{ciudadOp.nombre}}</option>
+                    
+                                             </select>
+                                                <div *ngIf="submittedPersona && datosContForm.ciudad.errors" class="invalid-feedback" style="display: block;">
+                                                    <div *ngIf="datosContForm.ciudad.errors.required">Ciudad es requerido</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">Dirección</label>
+                                                <input type="text" class="form-control" formControlName="direccion" [(ngModel)]="informacionBasica.direccion">
+                                                <div *ngIf="submittedPersona && datosContForm.direccion.errors" class="invalid-feedback" style="display: block;">
+                                                    <div *ngIf="datosContForm.direccion.errors.required">Dirección es requerido</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">Correo</label>
+                                                <input type="text" class="form-control" formControlName="correo" [(ngModel)]="informacionBasica.email">
+                                                <div *ngIf="submittedPersona && datosContForm.correo.errors" class="invalid-feedback" style="display: block;">
+                                                    <div *ngIf="datosContForm.correo.errors.required">Correo es requerido</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">Correo adicional</label>
+                                                <input type="text" class="form-control" [(ngModel)]="informacionBasica.emailAdicional" [ngModelOptions]="{standalone: true}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">Número de celular</label>
+                                                <input type="text" class="form-control" formControlName="celular" [(ngModel)]="informacionBasica.telefono">
+                                                <div *ngIf="submittedPersona && datosContForm.celular.errors" class="invalid-feedback" style="display: block;">
+                                                    <div *ngIf="datosContForm.celular.errors.required">Celular es requerido</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">Número Whats App</label>
+                                                <input type="text" class="form-control" formControlName="whatsapp" [(ngModel)]="informacionBasica.whatsapp">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">Perfil de facebook</label>
+                                                <input type="text" class="form-control" [(ngModel)]="informacionBasica.facebook" [ngModelOptions]="{standalone: true}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">Perfil de instagram</label>
+                                                <input type="text" class="form-control" [(ngModel)]="informacionBasica.instagram" [ngModelOptions]="{standalone: true}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">Perfil de twitter</label>
+                                                <input type="text" class="form-control" [(ngModel)]="informacionBasica.twitter" [ngModelOptions]="{standalone: true}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">Perfil de TikTok</label>
+                                                <input type="text" class="form-control" [(ngModel)]="informacionBasica.tiktok" [ngModelOptions]="{standalone: true}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">Perfil de youtube</label>
+                                                <input type="text" class="form-control" [(ngModel)]="informacionBasica.youtube" [ngModelOptions]="{standalone: true}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="row">
+                                    <div class="col-12 d-flex flex-sm-row flex-column mt-2">
+                                        <a href="javascript:void(0)" class="btn btn-primary mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-float waves-light" (click)="continuar()">Continuar</a>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </section>
+            <!--/ profile info section -->
+        </div>
+    </div>
+</div>

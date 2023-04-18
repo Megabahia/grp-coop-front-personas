@@ -1,0 +1,68 @@
+<div class="content-wrapper">
+    <div class="content-body">
+        <!-- users list start -->
+        <section class="app-ecommerce-details">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="card-header border-bottom pb-1 pt-1">
+                            <h4 class="card-title">Créditos autónomo</h4>
+                        </div>
+                        <div class="card-body p-2">
+                            <p class="text-primary">Obtén un crédito que puedes hacer uso en cualquiera de las instituciones afiliadas Global RedPyme.</p>
+                            <h4><b>Para empezar selecciona la ciudad y el establecimiento donde deseas aplicar tu crédito</b></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header border-bottom row justify-content-center">
+                    <h4 class="text-info col-md-12 text-center">Filtrar establecimientos</h4>
+                    <div class="col-md-3">
+                        <select class="form-control select2" [(ngModel)]="ciudad">
+                            <option value="">- Seleccione -</option>
+                            <option *ngFor="let ciudadOp of ciudadOpciones" value="{{ciudadOp.nombre}}">{{ciudadOp.nombre}}</option>
+                     </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-control select2" [(ngModel)]="tipoCategoria">
+                            <option value="">- Seleccione -</option>
+                            <option *ngFor="let categoriaEmpresaOp of categoriaEmpresaOpciones" value="{{categoriaEmpresaOp.nombre}}">{{categoriaEmpresaOp.nombre}}</option>
+
+                     </select>
+                    </div>
+                    <div class="col-md-3">
+                        <a class="btn btn-primary" (click)="obtenerListaEmpresasComerciales()">
+                            <i data-feather='search'></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="swiper-responsive-breakpoints swiper-container px-4 py-2" [swiper]="swiperResponsive">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide" *ngFor="let establecimiento of listaEstablecimientos">
+                                <div class="item-heading">
+                                    <h5 class="text-truncate mb-0">{{establecimiento.nombreComercial}}</h5>
+                                    <small class="text-body">{{establecimiento.tipoCategoria}}</small>
+                                </div>
+                                <div class="img-container w-50 mx-auto py-75">
+                                    <img src="assets/images/coral.jpg" class="img-fluid" alt="image" />
+                                </div>
+                                <a href="index-tienda.html" target="_blank">Ver productos</a>
+                                <a href="javascript:void(0)" class="btn btn-sm btn-primary mt-2" (click)="continuar(establecimiento._id)">Seleccionar establecimiento</a>
+                            </div>
+
+                        </div>
+                        <!-- Add Arrows -->
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+        <!-- users list ends -->
+    </div>
+</div>

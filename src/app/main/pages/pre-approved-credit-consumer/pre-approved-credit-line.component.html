@@ -1,0 +1,104 @@
+<!-- Error page-->
+<div>
+    <section class="text-LP">
+        <div class="container pb-5">
+            <div class="row justify-content-center align-items-center py-5">
+                <div class="col-md-12 text-center mb-4">
+                    <img src="/assets/images/logo/creditopagos.png" alt="brand-logo" width="300px"/>
+                    <h1 class="yellow2 mt-4 text-bold">CrediCompra - Crédito Pagos</h1>
+                    <h3 class="user-name text-center">
+                        Con tu Línea de Crédito otorgada por una Cooperativa de Ahorro y Crédito regulada puedes
+                        realizar los pagos a tus proveedores de manera fácil y rápida.
+
+                    </h3>
+                </div>
+                <div class="col-md-12 text-center">
+                    <h2 class="user-name font-weight-bolder azul2 text-center"> ¡FELICIDADES! </h2>
+
+
+                    <h3 class="user-name text-center">
+                        Ingresa el código enviado a tu correo para acceder a tu Línea de Crédito preaprobada y
+                        realizar los pagos a tus proveedores de manera fácil y rápida.
+
+                    </h3>
+
+                </div>
+                <div class="align-items-center " style="text-align: center;  ">
+
+                    <form [formGroup]="envioForm" (ngSubmit)="sentCode()">
+                        <div class="col-12 align-items-center my-2">
+                            <div class="form-group align-items-center">
+                                <span class="user-name font-weight-bolder">Ingrese el código recibido:</span>
+                                <input size="50" formControlName="code" type="text" class="form-control" name="code">
+                                <div *ngIf="submittedSimulador && getsimuladorForm.code.errors"
+                                     class="invalid-feedback" style="display: block;">
+                                    <div *ngIf="getsimuladorForm.code.errors.required">Código es requerido</div>
+                                    <div *ngIf="getsimuladorForm.code.errors.pattern">Solo se aceptan números</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 align-items-center my-3">
+                            <div class="form-group ">
+                                <span class="user-name font-weight-bolder">
+                                    Ingrese el número de cédula del representante legal o dueño de la empresa:
+                                </span>
+                                <input size="50" formControlName="document" type="text" class="form-control"
+                                       name="document">
+                                <div *ngIf="submittedSimulador && getsimuladorForm.document.errors"
+                                     class="invalid-feedback" style="display: block;">
+                                    <div *ngIf="getsimuladorForm.document.errors.required">Cédula es requerido</div>
+                                </div>
+                                <div *ngIf="submittedSimulador && getsimuladorForm.document.errors"
+                                     class="invalid-feedback"
+                                     style="display: block;">
+                                    <div *ngIf="submittedSimulador && getsimuladorForm.document.errors.required">Es
+                                        requerido
+                                    </div>
+                                    <div
+                                            *ngIf="getsimuladorForm.document.errors.minlength || getsimuladorForm.document.errors.maxlength ||getsimuladorForm.document.errors.min">
+                                        Ingrese 10 dígitos y solo numéricos
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <button class="btn btn-primary"
+                                    style="color: black !important;"
+                               (click)="sentCode()"
+                            >
+                                Continuar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-12 mb-4">
+                    <div class="col-md-12 ">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<!--<div class="footer-LP"></div>-->
+<div class="text-center">
+    <span class="azul2"><b>Powered by</b></span>
+    <br>
+    <img src="../assets/images/logo/logo.png" height="50px">
+</div>
+
+<ng-template #mensajeModal let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Mensaje</h5>
+        <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+        <div [innerHTML]="mensaje"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="cerrarModal()">Cerrar</button>
+    </div>
+</ng-template>

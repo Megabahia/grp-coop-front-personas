@@ -1,0 +1,219 @@
+<div class="content-wrapper">
+    <div class="content-header row">
+    </div>
+    <div class="content-body">
+        <!-- Error page-->
+        <div class="misc-wrapper">
+
+            <div class="card">
+                <div class="card-body">
+
+                    <div class=" mb-2 text-center">
+                        <h2>
+                            Confirme la firma electrónica para poder acceder a su línea de crédito
+                        </h2>
+                        <span>
+                            Recuerde que para poder firmar los documentos debe tener a la mano su firma y la clave de su firma electrónica, misma que es única e intransferible por su seguridad.
+                        </span>
+                    </div>
+                    <div class="content-body">
+                        <section class="app-user-list">
+                            <div class="card">
+                                <div class="card-body text-left">
+
+                                    <form class="auth-login-form mt-2" [formGroup]="firmaForm">
+
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Nombre del representante legal</label>
+                                                    <input class="form-control" name="nombreRepresentante"
+                                                           formControlName="nombreRepresentante"
+                                                           type="text">
+                                                    <div *ngIf="submitted && firmaElectronica.nombreRepresentante.errors"
+                                                         class="invalid-feedback"
+                                                         style="display: block;">
+                                                        <div *ngIf="firmaElectronica.nombreRepresentante.errors.required">
+                                                            Nombres del representante de la empresa es requerido
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Apellido del representante legal</label>
+                                                    <input class="form-control" name="apellidoRepresentante"
+                                                           formControlName="apellidoRepresentante"
+                                                           type="text">
+                                                    <div *ngIf="submitted && firmaElectronica.apellidoRepresentante.errors"
+                                                         class="invalid-feedback"
+                                                         style="display: block;">
+                                                        <div *ngIf="firmaElectronica.apellidoRepresentante.errors.required">
+                                                            Apellidos del representante de la empresa es requerido
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Correo del representante legal
+                                                    </label>
+                                                    <input class="form-control" name="correoRepresentante"
+                                                           formControlName="correoRepresentante"
+                                                           type="text">
+                                                    <div *ngIf="submitted && firmaElectronica.correoRepresentante.errors"
+                                                         class="invalid-feedback"
+                                                         style="display: block;">
+                                                        <div *ngIf="firmaElectronica.correoRepresentante.errors.required">
+                                                            Correo del representante de la empresa es requerido
+                                                        </div>
+                                                        <div *ngIf="firmaElectronica.correoRepresentante.errors.email">
+                                                            Email formato incorrecto
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Teléfono del representante legal
+                                                    </label>
+                                                    <input class="form-control" name="telefonoRepresentante"
+                                                           formControlName="telefonoRepresentante"
+                                                           type="text">
+                                                    <div *ngIf="submitted && firmaElectronica.telefonoRepresentante.errors"
+                                                         class="invalid-feedback"
+                                                         style="display: block;">
+                                                        <div *ngIf="firmaElectronica.telefonoRepresentante.errors.required">
+                                                            Teléfono del representante de la empresa es requerido
+                                                        </div>
+                                                        <div *ngIf="firmaElectronica.telefonoRepresentante.errors.minlength">
+                                                            Ingrese minimo 10 numeros
+                                                        </div>
+                                                        <div *ngIf="firmaElectronica.telefonoRepresentante.errors.maxlength">
+                                                            Ingrese maximo 10 numeros
+                                                        </div>
+                                                        <div *ngIf="firmaElectronica.telefonoRepresentante.errors.pattern">
+                                                            Ingrese solo numeros
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>WhatsApp del representante legal
+                                                    </label>
+                                                    <input class="form-control" name="whatsappRepresentante"
+                                                           formControlName="whatsappRepresentante"
+                                                           type="text">
+                                                    <div *ngIf="submitted && firmaElectronica.whatsappRepresentante.errors"
+                                                         class="invalid-feedback"
+                                                         style="display: block;">
+                                                        <div *ngIf="firmaElectronica.whatsappRepresentante.errors.required">
+                                                            WhatsaApp del representante de la empresa es requerido
+                                                        </div>
+                                                        <div *ngIf="firmaElectronica.whatsappRepresentante.errors.minlength">
+                                                            Ingrese minimo 10 numeros
+                                                        </div>
+                                                        <div *ngIf="firmaElectronica.whatsappRepresentante.errors.maxlength">
+                                                            Ingrese maximo 10 numeros
+                                                        </div>
+                                                        <div *ngIf="firmaElectronica.whatsappRepresentante.errors.pattern">
+                                                            Ingrese solo numeros
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Cédula o Ruc del representante legal
+                                                    </label>
+                                                    <input class="form-control" name="identificacionRepresentante"
+                                                           formControlName="identificacionRepresentante"
+                                                           type="text">
+                                                    <div *ngIf="submitted && firmaElectronica.identificacionRepresentante.errors"
+                                                         class="invalid-feedback"
+                                                         style="display: block;">
+                                                        <div *ngIf="firmaElectronica.identificacionRepresentante.errors.required">
+                                                            Ingrese el número de cédula o RUC del representante legal
+                                                        </div>
+                                                        <div *ngIf="firmaElectronica.identificacionRepresentante.errors.cedulaInvalid">
+                                                            Cédula del representante legal es invalido
+                                                        </div>
+                                                        <div *ngIf="firmaElectronica.identificacionRepresentante.errors.rucInvalid">
+                                                            RUC del representante legal es invalido
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Tipo de Identificación
+                                                    </label>
+                                                    <select class="form-control select2" formControlName="tipoIdentificacionRepresentante" (change)="obtenerTipoIdentificacion()">
+                                                        <option value="">- Seleccione -</option>
+                                                        <option value="cedula">Cédula</option>
+                                                        <option value="ruc">Ruc</option>
+<!--                                                        <option *ngFor="let paisOp of paisOpciones" value="{{paisOp.nombre}}">{{paisOp.nombre}}</option>-->
+                                                    </select>
+                                                    <div *ngIf="submitted && firmaElectronica.tipoIdentificacionRepresentante.errors"
+                                                         class="invalid-feedback"
+                                                         style="display: block;">
+                                                        <div *ngIf="firmaElectronica.tipoIdentificacionRepresentante.errors.required">
+                                                            Tipo identificacion de representante de la empresa es requerido
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" id="customCheck1" formControlName="aceptarTerminos"/>
+                                                        <label class="custom-control-label" for="customCheck1">
+                                                            Acepto que mi firma es única e intransferible y autorizo a la Entidad Financiera y Entidades competentes a hacer uso de ella de la forma debida
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="submitted && firmaElectronica.aceptarTerminos.errors"
+                                                     class="invalid-feedback"
+                                                     style="display: block;">
+                                                    <div *ngIf="firmaElectronica.aceptarTerminos.errors.required">
+                                                        Es requerido que acepte terminos.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2 d-flex justify-content-center">
+                                            <button class="btn btn-primary mr-1" (click)="guardar()">
+                                                Continuar
+                                            </button>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- / Error page-->
+    </div>
+</div>
+
+<ng-template #mensajeModal let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Mensaje</h5>
+        <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+        <div [innerHTML]="mensaje"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="cerrarModal()">Cerrar</button>
+    </div>
+</ng-template>

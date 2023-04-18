@@ -1,0 +1,299 @@
+<div class="content-wrapper">
+  <div class="content-header row">
+    <div class="col-12 mb-2">
+      <div class="row breadcrumbs-top">
+        <div class="col-12">
+          <h2 class="content-header-title float-left mb-0">Cargar facturas</h2>
+          <div class="breadcrumb-wrapper">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a class="text-primary" href="index.html">Inicio</a>
+              </li>
+              <li class="breadcrumb-item"><a class="text-primary" href="mis-facturas.html">facturas</a>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content-body">
+    <!-- users list start -->
+    <section class="app-user-list">
+      <!-- users filter start -->
+      <div class="card card-app-design">
+        <div class="card-body pb-1">
+          <h4 class="text-primary">Registra aquí tus facturas de cualquier compra. Al cargar tus facturas recibes
+            monedas gratis</h4>
+          <div class="design-planning-wrapper pt-1">
+            <div class="design-planning bg-light-info p-2">
+              <small class="card-text mb-25">Por facturas electrónicas recibes:</small>
+              <h6 class="mb-0"><b>{{ganarMonedasFacElec ? ganarMonedasFacElec.valor:0}}</b> super monedas por factura
+              </h6>
+              <button class="btn btn-primary mt-1" tabindex="0" aria-controls="DataTables_Table_0" type="button"
+                data-toggle="modal" data-target="#modals-slide-in" (click)="toggleSidebar('factura-electronica')">
+                Añadir factura
+              </button>
+            </div>
+            <div class="design-planning bg-light-success p-2">
+              <small class="card-text mb-25">Por facturas físicas recibes</small>
+              <h6 class="mb-0"><b>{{ganarMonedasFacFisi ? ganarMonedasFacFisi.valor:0}}</b> super monedas por factura
+              </h6>
+              <button class="btn btn-info mt-1" tabindex="0" aria-controls="DataTables_Table_0" type="button"
+                data-toggle="modal" data-target="#modals-slide-in2" (click)="toggleSidebar('factura-normal')">
+                Añadir factura
+              </button>
+            </div>
+            <div class="design-planning text-left p-2">
+              <small><b>NOTA:</b> <br>Las facturas deben estar a nombre del propietario de la
+                cuenta</small>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+      <div class="card">
+        <h5 class="card-header">Filtros de búsqueda</h5>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i data-feather='calendar'></i></span>
+                  </div>
+                  <input type="text" class="form-control form-control-sm flatpickr-range flatpickr-input"
+                    placeholder="- Rango de fechas">
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- users filter end -->
+      <!-- list section start -->
+      <div class="card">
+        <div class="card-datatable table-responsive pt-0">
+          <div class="row m-75">
+            <div class="col-lg-12 col-xl-6">
+              <label>Mostrar</label>
+              <select class="form-control-sm">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+
+            </div>
+          </div>
+          <table class="user-list-table table table-striped">
+            <thead class="thead-light">
+              <tr>
+                <th>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="customCheck2" />
+                    <label class="custom-control-label" for="customCheck2"></label>
+                  </div>
+                </th>
+                <th>Fecha de carga</th>
+                <th>Factura No.</th>
+                <th>Archivo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let factura of facturas">
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="customCheck2" />
+                    <label class="custom-control-label" for="customCheck2"></label>
+                  </div>
+                </td>
+                <td>{{transformarFecha(factura.created_at)}}</td>
+                <td>{{factura.numeroFactura}}</td>
+
+                <td>
+                  <a class="text-primary"
+                    href="{{factura.urlArchivo ? factura.urlArchivo: (factura.urlFoto ? factura.urlFoto:'')}}">{{factura.urlArchivo
+                    ? visualizarNombreArchivo(factura.urlArchivo): (factura.urlFoto ?
+                    visualizarNombreArchivo(factura.urlFoto):'') }}</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <ngb-pagination #paginator [collectionSize]="collectionSize" [(page)]="page" [(pageSize)]="page_size"
+          [maxSize]="5" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+        <!-- Modal to add new user starts-->
+        <!-- Modal to add new user Ends-->
+      </div>
+      <!-- list section end -->
+    </section>
+    <!-- users list ends -->
+  </div>
+</div>
+<core-sidebar class="modal modal-slide-in sidebar-todo-modal fade" name="factura-electronica"
+  overlayClass="modal-backdrop">
+  <div class="slideout-content">
+    <!-- Modal to add new user starts-->
+    <div class="modalsd modal-slide-in sdfade new-user-modal" id="modals-slide-in">
+      <div class="modal-dialog">
+        <form class="add-new-user modal-content pt-0" (ngSubmit)="(newUserForm.form.valid)" #newUserForm="ngForm">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+            (click)="toggleSidebar('factura-electronica')">
+            ×
+          </button>
+          <div class="modal-header mb-1">
+            <h5 class="modal-title" id="exampleModalLabel">Nueva factura</h5>
+          </div>
+          <div class="modal-body flex-grow-1">
+            <div class="form-group">
+              <label for="customFile1">Adjuntar archivos (PDF y XML)</label>
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile1" required
+                  (change)="cargarFacturaElec($event)" accept=".pdf,.xml" />
+                <label class="custom-file-label" for="customFile1">{{nombreFacElec ? nombreFacElec:'Escojer'}}</label>
+              </div>
+            </div>
+            <button class="btn btn-primary mr-1" data-toggle="modal" data-target="#exito" data-dismiss="modal"
+              aria-label="Close" (click)="subirFacturaElec()" [disabled]="loading"> <span *ngIf="loading"
+                class="spinner-border spinner-border-sm mr-1"></span>Guardar</button>
+            <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal"
+              (click)="toggleSidebar('factura-electronica')"> Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Modal to add new user Ends-->
+  </div>
+
+</core-sidebar>
+<core-sidebar class="modal modal-slide-in sidebar-todo-modal fade" name="factura-normal" overlayClass="modal-backdrop">
+  <div class="slideout-content">
+    <!-- Modal to add new user starts-->
+    <div class="modalsd modal-slide-in sdfade new-user-modal" id="modals-slide-in">
+      <div class="modal-dialog">
+        <form class="add-new-user modal-content pt-0" [formGroup]="facFisiForm">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+            (click)="toggleSidebar('factura-normal')">
+            ×
+          </button>
+          <div class="modal-header mb-1">
+            <h5 class="modal-title" id="exampleModalLabel">Nueva factura</h5>
+          </div>
+          <div class="modal-body flex-grow-1">
+            <div class="form-group">
+              <label>Nombre del local:</label>
+              <input class="form-control" type="text" formControlName="razonSocial"
+                [(ngModel)]="facturaFisica.razonSocial">
+              <div *ngIf="submittedFactura && FFForm.razonSocial.errors" class="invalid-feedback"
+                style="display: block;">
+                <div *ngIf="FFForm.razonSocial.errors.required">Razón social es requerido</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="username">País del local</label>
+              <select class="form-control select2" formControlName="pais" [(ngModel)]="facturaFisica.pais"
+                (change)="obtenerProvinciaOpciones()">
+                <option value="">- Seleccione -</option>
+                <option *ngFor="let paisOp of paisOpciones" value="{{paisOp.nombre}}">{{paisOp.nombre}}</option>
+              </select>
+              <div *ngIf="submittedFactura && FFForm.pais.errors" class="invalid-feedback" style="display: block;">
+                <div *ngIf="FFForm.pais.errors.required">País es requerido</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="username">Provincia del local</label>
+              <select class="form-control select2" formControlName="provincia" [(ngModel)]="facturaFisica.provincia"
+                (change)="obtenerCiudadOpciones() ">
+                <option value="">- Seleccione -</option>
+                <option *ngFor="let provinciaOp of provinciaOpciones" value="{{provinciaOp.nombre}}">
+                  {{provinciaOp.nombre}}</option>
+
+              </select>
+              <div *ngIf="submittedFactura && FFForm.provincia.errors" class="invalid-feedback" style="display: block;">
+                <div *ngIf="FFForm.provincia.errors.required">Provincia es requerido</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="username">Ciudad del local</label>
+              <select class="form-control select2" formControlName="ciudad" [(ngModel)]="facturaFisica.ciudad">
+                <option value="">- Seleccione -</option>
+                <option *ngFor="let ciudadOp of ciudadOpciones" value="{{ciudadOp.nombre}}">{{ciudadOp.nombre}}</option>
+
+              </select>
+              <div *ngIf="submittedFactura && FFForm.ciudad.errors" class="invalid-feedback" style="display: block;">
+                <div *ngIf="FFForm.ciudad.errors.required">Ciudad es requerido</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Fecha de compra:</label>
+              <ng2-flatpickr [setDate]="fecha" formControlName="fechaEmision" [config]="startDateOptions"
+                (input)="obtenerFechaEmision()"></ng2-flatpickr>
+              <div *ngIf="submittedFactura && FFForm.fechaEmision.errors" class="invalid-feedback"
+                style="display: block;">
+                <div *ngIf="FFForm.fechaEmision.errors.required">Fecha de compra es requerido</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Monto:</label>
+              <input class="form-control" type="text" formControlName="importeTotal"
+                [(ngModel)]="facturaFisica.importeTotal">
+              <div *ngIf="submittedFactura && FFForm.importeTotal.errors" class="invalid-feedback"
+                style="display: block;">
+                <div *ngIf="FFForm.importeTotal.errors.required">Monto es requerido</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Categoría de producto:</label>
+              <select class="form-control select2" formControlName="categoria" [(ngModel)]="facturaFisica.categoria">
+                <option value="">- Seleccione -</option>
+                <option *ngFor="let categoriaEmpresaOp of categoriaEmpresaOpciones"
+                  value="{{categoriaEmpresaOp.nombre}}">{{categoriaEmpresaOp.nombre}}</option>
+
+              </select>
+              <div *ngIf="submittedFactura && FFForm.categoria.errors" class="invalid-feedback" style="display: block;">
+                <div *ngIf="FFForm.categoria.errors.required">Categoría es requerido</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="customFile1">Adjuntar foto de factura</label>
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile1" required formControlName="urlFoto"
+                  [(ngModel)]="facturaFisica.urlFoto" (change)="subirImagen($event)"
+                  accept="image/png, image/jpeg, image/jpg" />
+                <label class="custom-file-label" for="customFile1">{{archivoFacturaFisica}}</label>
+                <div *ngIf="submittedFactura && FFForm.urlFoto.errors" class="invalid-feedback" style="display: block;">
+                  <div *ngIf="FFForm.urlFoto.errors.required">Archivo es requerido</div>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-primary mr-1" data-toggle="modal" data-target="#exito" data-dismiss="modal"
+              aria-label="Close" (click)="guardarFacturaFisica()" [disabled]="loading"> <span *ngIf="loading"
+                class="spinner-border spinner-border-sm mr-1"></span>Guardar</button>
+            <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal"
+              (click)="toggleSidebar('factura-normal')">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Modal to add new user Ends-->
+  </div>
+
+</core-sidebar>
+<ng-template #mensajeModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalCenterTitle">Mensaje</h5>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <div [innerHTML]="mensaje"></div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="cerrarModal()">Cerrar</button>
+  </div>
+</ng-template>

@@ -1,0 +1,43 @@
+<section class="text-LP">
+  <div class="container py-5">
+    <div class="row align-items-center pb-5">
+      <div class="col-md-12 text-center mb-5 pb-3">
+        <img src="assets/images/logo/logo.png" width="120">
+        <h1 class="yellow2 mt-4 text-bold">Por ser parte de nuestra familia</h1>
+        <h4 class="azul2 mt-2">Canjea los siguientes productos</h4>
+      </div>
+      <div class="m-1 row justify-content-center align-items-center">
+        <div class="col-lg-3" *ngFor="let producto of productos">
+          <div class="card shadow">
+            <div class="card-header">
+              <img src="{{producto.imagen}}" width="1000" height="200">
+            </div>
+            <div class="card-body">
+              <h4 class="azul">{{producto.nombre}}</h4>
+              <ul class="font-size-14">
+                <li>Precio: ${{producto.precioNormal}}</li>
+                <li class="azul2"><b>Paga en EFECTIVO solo: ${{producto.efectivo}}</b></li>
+                <li>Código de Super Monedas: {{producto.codigoDescuento}}</li>
+              </ul>
+            </div>
+            <div class="card-footer font-size-10 text-center">
+              <p>Aplica en:</p>
+              <div class="text-center mb-2"><img src="{{producto.imagen_empresa}}" width="80"></div>
+              <p><b>{{producto.empresa}}</b> <br>{{producto.local}}<br>{{producto.provincia}}- {{producto.pais}}</p>
+              <a href="#" class="text-facebook"><img
+                  src="https://th.bing.com/th/id/R.68c22e515a5712298552f4bbd4b1d8db?rik=XQrDxB9UT2dNwg&pid=ImgRaw&r=0"
+                  width="20">
+                Visitar página</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<div class="footer-LP">
+  <div class="text-center text-white small p-5">
+    Copyright © 2021 Super monedas , Derechos reservados
+  </div>
+</div>

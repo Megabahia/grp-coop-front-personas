@@ -1,0 +1,374 @@
+<div class="content-wrapper">
+    <div class="content-header row">
+        <div class="col-12 mb-2">
+            <div class="row breadcrumbs-top">
+                <div class="col-12">
+                    <h2 class="content-header-title float-left mb-0">Estados de mis créditos</h2>
+                    <div class="breadcrumb-wrapper">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a class="text-primary" href="index.html">Inicio</a>
+                            </li>
+                            <li class="breadcrumb-item"><a class="text-primary" href="#">Créditos Pre Aprobados</a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-body">
+        <!-- users list start -->
+        <section class="app-user-list">
+            <div class="card card-company-table">
+                <div class="row m-75">
+                    <div class="col-lg-12 col-xl-6">
+                        <label>Mostrar</label>
+                        <select class="form-control-sm" [(ngModel)]="page_size">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="card-datatable table-responsive pt-0">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>FECHA SOLICITUD DE CRÉDITO</th>
+                            <th>CANAL DE CRÉDITO</th>
+                            <th>ENTIDAD FINANCIERA</th>
+                            <th>LOGO</th>
+                            <th>CONCEPTO DE CRÉDITO</th>
+                            <th>VALOR $</th>
+                            <th>PLAZO DEL CRÉDITO (MESES)</th>
+                            <th>% INTERÉS</th>
+                            <th>ESTADO</th>
+                            <th>ACCIONES</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr *ngFor="let credito of listaCreditos">
+                            <td>{{transformarFecha(credito.created_at)}}</td>
+                            <td>{{credito.canal}}</td>
+                            <td><img [src]="credito.imagen" width="80"></td>
+                            <td>{{credito.entidadFinanciera}}</td>
+                            <td>{{credito.concepto}}</td>
+                            <td>{{credito.monto}}</td>
+                            <td>{{credito.plazo}}</td>
+                            <td>{{credito.interes}}%</td>
+                            <td>
+                                <div class="badge {{credito.estado =='Aprobado' ? 'badge-light-success':'badge-light-danger'}}">{{credito.estado}}</div>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" class="avatar bg-info mr-1">
+                                    <div class="avatar-content" data-toggle="tooltip" data-placement="bottom" title=""
+                                         data-original-title="Donde aplica">
+                                        <i data-feather='map-pin'></i>
+                                    </div>
+
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <ngb-pagination #paginator [collectionSize]="collectionSize" [(page)]="page" [(pageSize)]="page_size"
+                                [maxSize]="5" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+
+            </div>
+            <!-- list section end -->
+        </section>
+      <div class="text-center">
+        <img width="500" src="{{ coreConfig.app.appLogoImage }}" alt="brand-logo" />
+        <h3 class="text-justify">Realice su solicitud de crédito para acceder a su microcrédito línea de crédito para pago a proveedores
+        </h3>
+        <a href="#/personas/solucitudCredito" class="btn btn-primary">Continuar</a>
+      </div>
+        <!-- users list ends -->
+    </div>
+</div>
+<ng-template #establecimientoSeleccionadoMdl let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Donde aplica</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss( 'Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row text-center">
+            <div class="col-md-4" *ngFor="let convenio of listaConvenios">
+                <div class="card border">
+                    <div class="card-body">
+                        <h4 class="text-bold text-info">{{convenio.nombreComercial}}</h4>
+                        <p class="small">{{convenio.nombreEmpresa}}</p>
+                        <img [src]="convenio.imagen" width="70%">
+                        <p class="small"><b>{{convenio.ciudad}} - {{convenio.pais}}</b></p>
+                        <p class="small">{{convenio.direccion}}<br> Teléfono: {{convenio.telefono}}
+                        </p>
+                        <p class="small">{{convenio.correo}}</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="javascript:void(0)" class="btn btn-sm btn-primary"
+                           (click)="obtenerEmpresaComercial(convenio._id)">Confirmar crédito</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+    </div>
+</ng-template>
+<ng-template #datosContactoMdl let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Donde aplica</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss( 'Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+
+        <form [formGroup]="personaForm">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="username">Fecha de creación del usuario</label>
+                        <input type="text" class="form-control" value="{{informacionBasica.created_at}}" disabled/>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="username">Número de cédula</label>
+                        <input type="text" formControlName="identificacion" class="form-control"
+                               [(ngModel)]="informacionBasica.identificacion">
+                        <div *ngIf="submittedPersona && persForm.identificacion.errors" class="invalid-feedback"
+                             style="display: block;">
+                            <div *ngIf="persForm.identificacion.errors.required">Información es requerida</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="username">Nombres</label>
+                        <input type="text" formControlName="nombres" class="form-control"
+                               [(ngModel)]="informacionBasica.nombres">
+                        <div *ngIf="submittedPersona && persForm.nombres.errors" class="invalid-feedback"
+                             style="display: block;">
+                            <div *ngIf="persForm.nombres.errors.required">Nombres son requeridos</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="username">Apellidos</label>
+                        <input type="text" formControlName="apellidos" class="form-control"
+                               [(ngModel)]="informacionBasica.apellidos">
+                        <div *ngIf="submittedPersona && persForm.apellidos.errors" class="invalid-feedback"
+                             style="display: block;">
+                            <div *ngIf="persForm.apellidos.errors.required">Apellidos son requeridos</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="username">Género</label>
+                        <select formControlName="genero" class="form-control" id="status"
+                                [(ngModel)]="informacionBasica.genero">
+                            <option value="">- Seleccione -</option>
+                            <option *ngFor="let generoOp of tipoGeneroOpciones" value="{{generoOp.valor}}">
+                                {{generoOp.nombre}}</option>
+
+                        </select>
+                        <div *ngIf="submittedPersona && persForm.genero.errors" class="invalid-feedback"
+                             style="display: block;">
+                            <div *ngIf="persForm.genero.errors.required">Género es requerido</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="username">Fecha de nacimiento</label>
+                        <ng2-flatpickr [setDate]="fecha" formControlName="fechaNacimiento" [config]="startDateOptions"
+                                       (input)="calcularEdad()"></ng2-flatpickr>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="username">Edad</label>
+                        <input formControlName="edad" type="text" class="form-control" name="edad"
+                               [(ngModel)]="informacionBasica.edad" disabled>
+                        <div *ngIf="submittedPersona && persForm.edad.errors" class="invalid-feedback"
+                             style="display: block;">
+                            <div *ngIf="persForm.edad.errors.required">Edad es requerida</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <hr>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-md-12 my-1">
+                <h4>Datos de contacto</h4>
+            </div>
+        </div>
+        <form [formGroup]="datosContactoForm">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="username">País</label>
+                        <select class="form-control select2" formControlName="pais" [(ngModel)]="informacionBasica.pais"
+                                (change)="obtenerProvinciaOpciones()">
+                            <option value="">- Seleccione -</option>
+                            <option *ngFor="let paisOp of paisOpciones"
+                                    value="{{paisOp.nombre}}">{{paisOp.nombre}}</option>
+                        </select>
+                        <div *ngIf="submittedPersona && datosContForm.pais.errors" class="invalid-feedback"
+                             style="display: block;">
+                            <div *ngIf="datosContForm.pais.errors.required">País es requerido</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="username">Provincia</label>
+                        <select class="form-control select2" formControlName="provincia"
+                                [(ngModel)]="informacionBasica.provincia" (change)="obtenerCiudadOpciones() ">
+                            <option value="">- Seleccione -</option>
+                            <option *ngFor="let provinciaOp of provinciaOpciones"
+                                    value="{{provinciaOp.nombre}}">{{provinciaOp.nombre}}</option>
+
+                        </select>
+                        <div *ngIf="submittedPersona && datosContForm.provincia.errors" class="invalid-feedback"
+                             style="display: block;">
+                            <div *ngIf="datosContForm.provincia.errors.required">Provincia es requerido</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="username">Ciudad</label>
+                        <select class="form-control select2" formControlName="ciudad"
+                                [(ngModel)]="informacionBasica.ciudad">
+                            <option value="">- Seleccione -</option>
+                            <option *ngFor="let ciudadOp of ciudadOpciones"
+                                    value="{{ciudadOp.nombre}}">{{ciudadOp.nombre}}</option>
+
+                        </select>
+                        <div *ngIf="submittedPersona && datosContForm.ciudad.errors" class="invalid-feedback"
+                             style="display: block;">
+                            <div *ngIf="datosContForm.ciudad.errors.required">Ciudad es requerido</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="username">Dirección</label>
+                        <input type="text" class="form-control" formControlName="direccion"
+                               [(ngModel)]="informacionBasica.direccion">
+                        <div *ngIf="submittedPersona && datosContForm.direccion.errors" class="invalid-feedback"
+                             style="display: block;">
+                            <div *ngIf="datosContForm.direccion.errors.required">Dirección es requerido</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="username">Correo</label>
+                        <input type="text" class="form-control" formControlName="correo"
+                               [(ngModel)]="informacionBasica.email">
+                        <div *ngIf="submittedPersona && datosContForm.correo.errors" class="invalid-feedback"
+                             style="display: block;">
+                            <div *ngIf="datosContForm.correo.errors.required">Correo es requerido</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="username">Correo adicional</label>
+                        <input type="text" class="form-control" [(ngModel)]="informacionBasica.emailAdicional"
+                               [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="username">Número de celular</label>
+                        <input type="text" class="form-control" formControlName="celular"
+                               [(ngModel)]="informacionBasica.telefono">
+                        <div *ngIf="submittedPersona && datosContForm.celular.errors" class="invalid-feedback"
+                             style="display: block;">
+                            <div *ngIf="datosContForm.celular.errors.required">Celular es requerido</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="username">Número Whats App</label>
+                        <input type="text" class="form-control" formControlName="whatsapp"
+                               [(ngModel)]="informacionBasica.whatsapp">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="username">Perfil de facebook</label>
+                        <input type="text" class="form-control" [(ngModel)]="informacionBasica.facebook"
+                               [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="username">Perfil de instagram</label>
+                        <input type="text" class="form-control" [(ngModel)]="informacionBasica.instagram"
+                               [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="username">Perfil de twitter</label>
+                        <input type="text" class="form-control" [(ngModel)]="informacionBasica.twitter"
+                               [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="username">Perfil de TikTok</label>
+                        <input type="text" class="form-control" [(ngModel)]="informacionBasica.tiktok"
+                               [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="username">Perfil de youtube</label>
+                        <input type="text" class="form-control" [(ngModel)]="informacionBasica.youtube"
+                               [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-12 d-flex flex-sm-row flex-column mt-2">
+                <a href="javascript:void(0)"
+                   class="btn btn-primary mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-float waves-light"
+                   (click)="continuar()">Continuar</a>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+    </div>
+</ng-template>

@@ -1,0 +1,145 @@
+<div *ngIf="pantalla === 0" class="content-wrapper">
+    <div class="content-header row">
+        <div class="col-12 mb-2">
+            <div class="row breadcrumbs-top">
+                <div class="col-12">
+                    <h2 class="content-header-title float-left mb-0">Proveedores</h2>
+                    <div class="breadcrumb-wrapper">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a class="text-primary" href="index.html">Inicio</a>
+                            </li>
+                            <li class="breadcrumb-item"><a class="text-primary" href="mis-facturas.html">proveedores</a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-body">
+        <!-- users list start -->
+        <section class="app-user-list">
+            <!-- <div class="card">
+                <div class="card-header">
+                    <h4 class="text-primary d-block">Califica aquí tus compras, por cada compra que califiques reciben 10 super monedas.</h4>
+                </div>
+            </div> -->
+            <!-- <div class="card">
+                <div class="card-header">
+                    <h6 class="d-block">Filtros de búsqueda</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i data-feather='calendar'></i></span>
+                                    </div>
+                                    <input type="text" class="form-control form-control-sm flatpickr-range flatpickr-input" placeholder="- Rango de fechas">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div> -->
+
+            <!-- users filter end -->
+            <!-- list section start -->
+            <div class="card">
+                <div class="row m-75">
+                    <div class="col-lg-12 col-xl-6">
+                        <label>Mostrar</label>
+                        <select class="form-control-sm" [(ngModel)]="page_size" (change)="obtenerListaProveedores()">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+
+                    </div>
+                    <div class="col-lg-12 col-xl-6 text-right">
+                        <a (click)="cambiarPantalla(1)" class="btn btn-primary">
+                            Añadir proveedor
+                        </a>
+                    </div>
+                </div>
+                <div class="card-datatable table-responsive pt-0">
+
+                    <table class="user-list-table table table-striped">
+                        <thead class="thead-light">
+                        <tr>
+                            <th>Tipo persona</th>
+                            <th>Ruc</th>
+                            <th>Representante legal</th>
+                            <th>Nombre comercial</th>
+                            <th>Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let proveedor of proveedores">
+                            <td>
+                                {{proveedor.tipoPersona}}
+                            </td>
+                            <td>
+                                {{proveedor.identificacion}}
+                            </td>
+                            <td>
+                                {{proveedor.nombreRepresentante}}
+                            </td>
+
+                            <td>
+                                {{proveedor.nombreComercial}}
+                            </td>
+                            <td>
+                                <a href="javascript:void(0);" container="body" placement="top" ngbTooltip="Editar"
+                                   (click)="cambiarPantalla(1, proveedor)"><i class="mr-1" size="18"
+                                                                              data-feather="edit"></i></a>
+                                <a href="javascript:void(0);" container="body" placement="top" ngbTooltip="Eliminar"
+                                   (click)="eliminarProveedor(proveedor._id)"><i class="mr-1" size="18"
+                                                                                 data-feather="trash"></i></a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Modal to add new user starts-->
+                <ngb-pagination #paginator [collectionSize]="collectionSize" [(page)]="page" [(pageSize)]="page_size"
+                                [maxSize]="5" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+                <!-- Modal to add new user Ends-->
+            </div>
+            <!-- list section end -->
+        </section>
+        <!-- users list ends -->
+    </div>
+</div>
+<app-create *ngIf="pantalla === 1" (pantalla)="cambiarPantalla($event)" [proveedorPadre]="proveedor"></app-create>
+<ng-template #mensajeModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Mensaje</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss( 'Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div [innerHTML]="mensaje"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="cerrarModal()">Cerrar</button>
+    </div>
+</ng-template>
+<ng-template #eliminarproveedorMdl let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Mensaje</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss( 'Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>Confirma eliminar</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="eliminarproveedor()">SI</button>
+    </div>
+</ng-template>

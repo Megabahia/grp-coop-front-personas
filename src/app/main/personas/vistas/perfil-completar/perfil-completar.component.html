@@ -1,0 +1,206 @@
+<div class="card mb-0">
+    <div class="card-body">
+        <div class="card profile-header mb-2">
+            <!-- profile cover photo -->
+            <div class="text-center">
+
+                <img src="{{ coreConfig.app.appLogoImage }}" alt="brand-logo" width="300"/>
+            </div>
+            <!--/ profile cover photo -->
+
+            <div class="text-center col-auto mt-5">
+                <!-- profile picture -->
+                <!--                <img src="{{imagen ? imagen: 'assets/images/portrait/small/sin_foto.png'}}" class="rounded img-fluid"-->
+                <!--                     alt="Card image"/>-->
+                <!-- profile title -->
+                <br>
+                <div class="mt-1">
+                    <label class="btn btn-info btn-sm mr-75 waves-effect waves-float waves-light" for="change-picture">
+                        <span class="">Cambiar foto</span>
+                        <input class="form-control" type="file" id="change-picture" hidden
+                               accept="image/png, image/jpeg, image/jpg"
+                               (change)="subirImagen($event)"/>
+                    </label>
+                </div>
+
+            </div>
+
+            <form class="auth-login-form " [formGroup]="registerForm" (ngSubmit)="guardarRegistro()">
+                <!-- tabs pill -->
+                <div class="profile-header-nav">
+                    <!-- navbar -->
+                    <div class="row card-body">
+                        <div class="col-md-12 text-center">
+                            <p class="card-title azul2 ">
+                                Complete su perfil y acumule {{ganarMonedas?.valor}}
+                                Big Puntos para que realice compras en establecimientos afiliados pagando menos dinero
+                                en efectivo
+                            </p>
+                            <hr/>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="nombres">Nombre del representante legal:</label>
+                                <input formControlName="nombres" type="text"
+                                       class="form-control" id="nombres">
+                                <div *ngIf="submitted && f.nombres.errors"
+                                     class="invalid-feedback" style="display: block;">
+                                    <div *ngIf="f.nombres.errors?.required">
+                                        Nombre representate es requerida
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="celularRepresentante">Numero de celular del representante legal:</label>
+                                <input formControlName="celularRepresentante" type="text"
+                                       id="celularRepresentante" class="form-control">
+                                <div *ngIf="submitted && f.celularRepresentante.errors"
+                                     class="invalid-feedback" style="display: block;">
+                                    <div *ngIf="f.celularRepresentante.errors.required">Numero de celular es
+                                        requeridos
+                                    </div>
+                                    <div *ngIf="f.celularRepresentante.errors.minlength">Minimo 10 numeros</div>
+                                    <div *ngIf="f.celularRepresentante.errors.maxlength">Maximo 10 numeros</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="estadoCivil">Estado civil del representante legal</label>
+                                <select formControlName="estadoCivil" class="form-control"
+                                        (change)="verificarEstadoCivil()"
+                                        id="estadoCivil" style="display: block;">
+                                    <option value="">- Seleccionar -</option>
+                                    <option [value]="value.valor" *ngFor="let value of listadoEstadoCivil">
+                                        {{value.nombre}}
+                                    </option>
+                                </select>
+                                <div *ngIf="submitted && f.estadoCivil.errors"
+                                     class="invalid-feedback" style="display: block;">
+                                    <div *ngIf="f.estadoCivil.errors.required">Estado civil requerido</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4" *ngIf="estadoCivil">
+                            <div class="form-group">
+                                <label for="ingresosConyuge">Ingresos cónyuge</label>
+                                <input type="number" id="ingresosConyuge" formControlName="ingresosConyuge"
+                                       class="form-control" name="ingresosConyuge"
+                                       oninput="this.value = Math.round(this.value);"/>
+                                <div *ngIf="submitted && f.ingresosConyuge.errors"
+                                     class="invalid-feedback" style="display: block;">
+                                    <div *ngIf="f.ingresosConyuge.errors.required">Ingresos cónyuge
+                                        es requerido
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="identificacion">Ruc de la empresa o negocio:</label>
+                                <input formControlName="identificacion" type="text" id="identificacion"
+                                       class="form-control">
+                                <div *ngIf="submitted && f.identificacion.errors"
+                                     class="invalid-feedback" style="display: block;">
+                                    <div *ngIf="f.identificacion.errors.required">Ruc es requeridos</div>
+                                    <div *ngIf="f.identificacion.errors.minlength">Minimo 13 numeros</div>
+                                    <div *ngIf="f.identificacion.errors.maxlength">Maximo 13 numeros</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="whatsappRepresentante">Numero de WhatsApp del representante legal:</label>
+                                <input formControlName="whatsappRepresentante" type="text"
+                                       id="whatsappRepresentante" class="form-control">
+                                <div *ngIf="submitted && f.whatsappRepresentante.errors"
+                                     class="invalid-feedback" style="display: block;">
+                                    <div *ngIf="f.whatsappRepresentante.errors?.required">Whatsapp es requerido</div>
+                                    <div *ngIf="f.whatsappRepresentante.errors.minlength">Minimo 10 numeros</div>
+                                    <div *ngIf="f.whatsappRepresentante.errors.maxlength">Maximo 10 numeros</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="correoRepresentante">Correo del representante legal:</label>
+                                <input formControlName="correoRepresentante" type="text"
+                                       id="correoRepresentante" class="form-control">
+                                <div *ngIf="submitted && f.correoRepresentante.errors"
+                                     class="invalid-feedback" style="display: block;">
+                                    <div *ngIf="f.correoRepresentante.errors?.required">Correo del representante es
+                                        requerido
+                                    </div>
+                                    <div *ngIf="f.correoRepresentante.errors?.email">Formato de correo invalido
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-center">
+                            <hr/>
+                            <button type="button" data-target="#whatsapp" data-toggle="modal"
+                                    class="btn btn-primary mt-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-float waves-light"
+                                    (click)="guardarRegistro()">Continuar
+                            </button>
+                        </div>
+                    </div>
+                    <!--/ navbar -->
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<!-- /Forgot Password v1 -->
+
+
+<!-- / Error page-->
+
+<!--<ng-template #whatsapp let-modal>-->
+<!--    <div class="modal-header">-->
+<!--        <h5 class="modal-title" id="exampleModalCenterTitle">Mensaje</h5>-->
+<!--        <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">-->
+<!--            <span aria-hidden="true">&times;</span>-->
+<!--        </button>-->
+<!--    </div>-->
+<!--    <div class="modal-body" tabindex="0" ngbAutofocus>-->
+<!--        <ngb-alert [type]="'danger'" [dismissible]="false" *ngIf="error">-->
+<!--            <div class="alert-body">-->
+<!--                <p>{{ error }}</p>-->
+<!--            </div>-->
+<!--        </ngb-alert>-->
+<!--        <p class="text-primary font-weight-bold">Ingresa el código que hemos enviado a tu correo y valida tu-->
+<!--            cuenta</p>-->
+<!--        <div class="form-group">-->
+<!--            <input [(ngModel)]="codigo" class="form-control" type="text">-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="modal-footer">-->
+<!--        <a (click)="validarWhatsapp()" class="btn btn-primary">Validar</a>-->
+<!--    </div>-->
+<!--</ng-template>-->
+<!--<ng-template #mensajeModal let-modal>-->
+<!--    <div class="modal-header">-->
+<!--        <h5 class="modal-title" id="exampleModalCenterTitle">Mensaje</h5>-->
+<!--        <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">-->
+<!--            <span aria-hidden="true">&times;</span>-->
+<!--        </button>-->
+<!--    </div>-->
+<!--    <div class="modal-body" tabindex="0" ngbAutofocus>-->
+<!--        <div [innerHTML]="mensaje"></div>-->
+<!--    </div>-->
+<!--    <div class="modal-footer">-->
+<!--        <button type="button" class="btn btn-light" (click)="cerrarModal()">Cerrar</button>-->
+<!--    </div>-->
+<!--</ng-template>-->

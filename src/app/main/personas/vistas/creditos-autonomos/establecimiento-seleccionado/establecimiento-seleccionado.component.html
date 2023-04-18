@@ -1,0 +1,66 @@
+<div class="content-wrapper">
+    <div class="content-body">
+        <!-- users list start -->
+        <section class="app-ecommerce-details">
+            <div class="card">
+                <div class="row">
+                    <div class="col-md-4 p-3">
+                        <div class="text-center">
+                            <h2 class="text-primary mb-0"><b>{{empresa.nombreComercial}}</b></h2>
+                            <small class="text-body"><b>{{empresa.tipoCategoria}}</b></small>
+                        </div>
+                        <p class="small mt-1 mb-0">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <div class="img-container w-50 mx-auto py-75">
+                            <img src="assets/images/coral.jpg" class="img-fluid" alt="image" />
+                        </div>
+                        <p class="small text-center"><b>{{empresa.ciudad}} - {{empresa.pais}} </b><br> {{empresa.direccion}}<br> Teléfono: {{empresa.telefono1}}<br> Web: <a href="#"><b>www.coralmercados.com</b></a><br>
+                        </p>
+                    </div>
+
+                    <div class="col-md-8 border-left p-3">
+                        <form [formGroup]="solicitarForm">
+                            <div class="form-group">
+                                <label>Monto que solicita:</label>
+                                <input class="form-control form-control-sm" type="text" placeholder="$" formControlName="monto" [(ngModel)]="monto">
+                                <div *ngIf="submittedSolicitar && soliForm.monto.errors" class="invalid-feedback" style="display: block;">
+                                    <div *ngIf="soliForm.monto.errors.required">Monto es requerido</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Plazo (meses):</label>
+                                <select class="form-control form-control-sm" formControlName="plazo" [(ngModel)]="plazo">
+                                    <option value="">- Seleccione -</option>
+                                    <option *ngFor="let plazo of plazos.plazos" value="{{plazo}}">{{plazo}}</option>
+        
+                  </select>
+                                <div *ngIf="submittedSolicitar && soliForm.plazo.errors" class="invalid-feedback" style="display: block;">
+                                    <div *ngIf="soliForm.plazo.errors.required">Plazo es requerido</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group mt-2">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck2" [(ngModel)]="aceptarTerminos" [ngModelOptions]="{standalone: true}">
+                                    <label class="custom-control-label" for="customCheck2">Aceptar terminos y condiciones</label>
+                                    <div *ngIf="submittedSolicitar && !aceptarTerminos" class="invalid-feedback" style="display: block;">
+                                        <div *ngIf="submittedSolicitar && !aceptarTerminos">Es necesario aceptar términos</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="creditos-autonomo-establecimientos.html" class="btn btn-secondary mt-2"> Atrás </a>
+                            <a href="javascript:void(0)" class="btn btn-primary mt-2" (click)="continuar()"> Continuar </a>
+                            <div>
+
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+        </section>
+        <!-- users list ends -->
+    </div>
+</div>

@@ -1,0 +1,83 @@
+<div class="content-wrapper">
+    <div class="content-header row">
+        <div class="col-12 mb-2">
+            <div class="row breadcrumbs-top">
+                <div class="col-12">
+                    <h2 class="content-header-title float-left mb-0">Créditos pre-aprobados</h2>
+                    <div class="breadcrumb-wrapper">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a class="text-primary" href="index.html">Inicio</a>
+                            </li>
+                            <li class="breadcrumb-item"><a class="text-primary" href="#">Créditos pre-aprobados</a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-body">
+        <!-- users list start -->
+        <section class="app-user-list">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">¡FELICIDADES! Tienes un crédito Pre-Aprobado para PAGO A PROVEEDORES por
+                        $$MONTO
+                        PRE-APROBADO</h4>
+                </div>
+                <div class="card-body">
+
+                    <form class="auth-login-form mt-2" [formGroup]="validarForm" (ngSubmit)="validarCodigo()">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="codigo">Ingresa el codigo que recibiste en tu celular
+                                        aquí:</label>
+                                    <input
+                                            formControlName="codigo"
+                                            type="text"
+                                            id="codigo"
+                                            class="form-control"
+                                            placeholder="Ingresa el codigo que recibiste en tu celular"
+                                            [ngClass]="{ 'is-invalid': submitted && f.codigo.errors }"
+                                    />
+                                    <div *ngIf="submitted && f.codigo.errors" class="invalid-feedback">
+                                        <div *ngIf="f.codigo.errors.required">Codigo es requerido</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="rucEmpresa">Ingresa su ruc de la empresa:</label>
+                                    <input
+                                            formControlName="rucEmpresa"
+                                            type="text"
+                                            id="rucEmpresa"
+                                            class="form-control"
+                                            placeholder="Ingresa su ruc de la empresa"
+                                            [ngClass]="{ 'is-invalid': submitted && f.rucEmpresa.errors }"
+                                    />
+                                    <div *ngIf="submitted && f.rucEmpresa.errors" class="invalid-feedback">
+                                        <div *ngIf="f.rucEmpresa.errors.required">Ruc de la empresa es requerido</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label-group">Has click en OK y registra los datos para
+                                    pagar a tus proveedores
+                                </label>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" rippleEffect class="btn btn-primary mr-1">Ok</button>
+                                <button type="reset" rippleEffect class="btn btn-outline-secondary">Cancelar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <!-- list section end -->
+        </section>
+        <!-- users list ends -->
+    </div>
+</div>

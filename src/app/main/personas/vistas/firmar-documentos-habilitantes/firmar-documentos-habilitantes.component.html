@@ -1,0 +1,239 @@
+<div class="content-wrapper">
+    <div class="content-header row">
+    </div>
+    <div class="content-body">
+        <!-- Error page-->
+        <div class="misc-wrapper">
+
+            <div class="card">
+                <div class="card-body">
+
+                    <div class=" mb-2 text-center">
+                        <h2>
+                            Firmar documentos firmantes
+                        </h2>
+                    </div>
+                    <div class="content-body">
+                        <!-- users list start -->
+                        <section class="app-user-list">
+                            <div class="card-datatable table-responsive pt-0">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Fecha del Documento</th>
+                                        <th>Solicitud credito</th>
+                                        <th>Pagaré</th>
+                                        <th>Contratos cuenta</th>
+                                        <th>Tabla amortización</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>{{transformarFecha(credito?.created_at)}}</td>
+                                        <td>
+
+                                            <div class="text-center">
+                                                <a href="{{credito?.solicitudCreditoFirmado}}" class="mr-1"
+                                                   target="_blank">Ver</a>
+                                                <br>
+                                                <div
+                                                        class="badge badge-pill my-1"
+                                                        [ngClass]="credito?.solicitudCreditoFirmado ?'badge-light-success':'badge-light-warning' "
+                                                >
+                                                    <span *ngIf="credito?.solicitudCreditoFirmado"
+                                                          [class]="'mr-50 m-1' "> Firmado</span>
+                                                    <span *ngIf="!credito?.solicitudCreditoFirmado"
+                                                          [class]="'mr-50 m-1' "> Pendiente </span>
+                                                </div>
+
+                                                <div *ngIf="!credito?.solicitudCreditoFirmado">
+                                                    Firmar:  <i
+                                                        (click)="modalOpenSM(modalSM, credito,'solicitudCreditoFirmado')"
+                                                        ngbTooltip="Firmar"
+                                                        class="feather mx-50 font-medium-3"
+                                                        [ngClass]="'icon-check-square text-success'"
+                                                ></i>
+                                                </div>
+
+
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <div class="text-center">
+                                                <a href="{{credito?.pagareFirmado}}" target="_blank">Ver</a>
+                                                <br>
+                                                <div
+                                                        class="badge badge-pill my-1"
+                                                        [ngClass]="credito?.pagareFirmado ?'badge-light-success':'badge-light-warning' "
+                                                >
+                                                    <span *ngIf="credito?.pagareFirmado"
+                                                          [class]="'mr-50 m-1' "> Firmado</span>
+                                                    <span *ngIf="!credito?.pagareFirmado"
+                                                          [class]="'mr-50 m-1' "> Pendiente </span>
+                                                </div>
+
+                                                <div *ngIf="!credito?.pagareFirmado">
+                                                    Firmar:  <i (click)="modalOpenSM(modalSM, credito,'pagareFirmado')"
+                                                                ngbTooltip="Firmar"
+                                                                class="feather mx-50 font-medium-3"
+                                                                [ngClass]="'icon-check-square text-success'"
+                                                ></i>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="text-center">
+                                                <a href="{{credito?.contratosCuentaFirmado}}" target="_blank">Ver</a>
+                                                <br>
+                                                <div
+                                                        class="badge badge-pill my-1"
+                                                        [ngClass]="credito?.contratosCuentaFirmado ?'badge-light-success':'badge-light-warning' "
+                                                >
+                                                    <span *ngIf="credito?.contratosCuentaFirmado"
+                                                          [class]="'mr-50 m-1' "> Firmado</span>
+                                                    <span *ngIf="!credito?.contratosCuentaFirmado"
+                                                          [class]="'mr-50 m-1' "> Pendiente </span>
+                                                </div>
+
+                                                <div *ngIf="!credito?.contratosCuentaFirmado">
+                                                    Firmar:  <i
+                                                        (click)="modalOpenSM(modalSM, credito,'contratosCuentaFirmado')"
+                                                        ngbTooltip="Firmar"
+                                                        class="feather mx-50 font-medium-3"
+                                                        [ngClass]="'icon-check-square text-success'"
+                                                ></i>
+                                                </div>
+                                            </div>
+                                            <!--                                            <a href="{{credito?.contratosCuentaFirmado}}" target="_blank">Ver</a>-->
+                                        </td>
+                                        <td>
+                                            <div class="text-center">
+                                                <a href="{{credito?.tablaAmortizacionFirmado}}" target="_blank">Ver</a>
+                                                <br>
+                                                <div
+                                                        class="badge badge-pill my-1"
+                                                        [ngClass]="credito?.tablaAmortizacionFirmado ?'badge-light-success':'badge-light-warning' "
+                                                >
+                                                    <span *ngIf="credito?.tablaAmortizacionFirmado"
+                                                          [class]="'mr-50 m-1' "> Firmado</span>
+                                                    <span *ngIf="!credito?.tablaAmortizacionFirmado"
+                                                          [class]="'mr-50 m-1' "> Pendiente </span>
+                                                </div>
+
+                                                <div *ngIf="!credito?.tablaAmortizacionFirmado">
+                                                    Firmar:  <i
+                                                        (click)="modalOpenSM(modalSM, credito,'tablaAmortizacionFirmado')"
+                                                        ngbTooltip="Firmar"
+                                                        class="feather mx-50 font-medium-3"
+                                                        [ngClass]="'icon-check-square text-success'"
+                                                ></i>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--                            <ngb-pagination #paginator [collectionSize]="collectionSize" [(page)]="page"-->
+                            <!--                                            [maxSize]="5" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>-->
+                        </section>
+                        <!-- users list ends -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- / Error page-->
+    </div>
+</div>
+
+
+<ng-template #modalSM let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160">Firmar:</h5>
+        <button type="button" class="close"
+                (click)="modal.dismiss('Cross click')"
+                aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+        <form class="form form-horizontal "
+              [formGroup]="documentoFirmaForm"
+              (ngSubmit)="continuarCickPago()">
+            <div class="form-group px-3 pt-3 pb-1 row">
+                <div class="col-3 col-form-label">
+                    <label>Clave de la firma:</label>
+                </div>
+                <div class="col-10 ">
+                    <input type="password" id="claveFirma"
+                           class="form-control"
+                           formControlName="claveFirma"
+                           placeholder="Ingrese la clave de la Firma Electrónica"/>
+                    <div *ngIf="submitted && documentoFirmar.claveFirma.errors"
+                         class="invalid-feedback"
+                         style="display: block;">
+                        <div *ngIf="documentoFirmar.claveFirma.errors.required">
+                            Clave de la firma es requerido
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group px-3 py-0 row">
+                <div class="col-3 col-form-label">
+                    <label for="customFile1">Firma electronica: </label>
+                </div>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input"
+                           id="customFile1" required
+                           formControlName="certificado"
+                           (change)="subirImagen($event)"
+                           accept=".p12"/>
+                    <label class="custom-file-label"
+                           for="customFile1">{{documentoFirmaForm.get('certificado').value}}</label>
+                    <div *ngIf="submitted && documentoFirmar.certificado.errors"
+                         class="invalid-feedback"
+                         style="display: block;">
+                        <div *ngIf="documentoFirmar.certificado.errors.required">
+                            Firma electronica
+                            requerido
+                        </div>
+                        <div *ngIf="documentoFirmar.certificado.errors.extensionInvalida">
+                            La extension de la firma electronica es
+                            incorrecta, suba un archivo (.p12)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--                                                            <div class="mt-2 d-flex justify-content-center">-->
+            <!--                                                                <button class="btn btn-primary mr-1" type="submit">-->
+            <!--                                                                    Continuar-->
+            <!--                                                                </button>-->
+            <!--                                                            </div>-->
+        </form>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary"
+                    (click)="continuarCickPago()">Accept
+            </button>
+        </div>
+    </div>
+</ng-template>
+
+
+<ng-template #mensajeModalConfirm let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Confirmación</h5>
+
+        <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+        <div [innerHTML]="this.message"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.dismiss('Cross click')">Aceptar</button>
+    </div>
+</ng-template>

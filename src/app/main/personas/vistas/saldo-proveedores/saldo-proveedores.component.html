@@ -1,0 +1,302 @@
+<div class="content-wrapper">
+    <div class="content-header row">
+    </div>
+    <div class="content-body">
+        <!-- Error page-->
+        <div class="misc-wrapper">
+
+            <div class="card">
+                <div *ngIf="inicio" class="card-body">
+                    <div class=" mb-2 text-center">
+                        <h2>
+                            SALDO DISPONIBLE DE CRÉDITO
+                        </h2>
+                        <span>
+                            Usted realizará un pago a proveedores por {{this.proveedor?.valorPagar}}.
+                        </span>
+                        <h3>
+                            Datos del proveedor:
+                        </h3>
+
+                        <form class="form form-horizontal mt-3">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group row">
+                                        <div class="col-sm-3 col-form-label">
+                                            <label>Razón Social o Nombre del Proveedor:</label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="text" id="nombreProveedor"
+                                                   value="{{this.proveedor?.nombreComercial}}"
+                                                   disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group row">
+                                        <div class="col-sm-3 col-form-label">
+                                            <label>RUC del proveedor:</label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="text" id="identificacion"
+                                                   value="{{this.proveedor?.identificacion}}"
+                                                   disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group row">
+                                        <div class="col-sm-3 col-form-label">
+                                            <label>Banco destino:</label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="text" id="bancoDestino"
+                                                   value="{{this.proveedor?.cuentas[0].banco}}"
+                                                   disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group row">
+                                        <div class="col-sm-3 col-form-label">
+                                            <label>Número de cuenta:</label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="text" id="numeroCuenta"
+                                                   value="{{this.proveedor?.cuentas[0].cuenta}}"
+                                                   disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group row">
+                                        <div class="col-sm-3 col-form-label">
+                                            <label>Valor a pagar:</label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="text" id="valorPagar"
+                                                   value="{{this.proveedor?.valorPagar}}"
+                                                   disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="content-body">
+                        <div class="row justify-content-center">
+
+
+                            <div class="mt-2">
+                                <h3>¿Desea continuar?</h3>
+                                <button class="btn btn-primary mr-1" (click)="continuarCick()"
+                                        style="color: black !important;">
+                                    Continuar
+                                </button>
+                                <button (click)="logout()" class="btn btn-outline-secondary mr-1">
+                                    Cancelar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="continuar" class="card-body">
+                    <div class=" mb-2 text-center">
+                        <h2>
+                            Registre la clave de la Firma Electrónica del representante legal para continuar con el pago
+                            a sus proveedores
+                        </h2>
+                        <span>
+                            Recuerde que al ingresar la contraseña de su Firma Electrónica, usted autoriza al sistema
+                            a firmar los documentos habilitantes y entregarlos a la Entidad Financiera para realizar
+                            las transferencias de pago a sus proveedores.
+                        </span>
+                    </div>
+                    <div class="content-body">
+                        <section class="app-user-list">
+                            <form class="form form-horizontal mt-3" [formGroup]="documentoFirmaForm" (ngSubmit)="continuarCickPago()">
+                                <div class="form-group row">
+                                    <div class="col-sm-2 col-form-label">
+                                        <label>Clave de la firma:</label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <input type="password" id="claveFirma" class="form-control"
+                                               formControlName="claveFirma"
+                                               placeholder="Ingrese la clave de la Firma Electrónica"/>
+                                        <div *ngIf="submitted && documentoFirmar.claveFirma.errors"
+                                             class="invalid-feedback"
+                                             style="display: block;">
+                                            <div *ngIf="documentoFirmar.claveFirma.errors.required">
+                                                Clave de la firma es requerido
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="customFile1">Firma electronica</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="customFile1" required
+                                               formControlName="certificado"
+                                               (change)="subirImagen($event)" accept=".p12"/>
+                                        <label class="custom-file-label"
+                                               for="customFile1">{{documentoFirmaForm.get('certificado').value}}</label>
+                                        <div *ngIf="submitted && documentoFirmar.certificado.errors"
+                                             class="invalid-feedback"
+                                             style="display: block;">
+                                            <div *ngIf="documentoFirmar.certificado.errors.required">Firma electronica
+                                                requerido
+                                            </div>
+                                            <div *ngIf="documentoFirmar.certificado.errors.extensionInvalida">
+                                                La extension de la firma electronica es incorrecta, suba un archivo (.p12)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-2 d-flex justify-content-center">
+                                    <button class="btn btn-primary mr-1">
+                                        Continuar
+                                    </button>
+                                </div>
+                            </form>
+                        </section>
+                    </div>
+                </div>
+                <div *ngIf="continuarPago" class="card-body">
+                    <div class=" mb-2 text-center">
+                        <div class="misc-inner p-2 p-sm-5">
+                            <div class="text-center">
+                                <a href="javascript:void(0);">
+                                    <!--                                    <img src="assets/images/logo/logo.png" alt="brand-logo" width="300"/>-->
+                                    <img src="{{ coreConfig.app.appLogoImage }}" alt="brand-logo" width="400"/>
+
+                                    <!--                                    <h2 class="brand-text text-primary ml-1 mt-1">CréditoPagos</h2>-->
+                                </a>
+                            </div>
+                        </div>
+                        <h2>
+                            Su Firma ha sido cargada correctamente. Recuerde que el sistema no guardará ninguno de los datos registrados por su seguridad.
+                        </h2>
+                        <br>
+                        <h2>
+                            A continuación mostraremos un resumen del Pago a Proveedores realizado.
+                        </h2>
+                    </div>
+                    <div class="content-body">
+                        <section class="app-user-list">
+                            <div class="mt-2 d-flex justify-content-center">
+                                <button (click)="continuarClickResumen()" class="btn btn-primary mr-1" style="color: black !important;">
+                                    CONTINUAR
+                                </button>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div *ngIf="resumen" class="card-body">
+                    <div class=" mb-2 text-center">
+                        <div class="misc-inner p-2 p-sm-5">
+                            <div class="text-center">
+                                <a href="javascript:void(0);">
+                                    <!--                                    <img src="assets/images/logo/logo.png" alt="brand-logo" width="300"/>-->
+                                    <img src="{{ coreConfig.app.appLogoImage }}" alt="brand-logo" width="400"/>
+
+                                    <!--                                    <h2 class="brand-text text-primary ml-1 mt-1">CréditoPagos</h2>-->
+                                </a>
+                            </div>
+                        </div>
+                        <h2>PAGO EXITOSO</h2>
+                        <span>
+                            Usted realizará un pago a proveedores por {{this.proveedor?.valorPagar}}
+                        </span>
+                    </div>
+                    <div class="content-body">
+                        <section class="app-user-list">
+                            <div class="text-center">
+                                <form class="form form-horizontal mt-3">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group row">
+                                                <div class="col-sm-3 col-form-label">
+                                                    <label>Razón Social o Nombre del Proveedor:</label>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="text"
+                                                           value="{{this.proveedor?.nombreComercial}}"
+                                                           disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group row">
+                                                <div class="col-sm-3 col-form-label">
+                                                    <label>RUC del proveedor:</label>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="text"
+                                                           value="{{this.proveedor?.identificacion}}"
+                                                           disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group row">
+                                                <div class="col-sm-3 col-form-label">
+                                                    <label>Banco destino:</label>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="text"
+                                                           value="{{this.proveedor?.cuentas[0].banco}}"
+                                                           disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group row">
+                                                <div class="col-sm-3 col-form-label">
+                                                    <label>Número de cuenta:</label>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="text"
+                                                           value="{{this.proveedor?.cuentas[0].cuenta}}"
+                                                           disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group row">
+                                                <div class="col-sm-3 col-form-label">
+                                                    <label>Valor a pagar:</label>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="text"
+                                                           value="{{this.proveedor?.valorPagar}}"
+                                                           disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- / Error page-->
+    </div>
+</div>
+
+
+<ng-template #mensajeModal let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Mensaje</h5>
+        <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+        <div [innerHTML]="mensaje"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.dismiss('Cross click')">Cerrar</button>
+    </div>
+</ng-template>
