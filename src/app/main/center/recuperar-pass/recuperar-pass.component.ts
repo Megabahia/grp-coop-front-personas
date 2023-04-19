@@ -42,7 +42,7 @@ export class RecuperarPassComponent implements OnInit {
         private _recuperarPassService: RecuperarPassService,
         private _modalService: NgbModal,
     ) {
-        this.siteKey = '6Lewc_MgAAAAADbbRC1OjtcpEreTMKro2GqRsl_L';
+        this.siteKey = '6LcHWp8lAAAAAGDYYhMCK4e4VCHynv20Owab4Q1V';
         this._unsubscribeAll = new Subject();
 
         // Configure the layout
