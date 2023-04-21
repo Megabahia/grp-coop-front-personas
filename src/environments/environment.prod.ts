@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
   hmr: false,
-  apiUrl: 'https://api-coop.financieradevittoria.com'
+  apiUrl: 'https://api-coop.financieradevittoria.com',
+  setKey: '6LdGH6glAAAAALbaMNNz7mIzmWQH3sdfiUGHvyal'
 };
