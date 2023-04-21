@@ -17,6 +17,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {CreditosPreAprobadosService} from '../../personas/vistas/creditos-pre-aprobados/creditos-pre-aprobados.service';
 import {CoreMenuService} from '../../../../@core/components/core-menu/core-menu.service';
 import {menu} from '../../../menu/menu';
+import {environment} from "../../../../environments/environment";
 
 @Component({
     selector: 'app-login',
@@ -71,7 +72,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         private _coreMenuService: CoreMenuService,
         private _modalService: NgbModal
     ) {
-        this.siteKey = '6LcHWp8lAAAAAGDYYhMCK4e4VCHynv20Owab4Q1V';
+        this.siteKey = environment.setKey;
         this.captcha = false;
         this._unsubscribeAll = new Subject();
 
