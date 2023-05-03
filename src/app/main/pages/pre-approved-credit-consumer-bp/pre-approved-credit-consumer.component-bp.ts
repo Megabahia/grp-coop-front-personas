@@ -87,7 +87,7 @@ export class PreApprovedCreditConsumerComponentBp implements OnInit {
                 localStorage.setItem('simulador', 'ok');
                 localStorage.setItem('credito', JSON.stringify(data));
                 this._router.navigate([
-                    `/pages/ApprovedEndConsumerComponentBp`], {queryParams: data}
+                    `/pages/preApprovedEndConsumer-bp`], {queryParams: data}
                 );
             }, (error: any) => {
                 this.mensaje = 'Usted no tiene un Crédito Pre-Aprobado pero puede acceder un a Crédito para realizar su compra';
@@ -129,7 +129,7 @@ export class PreApprovedCreditConsumerComponentBp implements OnInit {
 
     actionContinue() {
         this._router.navigate([
-            `/pages/ApprovedEndConsumerComponentBp`,
+            `/pages/preApprovedEndConsumer-bp`,
         ]);
     }
 }
