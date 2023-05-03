@@ -1,0 +1,51 @@
+<div class="row">
+    <section class="text-LP">
+        <div class="container pb-5">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-12 text-center">
+                    <img class="my-3" src="../../../../assets/images/logo/credi-big.png" width="250" alt="">
+                </div>
+                <div class="col-md-12 text-center">
+                    <div class="row mx-2 justify-content-center align-items-center py-2">
+                        <div [innerHTML]="descripcion.valor "></div>
+                    </div>
+                    <div class="row mx-2 justify-content-center align-items-center py-2">
+                        <h3>{{requisitos.valor}}</h3>
+                    </div>
+                    <div class="row mx-2 justify-content-center align-items-center py-2">
+                        <ul class="list-group">
+                            <li class="list-group-item" *ngFor="let item of requisitos.config">{{item}}</li>
+                        </ul>
+                    </div>
+                    <div class="row mx-2 justify-content-center align-items-center py-2">
+                        <div class="col-12">
+                            <button type="submit" rippleEffect class="btn btn-primary mr-1" routerLink="/"
+                                    style="color: black !important;"
+                                    (click)="simulador()">Continuar
+                            </button>
+                            <a href="https://credicompra.com/">
+                                <button (click)="cancelar()"
+                                        rippleEffect class="btn btn-primary mr-1"
+                                        style="color: black !important;"
+                                >
+                                    Cancelar
+                                </button>
+                            </a>
+                        </div>
+
+                        <!-- Need-info -->
+<!--                        <app-need-info [href]="'https://wa.link/bqfcnh'"> </app-need-info>-->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="footer-LP"></div>-->
+<!--        <app-footer > </app-footer>-->
+
+    </section>
+</div>
+
+
+<!-- Buynow Button-->
+<!--<app-need-help [href]="'https://walink.co/9e8a9d'"> </app-need-help>-->
