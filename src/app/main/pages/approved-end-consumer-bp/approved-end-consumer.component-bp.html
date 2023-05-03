@@ -1,0 +1,73 @@
+<!-- Error page-->
+<div>
+    <section class="text-LP">
+        <div class="container pb-5">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-12 text-center mb-3">
+                    <img src="{{ coreConfig.app.appLogoImage }}" alt="brand-logo" width="300px"/>
+                    <h1 class="azul2 mt-4 text-bold">CrediCompra - Big Puntos</h1>
+                </div>
+            </div>
+            <div class="align-items-center " style="text-align: center;">
+                <div class="col-md-12 text-center">
+                    <h2 class="user-name font-weight-bolder text-center"> ¡FELICIDADES! </h2>
+                    <h3 class="user-name text-center">
+                        {{usuario}}
+                        <br>
+                        Tiene un crédito Preaprobado de $ {{monto}} para realizar compras en los mejores Locales Comerciales del país.
+                    </h3>
+                    <br>
+                    <h3 class="user-name text-bold text-center">
+                        Para acceder a su Crédito de Consumo, realice los siguientes pasos:
+                    </h3>
+                    <br>
+                    <h3 class="user-name text-justify">
+                        1.- Complete sus datos a través de la Solicitud de Crédito. Recuerde que primero debe crear su cuenta (en la siguiente pantalla)
+                    </h3>
+                    <br>
+                    <h3 class="user-name text-justify">
+                        2.- Visite <a href="https://credicompra.com/" target="_blank">www.credicompra.com</a> para conoces los Locales Comerciales en los que podrá realizar
+                        compras con su Crédito otorgado por una Cooperativa de Ahorro y Crédito regulada.
+                    </h3>
+                    <br>
+                    <h3>
+                        Listo !
+                    </h3>
+
+
+                </div>
+                <div class="align-items-center ">
+
+                    <div class="col-md-12 text-center">
+                        <a class=" btn btn-primary "
+                           (click)="actionContinue()"
+                           style="color: black !important;"
+                        >
+                            Continuar
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<app-footer > </app-footer>
+
+<ng-template #mensajeModal let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Mensaje</h5>
+        <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+        <div [innerHTML]="mensaje"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="cerrarModal()">Cerrar</button>
+    </div>
+</ng-template>

@@ -23,6 +23,10 @@ import {CreditRequestBpComponent} from "./credit-request-bp/credit-request-bp.co
 import {SimulatorCrediCompraBpComponent} from "./simulator-credi-compra-bp/simulator-credi-compra-bp.component";
 import {CreditRequirementsBpComponent} from "./credit-requirements-bp/credit-requirements-bp.component";
 import {SharedModule} from "../shared/shared.module";
+import {
+    PreApprovedCreditConsumerComponentBp
+} from "./pre-approved-credit-consumer-bp/pre-approved-credit-consumer.component-bp";
+import {ApprovedEndConsumerComponentBp} from "./approved-end-consumer-bp/approved-end-consumer.component-bp";
 
 // routing
 const routes: Routes = [
@@ -82,6 +86,17 @@ const routes: Routes = [
          component: CreditRequirementsBpComponent,
          data: {animation: 'misc', activacion: [8]},
      },
+    {
+        path: 'preApprovedCreditConsumer',
+        component: PreApprovedCreditConsumerComponentBp,
+        data: {animation: 'misc'},
+    },
+    {
+        path: 'preApprovedEndConsumer-bp',
+        component: ApprovedEndConsumerComponentBp,
+        data: {animation: 'misc'},
+    },
+
 ];
 
 @NgModule({
@@ -97,6 +112,8 @@ const routes: Routes = [
         CreditRequestBpComponent,
         SimulatorCrediCompraBpComponent,
         CreditRequirementsBpComponent,
+        ApprovedEndConsumerComponentBp,
+        PreApprovedCreditConsumerComponentBp,
     ],
 
     imports: [
