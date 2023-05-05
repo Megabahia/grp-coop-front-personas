@@ -10,10 +10,10 @@ import {takeUntil} from 'rxjs/operators';
 
 @Component({
     selector: 'app-approved-end-consumer',
-    templateUrl: './approved-end-consumer.component-bp.html',
-    styleUrls: ['./approved-end-consumer.component-bp.scss']
+    templateUrl: './approved-end-consumer-bp.component.html',
+    styleUrls: ['./approved-end-consumer-bp.component.scss']
 })
-export class ApprovedEndConsumerComponentBp implements OnInit {
+export class ApprovedEndConsumerBpComponent implements OnInit {
     public envioForm: FormGroup;
     public submittedSimulador = false;
     public pathSent;

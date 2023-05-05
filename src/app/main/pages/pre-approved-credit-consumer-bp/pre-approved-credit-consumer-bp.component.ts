@@ -10,10 +10,10 @@ import {Subject} from 'rxjs';
 
 @Component({
     selector: 'app-pre-approved-credit-consumer-bp',
-    templateUrl: './pre-approved-credit-consumer.component-bp.html',
-    styleUrls: ['./pre-approved-credit-consumer.component-bp.scss']
+    templateUrl: './pre-approved-credit-consumer-bp.component.html',
+    styleUrls: ['./pre-approved-credit-consumer-bp.component.scss']
 })
-export class PreApprovedCreditConsumerComponentBp implements OnInit {
+export class PreApprovedCreditConsumerBpComponent implements OnInit {
     public envioForm: FormGroup;
     public submittedSimulador = false;
     public pathSent;

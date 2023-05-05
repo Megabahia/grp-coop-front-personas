@@ -19,14 +19,14 @@ import {SimulatorCrediCompraComponent} from './simulator-credi-compra/simulator-
 import {CreditRequirementsComponent} from './credit-requirements/credit-requirements.component';
 import {PreApprovedCreditLineComponent} from './pre-approved-credit-consumer/pre-approved-credit-line.component';
 import {ApprovedEndConsumerComponent} from './approved-end-consumer/approved-end-consumer.component';
-import {CreditRequestBpComponent} from "./credit-request-bp/credit-request-bp.component";
-import {SimulatorCrediCompraBpComponent} from "./simulator-credi-compra-bp/simulator-credi-compra-bp.component";
-import {CreditRequirementsBpComponent} from "./credit-requirements-bp/credit-requirements-bp.component";
-import {SharedModule} from "../shared/shared.module";
+import {CreditRequestBpComponent} from './credit-request-bp/credit-request-bp.component';
+import {SimulatorCrediCompraBpComponent} from './simulator-credi-compra-bp/simulator-credi-compra-bp.component';
+import {CreditRequirementsBpComponent} from './credit-requirements-bp/credit-requirements-bp.component';
+import {SharedModule} from '../shared/shared.module';
 import {
-    PreApprovedCreditConsumerComponentBp
-} from "./pre-approved-credit-consumer-bp/pre-approved-credit-consumer.component-bp";
-import {ApprovedEndConsumerComponentBp} from "./approved-end-consumer-bp/approved-end-consumer.component-bp";
+    PreApprovedCreditConsumerBpComponent
+} from './pre-approved-credit-consumer-bp/pre-approved-credit-consumer-bp.component';
+import {ApprovedEndConsumerBpComponent} from './approved-end-consumer-bp/approved-end-consumer-bp.component';
 
 // routing
 const routes: Routes = [
@@ -71,29 +71,29 @@ const routes: Routes = [
         data: {animation: 'misc'},
     },
     {
-         path: 'solicitud-credito-bp',
-         component: CreditRequestBpComponent,
-         data: {animation: 'misc', activacion: [8]},
-     },
-     {
-         path: 'simulador-de-credito-bp',
-         component: SimulatorCrediCompraBpComponent,
-         data: {animation: 'misc', activacion: [8]},
-     },
+        path: 'solicitud-credito-bp',
+        component: CreditRequestBpComponent,
+        data: {animation: 'misc', activacion: [8]},
+    },
+    {
+        path: 'simulador-de-credito-bp',
+        component: SimulatorCrediCompraBpComponent,
+        data: {animation: 'misc', activacion: [8]},
+    },
 
-     {
-         path: 'requisitos-de-credito-bp',
-         component: CreditRequirementsBpComponent,
-         data: {animation: 'misc', activacion: [8]},
-     },
+    {
+        path: 'requisitos-de-credito-bp',
+        component: CreditRequirementsBpComponent,
+        data: {animation: 'misc', activacion: [8]},
+    },
     {
         path: 'preApprovedCreditConsumer',
-        component: PreApprovedCreditConsumerComponentBp,
+        component: PreApprovedCreditConsumerBpComponent,
         data: {animation: 'misc'},
     },
     {
         path: 'preApprovedEndConsumer-bp',
-        component: ApprovedEndConsumerComponentBp,
+        component: ApprovedEndConsumerBpComponent,
         data: {animation: 'misc'},
     },
 
@@ -112,8 +112,8 @@ const routes: Routes = [
         CreditRequestBpComponent,
         SimulatorCrediCompraBpComponent,
         CreditRequirementsBpComponent,
-        ApprovedEndConsumerComponentBp,
-        PreApprovedCreditConsumerComponentBp,
+        ApprovedEndConsumerBpComponent,
+        PreApprovedCreditConsumerBpComponent,
     ],
 
     imports: [
