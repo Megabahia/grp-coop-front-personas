@@ -19,6 +19,7 @@ import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.componen
 import { Role } from 'app/auth/models';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { FacebookLoginProvider, SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import {SharedModule} from "../shared/shared.module";
 
 const routes = [
   {
@@ -54,20 +55,21 @@ const routes = [
 
 @NgModule({
   declarations: [LoginComponent, RecuperarPassComponent, RegistroComponent, ReseteoPasswordComponent],
-  imports: [
-    RouterModule.forChild(routes),
-    ContentHeaderModule,
-    TranslateModule,
-    CoreCommonModule,
-    SwiperModule,
-    FormsModule,
-    CoreTouchspinModule,
-    CoreSidebarModule,
-    NgbModule,
-    Ng2FlatpickrModule,
-    NgxCaptchaModule,
-    // SocialLoginModule
-  ],
+    imports: [
+        RouterModule.forChild(routes),
+        ContentHeaderModule,
+        TranslateModule,
+        CoreCommonModule,
+        SwiperModule,
+        FormsModule,
+        CoreTouchspinModule,
+        CoreSidebarModule,
+        NgbModule,
+        Ng2FlatpickrModule,
+        NgxCaptchaModule,
+        SharedModule,
+        // SocialLoginModule
+    ],
   providers: [
     
     

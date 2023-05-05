@@ -63,6 +63,7 @@ import { FinalizarSolicitudComponent } from './vistas/finalizar-solicitud/finali
 import {IConfig, NgxMaskModule} from 'ngx-mask';
 import { EstadoSolicitudComponent } from './vistas/estado-solicitud/estado-solicitud.component';
 import { FirmarDocumentosHabilitantesComponent } from './vistas/firmar-documentos-habilitantes/firmar-documentos-habilitantes.component';
+import {SharedModule} from "../shared/shared.module";
 
 const maskConfig: Partial<IConfig> = {
     validation: false,
@@ -390,6 +391,7 @@ const routes = [
         QRCodeModule,
         NgxPrintModule,
         NgxMaskModule.forRoot(maskConfig),
+        SharedModule,
     ],
     exports: [
         BienvenidoComponent,
