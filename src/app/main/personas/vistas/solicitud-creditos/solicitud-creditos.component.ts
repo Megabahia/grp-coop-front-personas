@@ -184,6 +184,7 @@ export class SolicitudCreditosComponent implements OnInit {
                 especificaGastos: [''], //
                 totalIngresos: ['', [Validators.required, Validators.pattern('^[0-9]*$')]], //
                 totalEgresos: ['', [Validators.required, Validators.pattern('^[0-9]*$')]], //
+                autorizacion: [false, [Validators.requiredTrue]],
             });
         console.log('estado civil', this.usuario.persona.empresaInfo.esatdo_civil);
         if (this.usuario.persona.empresaInfo) {

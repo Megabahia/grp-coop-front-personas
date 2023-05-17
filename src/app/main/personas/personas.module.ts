@@ -64,6 +64,7 @@ import {IConfig, NgxMaskModule} from 'ngx-mask';
 import { EstadoSolicitudComponent } from './vistas/estado-solicitud/estado-solicitud.component';
 import { FirmarDocumentosHabilitantesComponent } from './vistas/firmar-documentos-habilitantes/firmar-documentos-habilitantes.component';
 import {SharedModule} from "../shared/shared.module";
+import {TerminosComponent} from './vistas/terminos/terminos.component';
 
 const maskConfig: Partial<IConfig> = {
     validation: false,
@@ -330,6 +331,13 @@ const routes = [
 
         // data: { animation: 'auth' }
     },
+    {
+        path: 'terminos',
+        component: TerminosComponent,
+        data: {activacion: [8]},
+        canActivate: [AuthGuard]
+        // data: { animation: 'auth' }
+    },
 ];
 
 @NgModule({
@@ -372,6 +380,7 @@ const routes = [
         FinalizarSolicitudComponent,
         EstadoSolicitudComponent,
         FirmarDocumentosHabilitantesComponent,
+        TerminosComponent,
     ],
     imports: [
         CoreCommonModule,
