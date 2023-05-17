@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../../../auth/service';
 import {PagoProvedorsService} from './pago-provedors.service';
+import {ToastrService} from 'ngx-toastr';
 import {log} from 'util';
 
 @Component({
@@ -25,6 +26,7 @@ export class PagoProvedorsComponent implements OnInit {
         private _pagoProvedorsService: PagoProvedorsService,
         private _formBuilder: FormBuilder,
         private _proveedorService: RegistroProveedorService,
+        private toastr: ToastrService,
     ) {
     }
 
@@ -69,6 +71,8 @@ export class PagoProvedorsComponent implements OnInit {
     pagar() {
         this.submitted = true;
         if (this.pagoFacturaForm.invalid) {
+            this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
+                'Alerta');
             return;
         }
         const infoEmpresa = JSON.parse(localStorage.getItem('grpPersonasUser')).persona.empresaInfo;

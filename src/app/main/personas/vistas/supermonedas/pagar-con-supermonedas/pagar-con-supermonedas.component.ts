@@ -11,6 +11,7 @@ import { PagoMonto } from "../../../models/supermonedas";
 import moment from "moment";
 import { MisMonedasService } from "../mis-monedas/mis-monedas.service";
 import { ParametrizacionesService } from "../../../servicios/parametrizaciones.service";
+import {ToastrService} from 'ngx-toastr';
 
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
@@ -53,7 +54,8 @@ export class PagarConSuperMonedasComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _modalService: NgbModal,
     private _misMonedasService: MisMonedasService,
-    private paramService: ParametrizacionesService
+    private paramService: ParametrizacionesService,
+    private toastr: ToastrService,
   ) {
     this._unsubscribeAll = new Subject();
     this.usuario = this._coreMenuService.grpPersonasUser;
@@ -124,6 +126,8 @@ export class PagarConSuperMonedasComponent implements OnInit {
 
     // stop here if form is invalid
     if (this.compraSuperMonedasForm.invalid) {
+      this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
+          'Alerta');
       return;
     }
     this.pagoMonto.codigoCobro =

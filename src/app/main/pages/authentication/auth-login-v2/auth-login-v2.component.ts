@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { CoreConfigService } from '@core/services/config.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-auth-login-v2',
@@ -34,7 +35,8 @@ export class AuthLoginV2Component implements OnInit {
     private _coreConfigService: CoreConfigService,
     private _formBuilder: FormBuilder,
     private _route: ActivatedRoute,
-    private _router: Router
+    private _router: Router,
+    private toastr: ToastrService,
   ) {
     this._unsubscribeAll = new Subject();
 
@@ -73,6 +75,8 @@ export class AuthLoginV2Component implements OnInit {
 
     // stop here if form is invalid
     if (this.loginForm.invalid) {
+      this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
+          'Alerta');
       return;
     }
 

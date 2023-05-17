@@ -11,6 +11,7 @@ import { BienvenidoService } from "../../bienvenido/bienvenido.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { FlatpickrOptions } from "ng2-flatpickr";
 import moment from "moment";
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: "app-mis-facturas",
@@ -66,7 +67,9 @@ export class MisFacturasComponent implements OnInit {
     private _bienvenidoService: BienvenidoService,
     private modalService: NgbModal,
     private _formBuilder: FormBuilder,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private toastr: ToastrService,
+
   ) {
     this.usuario = this._coreMenuService.grpPersonasUser;
 
@@ -327,6 +330,8 @@ export class MisFacturasComponent implements OnInit {
   guardarFacturaFisica() {
     this.submittedFactura = true;
     if (this.facFisiForm.invalid) {
+      this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
+          'Alerta');
       return;
     }
     let facturaFisicaValores = Object.values(this.facturaFisica);

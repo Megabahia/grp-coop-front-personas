@@ -15,6 +15,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {BienvenidoService} from '../../personas/vistas/bienvenido/bienvenido.service';
 import {Router} from '@angular/router';
 import {ParametrizacionesService} from '../../personas/servicios/parametrizaciones.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-perfil-usuario',
@@ -68,7 +69,9 @@ export class PerfilUsuarioComponent implements OnInit, OnDestroy {
         private _modalService: NgbModal,
         private _bienvenidoService: BienvenidoService,
         private _router: Router,
-        private paramService: ParametrizacionesService
+        private paramService: ParametrizacionesService,
+        private toastr: ToastrService,
+
     ) {
         this.informacionBasica = {
             pais: '',
@@ -244,6 +247,8 @@ export class PerfilUsuarioComponent implements OnInit, OnDestroy {
     guardarInformacion() {
         this.PerfilSub = true;
         if (this.personaForm.invalid) {
+            this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
+                'Alerta');
             return;
         }
         let wppAux = '';
@@ -383,6 +388,8 @@ export class PerfilUsuarioComponent implements OnInit, OnDestroy {
     guardarDatosTrabajo() {
         this.submitted = true;
         if (this.datosTrabajoForm.invalid) {
+            this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
+                'Alerta');
             return;
         }
         console.log(this.datosTrabajo);

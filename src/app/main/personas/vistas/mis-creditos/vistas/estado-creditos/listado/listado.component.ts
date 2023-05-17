@@ -15,6 +15,7 @@ import {BienvenidoService} from '../../../../bienvenido/bienvenido.service';
 import {Router} from '@angular/router';
 import {takeUntil} from 'rxjs/operators';
 import moment from 'moment';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-listado',
@@ -84,6 +85,8 @@ export class ListadoComponent implements OnInit {
       private _formBuilder: FormBuilder,
       private modalService: NgbModal,
       private changeDetector: ChangeDetectorRef,
+      private toastr: ToastrService,
+
   ) {
     this.informacionBasica = this.inicializarInformacion();
 
@@ -271,9 +274,13 @@ export class ListadoComponent implements OnInit {
     this.submittedPersona = true;
     // stop here if form is invalid
     if (this.datosContactoForm.invalid) {
+      this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
+          'Alerta');
       return;
     }
     if (this.personaForm.invalid) {
+      this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
+          'Alerta');
       return;
     }
     this._creditosAutonomosService.guardarInformacion({...this.informacionBasica, user_id: this.usuario.id, imagen: []})

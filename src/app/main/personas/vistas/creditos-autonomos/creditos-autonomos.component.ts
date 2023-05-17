@@ -12,6 +12,7 @@ import { CoreMenuService } from '../../../../../@core/components/core-menu/core-
 import { CompletarPerfil, SolicitarCredito } from '../../models/persona';
 import moment from 'moment';
 import { User } from '../../../../auth/models/user';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-creditos-autonomos',
@@ -55,7 +56,8 @@ export class CreditosAutonomosComponent implements OnInit {
     private _bienvenidoService: BienvenidoService,
     private _router: Router,
     private _formBuilder: FormBuilder,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private toastr: ToastrService,
   ) {
     this.informacion = {
       apellidos: "",
@@ -161,6 +163,8 @@ export class CreditosAutonomosComponent implements OnInit {
     this.submitted = true;
     // stop here if form is invalid
     if (this.registerForm.invalid) {
+      this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
+          'Alerta');
       return;
     }
     this.informacion.apellidos = this.f.apellidos.value;

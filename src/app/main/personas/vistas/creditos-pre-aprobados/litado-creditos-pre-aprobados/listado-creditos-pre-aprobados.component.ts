@@ -15,6 +15,7 @@ import {User} from '../../../../../auth/models/user';
 import {CreditosAutonomosService} from '../../creditos-autonomos/creditos-autonomos.service';
 import {DatePipe} from '@angular/common';
 import {ParametrizacionesService} from '../../../servicios/parametrizaciones.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-listado-creditos-pre-aprobados',
@@ -85,6 +86,7 @@ export class ListadoCreditosPreAprobadosComponent implements OnInit {
         private _formBuilder: FormBuilder,
         private modalService: NgbModal,
         private changeDetector: ChangeDetectorRef,
+        private toastr: ToastrService,
     ) {
         this.informacionBasica = this.inicializarInformacion();
 
@@ -271,9 +273,13 @@ export class ListadoCreditosPreAprobadosComponent implements OnInit {
         this.submittedPersona = true;
         // stop here if form is invalid
         if (this.datosContactoForm.invalid) {
+            this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
+                'Alerta');
             return;
         }
         if (this.personaForm.invalid) {
+            this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
+                'Alerta');
             return;
         }
         this._creditosAutonomosService.guardarInformacion({...this.informacionBasica, user_id: this.usuario.id, imagen: []})

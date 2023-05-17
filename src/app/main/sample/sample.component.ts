@@ -13,6 +13,7 @@ import { takeUntil } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-sample',
@@ -142,7 +143,8 @@ export class SampleComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _route: ActivatedRoute,
     private _router: Router,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private toastr: ToastrService,
   ) {
     this._unsubscribeAll = new Subject();
 
@@ -181,6 +183,8 @@ export class SampleComponent implements OnInit {
 
     // stop here if form is invalid
     if (this.loginForm.invalid) {
+      this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
+          'Alerta');
       return;
     }
 

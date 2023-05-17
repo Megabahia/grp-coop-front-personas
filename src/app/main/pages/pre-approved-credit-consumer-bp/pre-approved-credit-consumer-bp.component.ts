@@ -7,6 +7,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import Decimal from 'decimal.js';
 import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-pre-approved-credit-consumer-bp',
@@ -29,6 +30,7 @@ export class PreApprovedCreditConsumerBpComponent implements OnInit {
         private _router: Router,
         private _preArpovedCreditService: PreArpovedCreditServiceBp,
         private modalService: NgbModal,
+        private toastr: ToastrService,
     ) {
         const ref = document.referrer;
         const host = document.location.host;
@@ -72,6 +74,8 @@ export class PreApprovedCreditConsumerBpComponent implements OnInit {
         if (this.envioForm.invalid) {
             this.mensaje = 'Datos Incorrectos';
             this.abrirModal(this.mensajeModal);
+            this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
+                'Alerta');
             return;
         }
         const code = this.envioForm.value.code.toString();

@@ -10,6 +10,8 @@ import {CoreConfigService} from '../../../../../@core/services/config.service';
 import {Subject} from 'rxjs';
 import {ValidacionesPropias} from '../../../../../utils/customer.validators';
 import Decimal from 'decimal.js';
+import {ToastrService} from 'ngx-toastr';
+
 
 @Component({
     selector: 'app-solicitud-creditos',
@@ -46,13 +48,16 @@ export class SolicitudCreditosComponent implements OnInit {
     private coutaMensualStorage;
     private montoInteresStorage;
 
+
     constructor(
         private _coreConfigService: CoreConfigService,
         private paramService: ParametrizacionesService,
         private _formBuilder: FormBuilder,
         private _coreMenuService: CoreMenuService,
         private _serviceUpdateEmpresa: SolicitudCreditosService,
-        private _router: Router
+        private _router: Router,
+        private toastr: ToastrService,
+
     ) {
         this._unsubscribeAll = new Subject();
         this._coreConfigService.config = {
@@ -347,6 +352,8 @@ export class SolicitudCreditosComponent implements OnInit {
         this.submitted = true;
         if (this.formSolicitud.invalid) {
             console.log('fomulario', this.formSolicitud);
+            this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
+                'Alerta');
             return;
         }
         // this.formSolicitud.setValue('conyuge', this.formConyuge.value);

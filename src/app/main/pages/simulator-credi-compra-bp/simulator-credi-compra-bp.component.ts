@@ -5,6 +5,7 @@ import {ParametrizacionesService} from '../../personas/servicios/parametrizacion
 import Decimal from 'decimal.js';
 import {Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-simulator-credi-compra-bp',
@@ -36,6 +37,8 @@ export class SimulatorCrediCompraBpComponent implements OnInit {
         private _coreConfigService: CoreConfigService,
         private paramService: ParametrizacionesService,
         private modalService: NgbModal,
+        private toastr: ToastrService,
+
     ) {
         if (localStorage.getItem('pagina') !== 'https://credicompra.com/') {
             this._router.navigate([
@@ -130,6 +133,9 @@ export class SimulatorCrediCompraBpComponent implements OnInit {
     calcular() {
         this.submittedSimulador = true;
         if (this.infoCreditForm.invalid) {
+            this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
+                'Alerta');
+
             return;
         }
         // Formula para el calculo interes

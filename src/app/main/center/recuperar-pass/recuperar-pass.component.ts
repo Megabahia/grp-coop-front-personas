@@ -7,6 +7,7 @@ import {RecuperarPassService} from './recuperar-pass.service';
 import {Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {environment} from "../../../../environments/environment";
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-recuperar-pass',
@@ -42,6 +43,8 @@ export class RecuperarPassComponent implements OnInit {
         private _router: Router,
         private _recuperarPassService: RecuperarPassService,
         private _modalService: NgbModal,
+        private toastr: ToastrService,
+
     ) {
         this.siteKey = environment.setKey;
         this._unsubscribeAll = new Subject();
@@ -101,6 +104,8 @@ export class RecuperarPassComponent implements OnInit {
 
         // stop here if form is invalid
         if (this.forgotPasswordForm.invalid || !this.captcha) {
+            this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
+                'Alerta');
             return;
         }
         this._recuperarPassService.recuperarPassword(this.f.email.value).subscribe((info) => {

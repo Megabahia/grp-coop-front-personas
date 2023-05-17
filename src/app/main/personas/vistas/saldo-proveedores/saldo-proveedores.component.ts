@@ -11,6 +11,8 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import {ValidacionesPropias} from '../../../../../utils/customer.validators';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
+
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -45,6 +47,7 @@ export class SaldoProveedoresComponent implements OnInit {
         private _formBuilder: FormBuilder,
         private _pagoProvedorsService: PagoProvedorsService,
         private modalService: NgbModal,
+        private toastr: ToastrService,
     ) {
         this.activatedRoute.params.subscribe(paramsId => {
             this.getOneProveedor(paramsId.proveedor);
@@ -105,6 +108,8 @@ export class SaldoProveedoresComponent implements OnInit {
         this.submitted = true;
         if (this.documentoFirmaForm.invalid) {
             console.log('form', this.documentoFirmaForm);
+            this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
+                'Alerta');
             return;
         }
         this.firmaElectronica.delete('_id');

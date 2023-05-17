@@ -12,6 +12,7 @@ import { CreditosAutonomosService } from '../creditos-autonomos.service';
 import { CoreMenuService } from '@core/components/core-menu/core-menu.service';
 import { RucPersona } from 'app/main/personas/models/persona';
 import { ParametrizacionesService } from '../../../servicios/parametrizaciones.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-ruc-persona-aut',
@@ -63,7 +64,8 @@ export class RucPersonaAutComponent implements OnInit {
     // private _bienvenidoService: BienvenidoService,
     private _router: Router,
     private _formBuilder: FormBuilder,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private toastr: ToastrService,
   ) {
     this.usuario = this._coreMenuService.grpPersonasUser;
     this.video = {
@@ -228,6 +230,8 @@ export class RucPersonaAutComponent implements OnInit {
     this.submittedRuc = true;
     // stop here if form is invalid
     if (this.rucPersonaForm.invalid) {
+      this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
+          'Alerta');
       return;
     }
     this.rucPersona.user_id = this.usuario.id;

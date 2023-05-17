@@ -9,6 +9,7 @@ import {User} from '../../../../auth/models';
 import {CoreMenuService} from '../../../../../@core/components/core-menu/core-menu.service';
 import {Router} from '@angular/router';
 import {BienvenidoService} from '../bienvenido/bienvenido.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-perfil-completar',
@@ -36,6 +37,8 @@ export class PerfilCompletarComponent implements OnInit {
         private _coreMenuService: CoreMenuService,
         private _bienvenidoService: BienvenidoService,
         private router: Router,
+        private toastr: ToastrService,
+
     ) {
         this._unsubscribeAll = new Subject();
         // Configure the layout
@@ -132,6 +135,8 @@ export class PerfilCompletarComponent implements OnInit {
         this.submitted = true;
         if (this.registerForm.invalid) {
             console.log(this.registerForm);
+            this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
+                'Alerta');
             return;
         }
         console.log('paso');

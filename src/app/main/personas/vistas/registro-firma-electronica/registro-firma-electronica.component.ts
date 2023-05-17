@@ -4,6 +4,7 @@ import {ValidacionesPropias} from '../../../../../utils/customer.validators';
 import {FirmaElectronicaService} from './firma-electronica.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-registro-firma-electronica',
@@ -23,6 +24,7 @@ export class RegistroFirmaElectronicaComponent implements OnInit {
         private _firmaElectronica: FirmaElectronicaService,
         private modalService: NgbModal,
         private _router: Router,
+        private toastr: ToastrService,
     ) {
     }
 
@@ -65,6 +67,8 @@ export class RegistroFirmaElectronicaComponent implements OnInit {
         this.submitted = true;
         if (this.firmaForm.invalid) {
             console.log('form', this.firmaForm);
+            this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
+                'Alerta');
             return;
         }
         this._firmaElectronica.crear(this.firmaForm.value).subscribe((info) => {

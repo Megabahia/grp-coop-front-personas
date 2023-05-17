@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 import { ReseteoPasswordService } from './reseteo-password.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {environment} from "../../../../environments/environment";
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-reseteo-password',
@@ -49,6 +50,7 @@ export class ReseteoPasswordComponent implements OnInit {
     private _reseteoPasswordService: ReseteoPasswordService,
     private _activatedRoute: ActivatedRoute,
     private _modalService: NgbModal,
+    private toastr: ToastrService,
 
   ) {
     this.siteKey = environment.setKey;
@@ -116,6 +118,8 @@ export class ReseteoPasswordComponent implements OnInit {
 
     // stop here if form is invalid
     if (this.forgotPasswordForm.invalid || !this.passwordSimilar  || !this.captcha) {
+      this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
+          'Alerta');
       return;
     }
     this._reseteoPasswordService.resetearPassword(

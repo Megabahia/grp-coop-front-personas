@@ -7,6 +7,8 @@ import Decimal from 'decimal.js';
 import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {PreArpovedCreditLineService} from './pre-arpoved-credit-line.service';
+import {ToastrService} from 'ngx-toastr';
+
 
 @Component({
     selector: 'app-pre-approved-credit-line',
@@ -29,6 +31,7 @@ export class PreApprovedCreditLineComponent implements OnInit {
         private _router: Router,
         private _preArpovedCreditService: PreArpovedCreditLineService,
         private modalService: NgbModal,
+        private toastr: ToastrService,
     ) {
         const ref = document.referrer;
         const host = document.location.host;
@@ -72,6 +75,8 @@ export class PreApprovedCreditLineComponent implements OnInit {
         if (this.envioForm.invalid) {
             this.mensaje = 'Datos Incorrectos';
             this.abrirModal(this.mensajeModal);
+            this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
+                'Alerta');
             return;
         }
         const code = this.envioForm.value.code.toString();

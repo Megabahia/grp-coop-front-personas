@@ -3,6 +3,7 @@ import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angul
 import {RegistroProveedorService} from '../registro-proveedor.service';
 import {ParametrizacionesService} from '../../../servicios/parametrizaciones.service';
 import {ValidacionesPropias} from '../../../../../../utils/customer.validators';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-create',
@@ -24,6 +25,7 @@ export class CreateComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _proveedorService: RegistroProveedorService,
     private paramService: ParametrizacionesService,
+    private toastr: ToastrService,
   ) {
   }
 
@@ -76,6 +78,8 @@ export class CreateComponent implements OnInit {
     this.submitted = true;
     if (this.proveedorForm.invalid) {
         console.log('form', this.proveedorForm);
+      this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
+          'Alerta');
       return;
     }
     if (this.proveedorForm.get('_id').value === '') {

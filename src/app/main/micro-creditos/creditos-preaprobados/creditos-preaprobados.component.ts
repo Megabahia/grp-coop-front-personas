@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {GanarSuperMoneda} from '../../personas/models/supermonedas';
 import {MicroCreditosService} from '../micro-creditos.service';
 import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-creditos-preaprobados',
@@ -18,6 +19,7 @@ export class CreditosPreaprobadosComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _microCreditosServicios: MicroCreditosService,
     private _router: Router,
+    private toastr: ToastrService,
   ) {
 
   }
@@ -36,6 +38,8 @@ export class CreditosPreaprobadosComponent implements OnInit {
   validarCodigo() {
     this.submitted = true;
     if (this.validarForm.invalid) {
+      this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
+          'Alerta');
       return;
     }
     this._microCreditosServicios.compararCodigo(this.validarForm.value).subscribe(info => {

@@ -8,6 +8,7 @@ import {RegistroService} from './registro.service';
 import {Role} from '../../../auth/models/role';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {environment} from "../../../../environments/environment";
+import {ToastrService} from 'ngx-toastr';
 
 
 @Component({
@@ -48,6 +49,7 @@ export class RegistroComponent implements OnInit {
         private _route: ActivatedRoute,
         private _router: Router,
         private _modalService: NgbModal,
+        private toastr: ToastrService,
     ) {
         this.siteKey = environment.setKey;
         this._unsubscribeAll = new Subject();
@@ -91,6 +93,8 @@ export class RegistroComponent implements OnInit {
 
         // stop here if form is invalid
         if (this.registerForm.invalid || !this.captcha) {
+            this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
+                'Alerta');
             return;
         }
 

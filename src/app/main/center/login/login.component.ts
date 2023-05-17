@@ -5,6 +5,7 @@ import {CoreConfigService} from '../../../../@core/services/config.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable, Subject, Subscription} from 'rxjs';
 import {AuthenticationService} from '../../../auth/service/authentication.service';
+import {ToastrService} from 'ngx-toastr';
 import {ReCaptchaV3Service} from 'ngx-captcha';
 import {
     FacebookLoginProvider,
@@ -70,7 +71,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         private _registroService: RegistroService,
         private _creditosPreAprobadosService: CreditosPreAprobadosService,
         private _coreMenuService: CoreMenuService,
-        private _modalService: NgbModal
+        private _modalService: NgbModal,
+        private toastr: ToastrService,
     ) {
         this.siteKey = environment.setKey;
         this.captcha = false;
@@ -114,6 +116,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
         // stop here if form is invalid
         if (this.loginForm.invalid || !this.captcha) {
+            this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
+                'Alerta');
             return;
         }
 
