@@ -3,12 +3,12 @@
     <!-- /Brand logo-->
     <!-- Left Text-->
     <div class="d-none d-lg-flex col-lg-8 align-items-center p-5">
-      <div class="d-block mt-3">
-        <div class="text-center pl-5">
-          <img src="/assets/images/logo/creditopagos.png" alt="brand-logo" width="150" />
+      <div class="d-block mt-1">
+        <div class="text-center pl-5 mb-2">
+          <img src="/assets/images/logo/Logo_SAN_JOSE.png" alt="brand-logo" width="170"/>
+          <img src="/assets/images/logo/creditopagos.png" alt="brand-logo" width="150"/>
         </div>
-        <br>
-          <h2 class="pl-5 text-primary"><b>Accede hoy a tu línea de crédito y paga a tus proveedores de forma fácil y rápida</b></h2>        <div class="text-center pl-5">
+          <h2 class="pl-5 text-primary"><b>Accede hoy a tu Línea de Crédito y paga a tus proveedores y/o empleados de forma fácil y rápida</b></h2>        <div class="text-center pl-5">
           <img [src]="
                   coreConfig.layout.skin === 'dark'
                     ? 'assets/images/pages/login/login-2.png'
@@ -23,14 +23,23 @@
     <div class="d-flex col-lg-4 align-items-center auth-bg px-2 p-lg-5">
       <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
           <a class="appear" href="javascript:void(0);">
-              <img src="/assets/images/logo/creditopagos.png" alt="brand-logo" width="150"/>
+              <img src="/assets/images/logo/Logo_SAN_JOSE.png" alt="brand-logo" width="130"/>
+              <img src="/assets/images/logo/creditopagos.png" alt="brand-logo" width="95"/>
           </a>
-        <h2 class="card-title font-weight-bold mb-1">Bienvenido</h2>
-          <p class="text-center ">
-              <span style="font-size: 16px;">¿Aun no tienes cuenta?</span><a class="text-primary"
+
+        <h2 class="text-center card-title font-weight-bold mb-2 mt-2">Bienvenido</h2>
+
+          <div class=" h5 text-center font-weight-bold mb-1">Accede hoy a tu Línea de Crédito y paga a tus proveedores y/o empleados de manera fácil y rápida.</div>
+          <hr>
+
+          <p class="text-center mb-2">
+              <span style="font-size: 18px;">¿Aun no tienes cuenta?</span><a class="text-primary"
                                                                              style="font-size: 16px;"
                                                                              routerLink="/grp/registro"><span>&nbsp;Regístrate</span></a>
           </p>
+
+        <div class="h4 text-center font-weight-bold mb-1">Recuerda que debes tener RUC, Facturación electrónica y Firma electrónica para acceder a tu Línea de Crédito para pago a proveedores.</div>
+
         <p class="card-text mb-2">Por favor ingresa con tus datos de cuenta</p>
 
         <ngb-alert [type]="'danger'" [dismissible]="false" *ngIf="error">
