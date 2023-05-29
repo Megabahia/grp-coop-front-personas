@@ -4,147 +4,115 @@
 
 <!-- Forgot Password v1 -->
 <div class="text-center mb-3">
-  <img src="assets/images/logo.svg" width="250">
+  <img src="./assets/images/logo/credicompra.png" width="250">
 </div>
 <div class="card mb-0">
   <div class="card-body">
     <div class="card profile-header mb-2">
       <!-- profile cover photo -->
 
-      <!--/ profile cover photo -->
-
-      <div class="position-relative mt-5">
-        <!-- profile picture -->
-        <div class="">
-          <div class="cat">
-            <img src="{{imagen ? imagen: 'assets/images/portrait/small/avatar-s-11.jpg'}}" class="rounded img-fluid"
-              alt="Card image" />
+      <form class="auth-login-form mt-2" [formGroup]="formSolicitud">
+        <h3>
+          DATOS GENERALES DE SU EMPRESA O NEGOCIO
+        </h3>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>
+                Correo electronico:
+              </label>
+              <input type="text" formControlName="correo"
+                     class="form-control"
+                     value="">
+            </div>
+            <div *ngIf="submitted && controlsFrom.correo.errors"
+                 class="invalid-feedback"
+                 style="display: block;">
+              <div *ngIf="controlsFrom.correo.errors.required">
+                No cumple el formato
+              </div>
+            </div>
           </div>
-          <!-- profile title -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>
+                Nombre del representante legal o dueño del negocio:
+              </label>
+              <input type="text" formControlName="reprsentante"
+                     class="form-control"
+                     value="">
+            </div>
+            <div *ngIf="submitted && controlsFrom.reprsentante.errors"
+                 class="invalid-feedback"
+                 style="display: block;">
+              <div *ngIf="controlsFrom.reprsentante.errors.required">
+                Nombre del representante es requerido
+              </div>
+              <div *ngIf="controlsFrom.reprsentante.errors.minlength">
+                Ingrese minimo 8 caracteres
+              </div>
+              <div *ngIf="controlsFrom.reprsentante.errors.pattern">
+                Ingrese solo letras
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>
+                RUC de su empresa o negocio:
+              </label>
+              <input type="text" formControlName="rucEmpresa"
+                     class="form-control"
+                     value="">
+            </div>
+            <div *ngIf="submitted && controlsFrom.rucEmpresa.errors"
+                 class="invalid-feedback"
+                 style="display: block;">
+              <div *ngIf="controlsFrom.rucEmpresa.errors.required">Ruc es
+                requerido
+              </div>
+              <div *ngIf="controlsFrom.rucEmpresa.errors.minlength">
+                Ingrese minimo 13 caracteres
+              </div>
+              <div *ngIf="controlsFrom.rucEmpresa.errors.maxlength">
+                Ingrese maximo 13 caracteres
+              </div>
+              <div *ngIf="controlsFrom.rucEmpresa.errors.pattern">
+                Ingrese solo numeros
+              </div>
+              <div *ngIf="controlsFrom.rucEmpresa.errors.rucInvalid">
+                Ruc invalido
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>
+                Nombre comercial de su empresa o negocio:
+              </label>
+              <input type="text" formControlName="comercial"
+                     class="form-control"
+                     value="">
+            </div>
+            <div *ngIf="submitted && controlsFrom.comercial.errors"
+                 class="invalid-feedback"
+                 style="display: block;">
+              <div *ngIf="controlsFrom.comercial.errors.required">
+                Nombre comercial es requerido
+              </div>
+              <div *ngIf="controlsFrom.comercial.errors.minlength">
+                Ingrese minimo 4 caracteres
+              </div>
+              <div *ngIf="controlsFrom.comercial.errors.pattern">
+                Ingrese solo letras
+              </div>
+            </div>
+          </div>
         </div>
-
-      </div>
-      <h2>{{f.nombres.value}} {{f.apellidos.value}}</h2>
-      <div>
-        <label class="btn btn-info btn-sm mr-75 waves-effect waves-float waves-light" for="change-picture">
-          <span class="">Cambiar foto</span>
-          <input class="form-control" type="file" id="change-picture" hidden accept="image/png, image/jpeg, image/jpg"
-            (change)="subirImagen($event)" />
-        </label>
-      </div>
-
-      <form class="auth-login-form mt-2" [formGroup]="registerForm" (ngSubmit)="guardarRegistro()">
-        <!-- tabs pill -->
-        <div class="profile-header-nav">
-          <!-- navbar -->
-          <div class="row card-body">
-            <div class="col-md-12">
-              <p class="card-title " style="color:red">
-                Al completar su perfil usted GANARA {{ganarMonedas.valor}} Supermonedas para que haga uso en
-                canje de magníficos
-                PREMIOS!.</p>
-              <hr />
-            </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="identificacion">Número de identificación</label>
-                <input formControlName="identificacion" type="text" class="form-control"
-                  [ngClass]="{ 'is-invalid': submitted && f.identificacion.errors }">
-                <div *ngIf="submitted && f.identificacion.errors" class="invalid-feedback">
-                  <div *ngIf="f.identificacion.errors.required">Identificación es requerida</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="nombres">Nombres</label>
-                <input formControlName="nombres" type="text" class="form-control"
-                  [ngClass]="{ 'is-invalid': submitted && f.nombres.errors }">
-                <div *ngIf="submitted && f.nombres.errors" class="invalid-feedback">
-                  <div *ngIf="f.nombres.errors.required">Nombres son requeridos</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="apellidos">Apellidos</label>
-                <input formControlName="apellidos" type="text" class="form-control"
-                  [ngClass]="{ 'is-invalid': submitted && f.apellidos.errors }">
-                <div *ngIf="submitted && f.apellidos.errors" class="invalid-feedback">
-                  <div *ngIf="f.apellidos.errors.required">Apellidos son requeridos</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="genero">Género</label>
-                <select formControlName="genero" class="form-control" id="status"
-                  [ngClass]="{ 'is-invalid': submitted && f.genero.errors }">
-                  <option>- Seleccionar - </option>
-                  <option>Hombre</option>
-                  <option>Mujer</option>
-                  <option>No especificado</option>
-                </select>
-                <div *ngIf="submitted && f.genero.errors" class="invalid-feedback">
-                  <div *ngIf="f.genero.errors.required">El campo Genero es requerido</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="fechaNacimiento">Fecha de nacimiento</label>
-                <ng2-flatpickr [setDate]="fecha" formControlName="fechaNacimiento" [config]="startDateOptions"
-                  [ngClass]="{ 'is-invalid': submitted && f.fechaNacimiento.errors }" (input)="calcularEdad()">
-                </ng2-flatpickr>
-                <div *ngIf="submitted && f.fechaNacimiento.errors" class="invalid-feedback">
-                  <div *ngIf="f.fechaNacimiento.errors.required">Fecha es requerida</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="edad">Edad</label>
-                <input formControlName="edad" type="text" class="form-control"
-                  [ngClass]="{ 'is-invalid': submitted && f.edad.errors }" disabled>
-                <div *ngIf="submitted && f.edad.errors" class="invalid-feedback">
-                  <div *ngIf="f.edad.errors.required">Fecha es requerida</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-8">
-              <div class="form-group">
-                <label for="whatsapp" class="font-weight-bold">Número WhatsApp <small class="text-info">(Importante
-                    para validar tu cuenta)</small></label>
-                <input formControlName="whatsapp" type="text"
-                  [ngClass]="{ 'is-invalid': submitted && f.whatsapp.errors }" class="form-control"
-                  placeholder="Ejemplo: 0987654321">
-                <div *ngIf="submitted && f.whatsapp.errors" class="invalid-feedback">
-                  <div *ngIf="f.whatsapp.errors.pattern">Solo se aceptan números</div>
-                  <div *ngIf="f.whatsapp.errors.required">Nro de WhatsApp requerido</div>
-                  <div *ngIf="f.whatsapp.errors.minlength || f.whatsapp.errors.maxlength || f.whatsapp.errors.min">
-                    Ingrese un número de 10 dígitos</div>
-                </div>
-              </div>
-            </div>
-
-
-            <div class="col-12 text-center">
-              <hr />
-              <button type="button" data-target="#whatsapp" data-toggle="modal"
-                class="btn btn-primary mt-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-float waves-light"
-                (click)="guardarRegistro()">Validar cuenta</button>
-              <button type="button"
-                class="btn btn-primary mt-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-float waves-light"
-                (click)="omitirContinuar()">Omitir y Continuar</button>
-            </div>
-          </div>
-          <!--/ navbar -->
+        <div class="mt-2 text-center">
+          <button class="btn btn-primary mr-1" (click)="guardar()" style="color: black !important;">
+            CONTINUAR
+          </button>
         </div>
       </form>
     </div>

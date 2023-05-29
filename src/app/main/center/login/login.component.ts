@@ -145,7 +145,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                         }).subscribe((info) => {
                             console.log('creditos', info.info[0]?.estado);
                             if (info.cont === 0) {
-                                this._router.navigate(['/pages/solicitud-credito']);
+                                this._router.navigate(['/personas/completarPerfil']);
                                 return;
                             }
                             if (info.info[0]?.estado === 'Aprobado') {
