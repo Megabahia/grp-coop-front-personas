@@ -10,10 +10,11 @@
 
                     <div class=" mb-2 text-center">
                         <h2>
-                            Confirme la firma electrónica para poder acceder a su línea de crédito
+                            Para acceder a su Línea de Crédito, por favor confirme los datos de la Firma Electrónica
                         </h2>
                         <span>
-                            Recuerde que para poder firmar los documentos debe tener a la mano su firma y la clave de su firma electrónica, misma que es única e intransferible por su seguridad.
+                            Recuerde que para poder firmar los documentos debe tener a la mano su Firma Electrónica y
+                            la clave de su Firma Electrónica, misma que es única e intransferible por su seguridad.
                         </span>
                     </div>
                     <div class="content-body">
@@ -150,17 +151,20 @@
                                                 <div class="form-group">
                                                     <label>Tipo de Identificación
                                                     </label>
-                                                    <select class="form-control select2" formControlName="tipoIdentificacionRepresentante" (change)="obtenerTipoIdentificacion()">
+                                                    <select class="form-control select2"
+                                                            formControlName="tipoIdentificacionRepresentante"
+                                                            (change)="obtenerTipoIdentificacion()">
                                                         <option value="">- Seleccione -</option>
                                                         <option value="cedula">Cédula</option>
                                                         <option value="ruc">Ruc</option>
-<!--                                                        <option *ngFor="let paisOp of paisOpciones" value="{{paisOp.nombre}}">{{paisOp.nombre}}</option>-->
+                                                        <!--                                                        <option *ngFor="let paisOp of paisOpciones" value="{{paisOp.nombre}}">{{paisOp.nombre}}</option>-->
                                                     </select>
                                                     <div *ngIf="submitted && firmaElectronica.tipoIdentificacionRepresentante.errors"
                                                          class="invalid-feedback"
                                                          style="display: block;">
                                                         <div *ngIf="firmaElectronica.tipoIdentificacionRepresentante.errors.required">
-                                                            Tipo identificacion de representante de la empresa es requerido
+                                                            Tipo identificacion de representante de la empresa es
+                                                            requerido
                                                         </div>
                                                     </div>
                                                 </div>
@@ -168,9 +172,13 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck1" formControlName="aceptarTerminos"/>
+                                                        <input type="checkbox" class="custom-control-input"
+                                                               id="customCheck1" formControlName="aceptarTerminos"/>
                                                         <label class="custom-control-label" for="customCheck1">
-                                                            Acepto que mi firma es única e intransferible y autorizo a la Entidad Financiera y Entidades competentes a hacer uso de ella de la forma debida
+                                                            Acepto que mi firma es única e intransferible y AUTORIZO a
+                                                            la Plataforma, Cooperativa de Ahorro y Crédito regulada y, a
+                                                            las Entidades competentes a hacer uso de ella para los fines
+                                                            pertinentes.
                                                         </label>
                                                     </div>
                                                 </div>
@@ -184,7 +192,7 @@
                                             </div>
                                         </div>
                                         <div class="mt-2 d-flex justify-content-center">
-                                            <button class="btn btn-primary mr-1" (click)="guardar()">
+                                            <button class="btn btn-primary mr-1" (click)="guardar()" style="color: black!important;">
                                                 Continuar
                                             </button>
                                         </div>

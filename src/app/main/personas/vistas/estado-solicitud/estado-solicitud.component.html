@@ -3,7 +3,7 @@
         <div class="misc-inner">
             <div class="text-center">
                 <a href="javascript:void(0);">
-                    <img src="assets/images/logo/red-credito.png" alt="brand-logo" width="300"/>
+                    <img src="assets/images/logo/creditopagos.png" alt="brand-logo" width="150"/>
                 </a>
             </div>
         </div>
@@ -12,6 +12,7 @@
         </span>
         <br>
         <a class="mt-3 btn btn-primary" href="https://walink.co/9ba631" (click)="cerrarSesion()">Whatsapp</a>
+        <app-footer></app-footer>
     </div>
 </div>
 
@@ -21,18 +22,22 @@
         <div class="misc-inner">
             <div class="text-center">
                 <a href="javascript:void(0);">
-                    <img src="assets/images/logo/red-credito.png" alt="brand-logo" width="300"/>
+                    <img src="assets/images/logo/creditopagos.png" alt="brand-logo" width="150"/>
                 </a>
             </div>
         </div>
         <h1>Felicidades!!</h1>
-        <p>
-            Su línea de crédito para realizar los pagos a sus proveedores ha sido <b>APROBADA</b> por un monto de {{this.credito?.monto}}.
+        <p>º
+            Su Línea de Crédito para realizar pagos sus proveedores y/o empleados ha sido APROBADA por un monto de {{this.credito?.montoAprobado}}.
         </p>
         <p>
-            Haga click en el botón y registre su Firma electrónica. Recuerde que por su seguridad Global Redpyme – Crédito Pagos NO guardará esta información.
+            Haga click en el botón CONTINUAR y registre su Firma Electrónica para realizar pagos a sus proveedores y/o empleados.
         </p>
-        <a href="https://credicompra.com/" class="btn btn-primary" style="color: black !important;">CrediCompra</a>
+        <p>
+            Recuerde que por su seguridad Global Redpyme-Crédito Pagos NO guardará esta información.
+        </p>
+        <a [routerLink]="['/personas/registroFirmaElectronica']" class="btn btn-primary" style="color: black !important;">CONTINUAR</a>
+        <app-footer></app-footer>
     </div>
 </div>
 
@@ -41,7 +46,7 @@
         <div class="misc-inner">
             <div class="text-center">
                 <a href="javascript:void(0);">
-                    <img src="assets/images/logo/red-credito.png" alt="brand-logo" width="300"/>
+                    <img src="assets/images/logo/creditopagos.png" alt="brand-logo" width="150"/>
                 </a>
             </div>
         </div>
@@ -55,5 +60,6 @@
         </h4>
         <br>
         <a class="btn btn-primary" href="/" (click)="cerrarSesion()">Salir</a>
+        <app-footer></app-footer>
     </div>
 </div>
