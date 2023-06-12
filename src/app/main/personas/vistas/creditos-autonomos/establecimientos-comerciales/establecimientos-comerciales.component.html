@@ -47,9 +47,9 @@
                                     <small class="text-body">{{establecimiento.tipoCategoria}}</small>
                                 </div>
                                 <div class="img-container w-50 mx-auto py-75">
-                                    <img src="assets/images/coral.jpg" class="img-fluid" alt="image" />
+                                    <img [src]="establecimiento.imagen" class="img-fluid" alt="image" />
                                 </div>
-                                <a href="index-tienda.html" target="_blank">Ver productos</a>
+                                <a href="" target="_blank" class="btn btn-sm btn-primary mt-2 mx-1">Ver productos</a>
                                 <a href="javascript:void(0)" class="btn btn-sm btn-primary mt-2" (click)="continuar(establecimiento._id)">Seleccionar establecimiento</a>
                             </div>
 

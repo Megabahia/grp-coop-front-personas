@@ -65,6 +65,11 @@ import { EstadoSolicitudComponent } from './vistas/estado-solicitud/estado-solic
 import { FirmarDocumentosHabilitantesComponent } from './vistas/firmar-documentos-habilitantes/firmar-documentos-habilitantes.component';
 import {SharedModule} from "../shared/shared.module";
 import {TerminosComponent} from './vistas/terminos/terminos.component';
+import {SolicitudCreditoComponent} from './vistas/creditos-autonomos/solicitud-credito/solicitud-credito.component';
+import {
+    ResumenRequisitosCreditoComponent
+} from './vistas/creditos-autonomos/resumen-requisitos-credito/resumen-requisitos-credito.component';
+import {ValidacionDatosComponent} from './vistas/creditos-autonomos/validacion-datos/validacion-datos.component';
 
 const maskConfig: Partial<IConfig> = {
     validation: false,
@@ -164,6 +169,13 @@ const routes = [
                 component: CreditosAutonomosComponent,
                 data: {roles: [Role.SuperMonedas], activacion: [8, 0]},
                 canActivate: [AuthGuard],
+                // data: { animation: 'auth' }
+            },
+            {
+                path: 'validacion-datos',
+                component: ValidacionDatosComponent,
+                data: {roles: [Role.SuperMonedas], activacion: [8, 0]},
+                canActivate: [AuthGuard]
                 // data: { animation: 'auth' }
             },
         ],
@@ -381,6 +393,9 @@ const routes = [
         EstadoSolicitudComponent,
         FirmarDocumentosHabilitantesComponent,
         TerminosComponent,
+        SolicitudCreditoComponent,
+        ResumenRequisitosCreditoComponent,
+        ValidacionDatosComponent,
     ],
     imports: [
         CoreCommonModule,

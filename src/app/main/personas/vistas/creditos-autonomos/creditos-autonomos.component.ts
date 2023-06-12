@@ -1,25 +1,24 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Subject } from 'rxjs';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { BienvenidoService } from '../bienvenido/bienvenido.service';
-import { takeUntil } from 'rxjs/operators';
-import { CreditosAutonomosService } from './creditos-autonomos.service';
-import { FlatpickrOptions } from 'ng2-flatpickr';
-import { CoreConfigService } from '../../../../../@core/services/config.service';
-import { CoreMenuService } from '../../../../../@core/components/core-menu/core-menu.service';
-import { CompletarPerfil, SolicitarCredito } from '../../models/persona';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Subject} from 'rxjs';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {BienvenidoService} from '../bienvenido/bienvenido.service';
+import {takeUntil} from 'rxjs/operators';
+import {CreditosAutonomosService} from './creditos-autonomos.service';
+import {FlatpickrOptions} from 'ng2-flatpickr';
+import {CoreConfigService} from '../../../../../@core/services/config.service';
+import {CoreMenuService} from '../../../../../@core/components/core-menu/core-menu.service';
+import {CompletarPerfil, SolicitarCredito} from '../../models/persona';
 import moment from 'moment';
-import { User } from '../../../../auth/models/user';
-import {ToastrService} from 'ngx-toastr';
+import {User} from '../../../../auth/models/user';
 
 @Component({
   selector: 'app-creditos-autonomos',
   templateUrl: './creditos-autonomos.component.html',
   styleUrls: ['./creditos-autonomos.component.scss']
 })
-export class CreditosAutonomosComponent implements OnInit {
+export class CreditosAutonomosComponent implements OnInit, AfterViewInit {
   @ViewChild('startDatePicker') startDatePicker;
   @ViewChild('whatsapp') whatsapp;
   public error;
@@ -30,7 +29,7 @@ export class CreditosAutonomosComponent implements OnInit {
   public loading = false;
   public submitted = false;
   public usuario: User;
-  public idEmpresa = "";
+  public idEmpresa = '';
   public proceso = 1;
   public solicitarCredito: SolicitarCredito;
   public startDateOptions: FlatpickrOptions = {
@@ -56,19 +55,18 @@ export class CreditosAutonomosComponent implements OnInit {
     private _bienvenidoService: BienvenidoService,
     private _router: Router,
     private _formBuilder: FormBuilder,
-    private modalService: NgbModal,
-    private toastr: ToastrService,
+    private modalService: NgbModal
   ) {
     this.informacion = {
-      apellidos: "",
-      user_id: "",
+      apellidos: '',
+      user_id: '',
       edad: 0,
-      fechaNacimiento: "",
-      genero: "",
-      identificacion: "",
-      nombres: "",
-      whatsapp: ""
-    }
+      fechaNacimiento: '',
+      genero: '',
+      identificacion: '',
+      nombres: '',
+      whatsapp: ''
+    };
     this.solicitarCredito = this.inicialidarSolicitudCredito();
     this._unsubscribeAll = new Subject();
 
@@ -76,22 +74,24 @@ export class CreditosAutonomosComponent implements OnInit {
 
   inicialidarSolicitudCredito(): SolicitarCredito {
     return {
-      _id: "",
+      _id: '',
       aceptaTerminos: 0,
-      empresaComercial_id: "",
-      empresaIfis_id: "",
-      estado: "Confirmado",
+      empresaComercial_id: '',
+      empresaIfis_id: '',
+      estado: 'Confirmado',
       monto: 0,
+      cuota: 0,
       plazo: 0,
-      user_id: "",
-      canal: "Autonomo",
-      tipoCredito: "Autonomo",
-      concepto: "Autonomo",
-      nombres: "",
-      apellidos: "",
-      numeroIdentificacion: "",
-    }
+      user_id: '',
+      canal: 'Autonomo',
+      tipoCredito: 'Autonomo',
+      concepto: 'Autonomo',
+      nombres: '',
+      apellidos: '',
+      numeroIdentificacion: '',
+    };
   }
+
   // Lifecycle Hooks
   // -----------------------------------------------------------------------------------------------------
   get f() {
@@ -131,6 +131,7 @@ export class CreditosAutonomosComponent implements OnInit {
       });
     });
   }
+
   ngAfterViewInit(): void {
     this.solicitarCredito.user_id = this.usuario.id;
   }
@@ -151,6 +152,7 @@ export class CreditosAutonomosComponent implements OnInit {
 
     }
   }
+
   calcularEdad() {
     this.informacion.edad = moment().diff(this.f.fechaNacimiento.value[0], 'years');
     this.informacion.fechaNacimiento = moment(this.f.fechaNacimiento.value[0]).format('YYYY-MM-DD');
@@ -158,13 +160,12 @@ export class CreditosAutonomosComponent implements OnInit {
       edad: this.informacion.edad
     });
   }
+
   guardarRegistro() {
 
     this.submitted = true;
     // stop here if form is invalid
     if (this.registerForm.invalid) {
-      this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
-          'Alerta');
       return;
     }
     this.informacion.apellidos = this.f.apellidos.value;
@@ -179,16 +180,17 @@ export class CreditosAutonomosComponent implements OnInit {
     this._creditosAutonomosService.guardarInformacion(this.informacion).subscribe(info => {
       this._bienvenidoService.cambioDeEstado(
         {
-          estado: "3",
+          estado: '3',
           id: this.usuario.id
         }
       ).subscribe(infoCambio => {
-        this.usuario.estado = "3";
+        this.usuario.estado = '3';
         this.usuario.persona = info;
         localStorage.setItem('grpPersonasUser', JSON.stringify(this.usuario));
       });
     });
   }
+
   continuar(value) {
     if (value == 7) {
       // Agregar informacion al credito
@@ -202,19 +204,23 @@ export class CreditosAutonomosComponent implements OnInit {
       this.proceso = value;
     }
   }
+
   obtenerIdIfi(value) {
     console.log(value);
     this.solicitarCredito.empresaIfis_id = value;
   }
+
   obtenerEstablecimiento(value) {
     this.solicitarCredito.empresaComercial_id = value;
     this.idEmpresa = value;
   }
+
   obtenerMonto(value) {
     this.solicitarCredito.plazo = value.plazo;
     this.solicitarCredito.monto = value.monto;
-    this.solicitarCredito.aceptaTerminos = value.aceptaTerminos ? 1:0;
+    this.solicitarCredito.aceptaTerminos = value.aceptaTerminos ? 1 : 0;
   }
+
   abrirModal(modal) {
     this.modalService.open(modal);
   }

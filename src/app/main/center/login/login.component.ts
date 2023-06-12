@@ -161,7 +161,11 @@ export class LoginComponent implements OnInit, OnDestroy {
                                 this._router.navigate(['/personas/estado-solicitud-credito']);
                                 return;
                             } else {
-                                this._router.navigate(['/personas/solucitudCredito']);
+                                if (localStorage.getItem('credito') !== null && JSON.parse(localStorage.getItem('credito')).tipoCredito.includes('Pymes')) {
+                                    this._router.navigate(['/personas/solucitudCredito']);
+                                } else {
+                                    this._router.navigate(['/personas/creditos-autonomos/solicitar-credito']);
+                                }
                             }
                             this._router.navigate(['/personas/estado-solicitud-credito']);
                         });
@@ -190,7 +194,11 @@ export class LoginComponent implements OnInit, OnDestroy {
                                 this._router.navigate(['/personas/estado-solicitud-credito']);
                                 return;
                             } else {
-                                this._router.navigate(['/personas/solucitudCredito']);
+                                if (localStorage.getItem('credito') !== null && JSON.parse(localStorage.getItem('credito')).tipoCredito.includes('Pymes')) {
+                                    this._router.navigate(['/personas/solucitudCredito']);
+                                } else {
+                                    this._router.navigate(['/personas/creditos-autonomos/solicitar-credito']);
+                                }
                             }
                             this._router.navigate(['/personas/estado-solicitud-credito']);
                         });

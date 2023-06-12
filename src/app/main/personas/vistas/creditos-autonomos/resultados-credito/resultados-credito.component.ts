@@ -9,8 +9,6 @@ import moment from 'moment';
 import { CoreConfigService } from '../../../../../../@core/services/config.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CreditosAutonomosService } from '../creditos-autonomos.service';
-import {ToastrService} from 'ngx-toastr';
-
 
 @Component({
   selector: 'app-resultados-credito-aut',
@@ -58,8 +56,7 @@ export class ResultadosCreditoAutComponent implements OnInit {
     // private _bienvenidoService: BienvenidoService,
     private _router: Router,
     private _formBuilder: FormBuilder,
-    private modalService: NgbModal,
-    private toastr: ToastrService,
+    private modalService: NgbModal
   ) {
     this.video = {
       url: "https://www.youtube.com/embed/aK52RxV2XuI"
@@ -145,8 +142,6 @@ export class ResultadosCreditoAutComponent implements OnInit {
     this.submitted = true;
     // stop here if form is invalid
     if (this.registerForm.invalid) {
-      this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
-          'Alerta');
       return;
     }
     // this.informacion.apellidos = this.f.apellidos.value;
