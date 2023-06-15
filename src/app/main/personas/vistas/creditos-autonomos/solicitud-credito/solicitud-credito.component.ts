@@ -63,9 +63,21 @@ export class SolicitudCreditoComponent implements OnInit {
         altFormat: 'Y-n-j',
         altInputClass: 'form-control flat-picker flatpickr-input invoice-edit-input',
     };
-    public paisOpciones;
-    public provinciaOpciones;
-    public ciudadOpciones;
+    public paises;
+    public provincias;
+    public ciudades;
+    public paisEmpresa;
+    public provinciaEmpresa;
+    public ciudadEmpresa;
+    public paisReferido1;
+    public provinciaReferido1;
+    public ciudadReferido1;
+    public paisReferido2;
+    public provinciaReferido2;
+    public ciudadReferido2;
+    public paisReferido3;
+    public provinciaReferido3;
+    public ciudadReferido3;
     public paisTipoPersonaOpciones;
     public provinciaTipoPersonaOpciones;
     public ciudadTipoPersonaOpciones;
@@ -145,48 +157,84 @@ export class SolicitudCreditoComponent implements OnInit {
                 tipoVivienda: [this.usuario.tipoVivienda, Validators.required],
                 nombreDueno: [this.usuario.nombreDueno, [Validators.minLength(8), Validators.pattern('[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\\s]+')]],
                 whatsappDueno: ['', []],
+                pais: [this.usuario.pais, Validators.required],
+                provincia: [this.usuario.provincia, Validators.required],
+                ciudad: [this.usuario.ciudad, Validators.required],
                 direccionDomicilio: [this.usuario.direccionDomicilio, [Validators.required, Validators.minLength(20), Validators.pattern('[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\\s]+')]],
                 referenciaDomicilio: [this.usuario.referenciaDomicilio, Validators.required],
                 estadoCivil: [this.estadoCivilStorage, Validators.required],
                 ocupacionSolicitante: this._formBuilder.group({
-                    nombreNegocio: [this.usuario.ocupacionSolicitante?.nombreNegocio, [Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]],
+                    nombreNegocio: [this.usuario.ocupacionSolicitante?.nombreNegocio, [
+                        Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]
+                    ],
                     direccionNegocio: [this.usuario.ocupacionSolicitante?.direccionNegocio, [
                         Validators.required, Validators.minLength(20), Validators.pattern('[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\\s]+')
                     ]],
-                    tiempoTrabajo: [this.usuario.ocupacionSolicitante?.tiempoTrabajo, [Validators.required, Validators.pattern('^([0-9])+$')]],
-                    cargoDesempeno: [this.usuario.ocupacionSolicitante?.cargoDesempeno, [Validators.required, Validators.minLength(4), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]],
+                    tiempoTrabajo: [this.usuario.ocupacionSolicitante?.tiempoTrabajo, [
+                        Validators.required, Validators.pattern('^([0-9])+$')]
+                    ],
+                    cargoDesempeno: [this.usuario.ocupacionSolicitante?.cargoDesempeno, [
+                        Validators.required, Validators.minLength(4), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]
+                    ],
                     // sueldoPercibe: ['', [Validators.required, Validators.pattern('^([0-9])+$')]],
                 }),
                 referenciasSolicitante: this._formBuilder.array([
                     this._formBuilder.group({
-                        referenciaSolicitante: [this.usuario.referenciasSolicitante?.referenciaSolicitante, [Validators.required]],
-                        nombre: [this.usuario.referenciasSolicitante?.nombre, [Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]],
-                        apellido: [this.usuario.referenciasSolicitante?.apellido, [Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]],
-                        direccion: [this.usuario.referenciasSolicitante?.direccion, [Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\\s]+')]],
-                        telefono: [this.usuario.referenciasSolicitante?.telefono, [Validators.required,
+                        referenciaSolicitante: [this.usuario.referenciasSolicitante[0]?.referenciaSolicitante, [Validators.required]],
+                        nombre: [this.usuario.referenciasSolicitante[0]?.nombre, [
+                            Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]
+                        ],
+                        apellido: [this.usuario.referenciasSolicitante[0]?.apellido, [
+                            Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]
+                        ],
+                        direccion: [this.usuario.referenciasSolicitante[0]?.direccion, [
+                            Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\\s]+')]
+                        ],
+                        telefono: [this.usuario.referenciasSolicitante[0]?.telefono, [Validators.required,
                             Validators.maxLength(10),
                             Validators.minLength(10),
                             Validators.pattern('^[0-9]*$')]],
+                        pais: [this.usuario.referenciasSolicitante[0]?.pais, [Validators.required]],
+                        provincia: [this.usuario.referenciasSolicitante[0]?.provincia, [Validators.required]],
+                        ciudad: [this.usuario.referenciasSolicitante[0]?.ciudad, [Validators.required]],
                     }),
                     this._formBuilder.group({
-                        referenciaSolicitante: [this.usuario.referenciasSolicitante?.referenciaSolicitante, [Validators.required]],
-                        nombre: [this.usuario.referenciasSolicitante?.nombre, [Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]],
-                        apellido: [this.usuario.referenciasSolicitante?.apellido, [Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]],
-                        direccion: [this.usuario.referenciasSolicitante?.direccion, [Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\\s]+')]],
-                        telefono: [this.usuario.referenciasSolicitante?.telefono, [Validators.required,
+                        referenciaSolicitante: [this.usuario.referenciasSolicitante[1]?.referenciaSolicitante, [Validators.required]],
+                        nombre: [this.usuario.referenciasSolicitante[1]?.nombre, [
+                            Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]
+                        ],
+                        apellido: [this.usuario.referenciasSolicitante[1]?.apellido, [
+                            Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]
+                        ],
+                        direccion: [this.usuario.referenciasSolicitante[1]?.direccion, [
+                            Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\\s]+')]
+                        ],
+                        telefono: [this.usuario.referenciasSolicitante[1]?.telefono, [Validators.required,
                             Validators.maxLength(10),
                             Validators.minLength(10),
                             Validators.pattern('^[0-9]*$')]],
+                        pais: [this.usuario.referenciasSolicitante[1]?.pais, [Validators.required]],
+                        provincia: [this.usuario.referenciasSolicitante[1]?.provincia, [Validators.required]],
+                        ciudad: [this.usuario.referenciasSolicitante[1]?.ciudad, [Validators.required]],
                     }),
                     this._formBuilder.group({
-                        referenciaSolicitante: [this.usuario.referenciasSolicitante?.referenciaSolicitante, [Validators.required]],
-                        nombre: [this.usuario.referenciasSolicitante?.nombre, [Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]],
-                        apellido: [this.usuario.referenciasSolicitante?.apellido, [Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]],
-                        direccion: [this.usuario.referenciasSolicitante?.direccion, [Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\\s]+')]],
-                        telefono: [this.usuario.referenciasSolicitante?.telefono, [Validators.required,
+                        referenciaSolicitante: [this.usuario.referenciasSolicitante[2]?.referenciaSolicitante, [Validators.required]],
+                        nombre: [this.usuario.referenciasSolicitante[2]?.nombre, [
+                            Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]
+                        ],
+                        apellido: [this.usuario.referenciasSolicitante[2]?.apellido, [
+                            Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]
+                        ],
+                        direccion: [this.usuario.referenciasSolicitante[2]?.direccion, [
+                            Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\\s]+')]
+                        ],
+                        telefono: [this.usuario.referenciasSolicitante[2]?.telefono, [Validators.required,
                             Validators.maxLength(10),
                             Validators.minLength(10),
                             Validators.pattern('^[0-9]*$')]],
+                        pais: [this.usuario.referenciasSolicitante[2]?.pais, [Validators.required]],
+                        provincia: [this.usuario.referenciasSolicitante[2]?.provincia, [Validators.required]],
+                        ciudad: [this.usuario.referenciasSolicitante[2]?.ciudad, [Validators.required]],
                     })
                 ], [ValidacionesPropias.parientesTelefonosConsumo, ValidacionesPropias.padresConsumo]),
                 ingresosSolicitante: this._formBuilder.group({
@@ -234,35 +282,38 @@ export class SolicitudCreditoComponent implements OnInit {
         // this.personaForm.patchValue(this.usuario);
         console.log('.....--', this.usuario);
         this.tipoViviendaSelected();
-        this.obtenerPaisOpciones();
-        this.obtenerProvinciaOpciones();
-        this.obtenerCiudadOpciones();
+        this.obtenerArrays();
         this.obtenerPaisTipoPersonaOpciones();
         this.obtenerProvinciaTipoPersonaOpciones();
         this.obtenerCiudadTipoPersonaOpciones();
         this.alfa = (this.tipoPersonaStorage === 'Alfa');
     }
 
-    obtenerPaisOpciones() {
-        this.paramService.obtenerListaPadres('PAIS').subscribe((info) => {
-            this.paisOpciones = info;
+    obtenerArrays() {
+        this.paramService.obtenerListaTipo('PAIS').subscribe((info) => {
+            this.paises = this.paisEmpresa = this.paisReferido1 = this.paisReferido2 = this.paisReferido3 = info;
+        });
+        this.paramService.obtenerListaTipo('PROVINCIA').subscribe((info) => {
+            this.provincias = this.provinciaEmpresa = this.provinciaReferido1 = this.provinciaReferido2 = this.provinciaReferido3 = info;
+        });
+        this.paramService.obtenerListaTipo('Ciudad').subscribe((info) => {
+            this.ciudades = this.ciudadEmpresa = this.ciudadReferido1 = this.ciudadReferido2 = this.ciudadReferido3 = info;
         });
     }
-
-    obtenerProvinciaOpciones() {
-        this.paramService
-            .obtenerListaHijos(this.personaForm.value.garante.pais, 'PAIS')
-            .subscribe((info) => {
-                this.provinciaOpciones = info;
-            });
+    obtenerPaisOpciones(event = null, variablePais) {
+        const idPadre = this.paises.find(item => item.nombre === event?.target.value)?._id;
+        this[variablePais] = this.paises.filter(item => item.idPadre === idPadre);
     }
 
-    obtenerCiudadOpciones() {
-        this.paramService
-            .obtenerListaHijos(this.personaForm.value.garante.provincia, 'PROVINCIA')
-            .subscribe((info) => {
-                this.ciudadOpciones = info;
-            });
+    obtenerProvinciaOpciones(event = null, variableProvincia) {
+        const idPadre = this.paises.find(item => item.nombre === event?.target.value)?._id;
+        this[variableProvincia] = this.provincias.filter(item => item.idPadre === idPadre);
+    }
+
+    obtenerCiudadOpciones(event = null, variableCiudad) {
+        console.log(variableCiudad);
+        const idPadre = this.provincias.find(item => item.nombre === event?.target.value)?._id;
+        this[variableCiudad] = this.ciudades.filter(item => item.idPadre === idPadre);
     }
 
     obtenerPaisTipoPersonaOpciones() {

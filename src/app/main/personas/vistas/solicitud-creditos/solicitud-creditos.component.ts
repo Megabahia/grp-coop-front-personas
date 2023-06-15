@@ -30,9 +30,21 @@ export class SolicitudCreditosComponent implements OnInit {
     public casado = false;
     public submitted = false;
     public usuario: User;
-    public paisOpciones;
-    public provinciaOpciones;
-    public ciudadOpciones;
+    public paises;
+    public provincias;
+    public ciudades;
+    public paisEmpresa;
+    public provinciaEmpresa;
+    public ciudadEmpresa;
+    public paisReferido1;
+    public provinciaReferido1;
+    public ciudadReferido1;
+    public paisReferido2;
+    public provinciaReferido2;
+    public ciudadReferido2;
+    public paisReferido3;
+    public provinciaReferido3;
+    public ciudadReferido3;
     public tipoParentesco = [];
     public listadoEstadoCivil;
     public porcentajeConyuge = 2;
@@ -135,7 +147,9 @@ export class SolicitudCreditosComponent implements OnInit {
                         apellidoFamiliar: ['', [Validators.required, Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]], //
                         telefonoFamiliar: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*$')]],
                         direccionFamiliar: ['', [Validators.required, Validators.minLength(8), Validators.pattern('[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ.\\s]+')]], //
-                        //
+                        pais: ['', [Validators.required]],
+                        provincia: ['', [Validators.required]],
+                        ciudad: ['', [Validators.required]],
                     }),
                     this._formBuilder.group({
                         tipoPariente: ['', [Validators.required]],
@@ -143,7 +157,9 @@ export class SolicitudCreditosComponent implements OnInit {
                         apellidoFamiliar: ['', [Validators.required, Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]], //
                         telefonoFamiliar: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*$')]],
                         direccionFamiliar: ['', [Validators.required, Validators.minLength(8), Validators.pattern('[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ.\\s]+')]], //
-                        //
+                        pais: ['', [Validators.required]],
+                        provincia: ['', [Validators.required]],
+                        ciudad: ['', [Validators.required]],
                     }),
                     this._formBuilder.group({
                         tipoPariente: ['', [Validators.required]],
@@ -151,7 +167,9 @@ export class SolicitudCreditosComponent implements OnInit {
                         apellidoFamiliar: ['', [Validators.required, Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]], //
                         telefonoFamiliar: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*$')]],
                         direccionFamiliar: ['', [Validators.required, Validators.minLength(8), Validators.pattern('[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ.\\s]+')]], //
-                        //
+                        pais: ['', [Validators.required]],
+                        provincia: ['', [Validators.required]],
+                        ciudad: ['', [Validators.required]],
                     }),
                 ], [ValidacionesPropias.parientesTelefonos, ValidacionesPropias.padres]),
                 comerciales: this._formBuilder.array([
@@ -204,9 +222,7 @@ export class SolicitudCreditosComponent implements OnInit {
                 this.casado = true;
             }
         }
-        this.obtenerPaisOpciones();
-        this.obtenerProvinciaOpciones();
-        this.obtenerCiudadOpciones();
+        this.obtenerArrays();
         this.obtenerEstadosCiviles();
         this.paramService.obtenerListaPadres('TIPO_PARIENTE').subscribe((info) => {
             this.tipoParentesco = info;
@@ -265,22 +281,31 @@ export class SolicitudCreditosComponent implements OnInit {
         this.montoInteresStorage = localStorage.getItem('montoInteres');
     }
 
-    obtenerPaisOpciones() {
-        this.paramService.obtenerListaPadres('PAIS').subscribe((info) => {
-            this.paisOpciones = info;
+    obtenerArrays() {
+        this.paramService.obtenerListaTipo('PAIS').subscribe((info) => {
+            this.paises = this.paisEmpresa = this.paisReferido1 = this.paisReferido2 = this.paisReferido3 = info;
+        });
+        this.paramService.obtenerListaTipo('PROVINCIA').subscribe((info) => {
+            this.provincias = this.provinciaEmpresa = this.provinciaReferido1 = this.provinciaReferido2 = this.provinciaReferido3 = info;
+        });
+        this.paramService.obtenerListaTipo('Ciudad').subscribe((info) => {
+            this.ciudades = this.ciudadEmpresa = this.ciudadReferido1 = this.ciudadReferido2 = this.ciudadReferido3 = info;
         });
     }
-
-    obtenerProvinciaOpciones() {
-        this.paramService.obtenerListaHijos(this.formSolicitud.get('pais').value, 'PAIS').subscribe((info) => {
-            this.provinciaOpciones = info;
-        });
+    obtenerPaisOpciones(event = null, variablePais) {
+        const idPadre = this.paises.find(item => item.nombre === event?.target.value)?._id;
+        this[variablePais] = this.paises.filter(item => item.idPadre === idPadre);
     }
 
-    obtenerCiudadOpciones() {
-        this.paramService.obtenerListaHijos(this.formSolicitud.get('provincia').value, 'PROVINCIA').subscribe((info) => {
-            this.ciudadOpciones = info;
-        });
+    obtenerProvinciaOpciones(event = null, variableProvincia) {
+        const idPadre = this.paises.find(item => item.nombre === event?.target.value)?._id;
+        this[variableProvincia] = this.provincias.filter(item => item.idPadre === idPadre);
+    }
+
+    obtenerCiudadOpciones(event = null, variableCiudad) {
+        console.log(variableCiudad);
+        const idPadre = this.provincias.find(item => item.nombre === event?.target.value)?._id;
+        this[variableCiudad] = this.ciudades.filter(item => item.idPadre === idPadre);
     }
 
     obtenerEstadosCiviles() {

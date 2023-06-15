@@ -70,4 +70,10 @@ export class ParametrizacionesService {
       { tipo }
     );
   }
+  obtenerListaTipo(tipo) {
+    return this._httpClient.post<any>(
+        `${environment.apiUrl}/central/param/listar/tipo/todos`,
+        { tipo }
+    );
+  }
 }

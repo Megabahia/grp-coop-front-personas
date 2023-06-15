@@ -642,6 +642,60 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
+                                                <label for="pais">País</label>
+                                                <select class="form-control select2" id="pais"
+                                                        formControlName="pais"
+                                                        (change)="obtenerProvinciaOpciones($event, 'provinciaEmpresa')">
+                                                    <option value="">- Seleccione -</option>
+                                                    <option *ngFor="let paisOp of paisEmpresa"
+                                                            value="{{paisOp.nombre}}">{{paisOp.nombre}}</option>
+                                                </select>
+                                                <div *ngIf="submittedPersona && persForm.pais.errors"
+                                                     class="invalid-feedback" style="display: block;">
+                                                    <div *ngIf="persForm.pais.errors.required">País es
+                                                        requerido
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="provincia">Provincia</label>
+                                                <select class="form-control select2" formControlName="provincia"
+                                                        id="provincia" (change)="obtenerCiudadOpciones($event, 'ciudadEmpresa') ">
+                                                    <option value="">- Seleccione -</option>
+                                                    <option *ngFor="let provinciaOp of provinciaEmpresa"
+                                                            value="{{provinciaOp.nombre}}">{{provinciaOp.nombre}}</option>
+
+                                                </select>
+                                                <div *ngIf="submittedPersona && persForm.provincia.errors"
+                                                     class="invalid-feedback" style="display: block;">
+                                                    <div *ngIf="persForm.provincia.errors.required">Provincia es
+                                                        requerido
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="ciudad">Ciudad</label>
+                                                <select class="form-control select2" formControlName="ciudad"
+                                                        id="ciudad">
+                                                    <option value="">- Seleccione -</option>
+                                                    <option *ngFor="let ciudadOp of ciudadEmpresa"
+                                                            value="{{ciudadOp.nombre}}">{{ciudadOp.nombre}}</option>
+
+                                                </select>
+                                                <div *ngIf="submittedPersona && persForm.ciudad.errors"
+                                                     class="invalid-feedback" style="display: block;">
+                                                    <div *ngIf="persForm.ciudad.errors.required">Ciudad es
+                                                        requerido
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
                                                 <label>Dirección del domicilio</label>
                                                 <input formControlName="direccionDomicilio" type="text"
                                                        class="form-control">
@@ -910,6 +964,70 @@
                                                                 </div>
                                                                 <div *ngIf="referencia.controls?.apellido?.errors.pattern || referencia.controls?.apellido?.errors.minlength">
                                                                     Ingrese solo letras
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="pais">País</label>
+                                                            <select class="form-control select2" id="pais1"
+                                                                    formControlName="pais"
+                                                                    (change)="obtenerProvinciaOpciones($event, 'provinciaReferido{{i+1}}')">
+                                                                <option value="">- Seleccione -</option>
+                                                                <option *ngFor="let paisOp of paisReferido1"
+                                                                        value="{{paisOp.nombre}}">{{paisOp.nombre}}</option>
+                                                            </select>
+                                                            <div *ngIf="submittedPersona && referencia.controls?.pais?.errors"
+                                                                 class="invalid-feedback" style="display: block;">
+                                                                <div *ngIf="referencia.controls?.pais.errors.required">País es
+                                                                    requerido
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="provincia">Provincia</label>
+                                                            <select class="form-control select2" formControlName="provincia"
+                                                                    id="provincia" (change)="obtenerCiudadOpciones($event, 'ciudadReferido' + (i+1)) ">
+                                                                <option value="">- Seleccione -</option>
+                                                                <option *ngFor="let provinciaOp of provinciaReferido1"
+                                                                        value="{{provinciaOp.nombre}}">{{provinciaOp.nombre}}</option>
+
+                                                            </select>
+                                                            <div *ngIf="submittedPersona && referencia.controls?.provincia?.errors"
+                                                                 class="invalid-feedback" style="display: block;">
+                                                                <div *ngIf="referencia.controls?.provincia?.errors.required">Provincia es
+                                                                    requerido
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="ciudad">Ciudad</label>
+                                                            <select class="form-control select2" formControlName="ciudad"
+                                                                    id="ciudad">
+                                                                <option value="">- Seleccione -</option>
+                                                                <ng-container *ngIf="(i+1)==1">
+                                                                    <option *ngFor="let ciudadOp of ciudadReferido1"
+                                                                            value="{{ciudadOp.nombre}}">{{ciudadOp.nombre}}</option>
+                                                                </ng-container>
+                                                                <ng-container *ngIf="(i+1)==2">
+                                                                    <option *ngFor="let ciudadOp of ciudadReferido2"
+                                                                            value="{{ciudadOp.nombre}}">{{ciudadOp.nombre}}</option>
+                                                                </ng-container>
+                                                                <ng-container *ngIf="(i+1)==3">
+                                                                    <option *ngFor="let ciudadOp of ciudadReferido3"
+                                                                            value="{{ciudadOp.nombre}}">{{ciudadOp.nombre}}</option>
+                                                                </ng-container>
+                                                            </select>
+                                                            <div *ngIf="submittedPersona && referencia.controls?.ciudad.errors"
+                                                                 class="invalid-feedback" style="display: block;">
+                                                                <div *ngIf="referencia.controls?.ciudad.errors.required">Ciudad es
+                                                                    requerido
                                                                 </div>
                                                             </div>
                                                         </div>
