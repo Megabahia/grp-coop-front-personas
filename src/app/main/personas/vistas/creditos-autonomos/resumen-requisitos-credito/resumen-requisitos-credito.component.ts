@@ -107,7 +107,7 @@ export class ResumenRequisitosCreditoComponent implements OnInit {
                 {'label': 'Planilla de luz del domicilio', 'valor': false},
                 {'label': 'Matricula del vehículo (en caso de aplicar)', 'valor': false},
                 {'label': 'Impuesto predial (en caso de aplicar)', 'valor': false},
-                {'label': 'Referencias de Tu Madrina o Padrino', 'valor': false},
+                {'label': 'Documentación de tu madrina o padrino', 'valor': false},
                 {'label': 'Autorización y validación de información', 'valor': false},
             ];
         }
