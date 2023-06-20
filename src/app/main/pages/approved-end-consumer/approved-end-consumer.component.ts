@@ -97,10 +97,14 @@ export class ApprovedEndConsumerComponent implements OnInit {
     }
 
     actionContinue() {
-        localStorage.setItem('simulador', 'ok');
-        localStorage.setItem('pagina', 'https://credicompra.com/');
-        this._routerN.navigate([
-            `/pages/simulador-de-credito`,
-        ]);
+        if (localStorage.getItem('alcance') === 'OMNIGLOBAL') {
+            window.location.href = 'https://credicompra.bigpuntos.com/';
+        } else {
+            localStorage.setItem('simulador', 'ok');
+            localStorage.setItem('pagina', 'https://credicompra.com/');
+            this._routerN.navigate([
+                `/pages/simulador-de-credito`,
+            ]);
+        }
     }
 }
