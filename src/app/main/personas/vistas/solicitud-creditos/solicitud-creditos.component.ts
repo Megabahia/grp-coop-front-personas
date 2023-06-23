@@ -71,6 +71,7 @@ export class SolicitudCreditosComponent implements OnInit {
         private toastr: ToastrService,
 
     ) {
+        this.usuario = this._coreMenuService.grpPersonasUser;
         this._unsubscribeAll = new Subject();
         this._coreConfigService.config = {
             layout: {
@@ -114,7 +115,6 @@ export class SolicitudCreditosComponent implements OnInit {
                 }
             });
         });
-        this.usuario = this._coreMenuService.grpPersonasUser;
         this.declareFormConyuge();
         this.formSolicitud = this._formBuilder.group(
             {
@@ -137,7 +137,7 @@ export class SolicitudCreditosComponent implements OnInit {
                 whatsapp: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*$')]],
                 conyuge: this._formBuilder.group({
                     nombreConyuge: [''], //
-                    telefonoConyuge: ['', [Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*$')]], //
+                    telefonoConyuge: ['', []], //
                     cedulaConyuge: [''],
                 }),
                 familiares: this._formBuilder.array([
@@ -209,6 +209,11 @@ export class SolicitudCreditosComponent implements OnInit {
             this.formSolicitud.patchValue({...this.usuario.persona.empresaInfo});
             if (this.usuario.persona.empresaInfo.esatdo_civil === 'Casado' || this.usuario.persona.empresaInfo.esatdo_civil === 'Unión libre') {
                 this.casado = true;
+                (this.formSolicitud as FormGroup).setControl('conyuge', this._formBuilder.group({
+                    nombreConyuge: ['', [Validators.required]],
+                    telefonoConyuge: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*$')]],
+                    cedulaConyuge: ['', [Validators.required, ValidacionesPropias.cedulaValido]],
+                }));
             }
         }
         if (localStorage.getItem('credito')) {
@@ -249,7 +254,7 @@ export class SolicitudCreditosComponent implements OnInit {
             (this.formSolicitud as FormGroup).setControl('conyuge', this._formBuilder.group({
                 nombreConyuge: ['', [Validators.required]],
                 telefonoConyuge: ['', [Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*$')]], //
-                cedulaConyuge: ['', [Validators.required]],
+                cedulaConyuge: ['', [Validators.required, ValidacionesPropias.cedulaValido]],
             }));
             console.log('control conyuge', this.formSolicitud.get('conyuge')['controls']);
             this.casado = true;
@@ -257,9 +262,9 @@ export class SolicitudCreditosComponent implements OnInit {
                 new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]));
         } else {
             (this.formSolicitud as FormGroup).setControl('conyuge', this._formBuilder.group({
-                nombreConyuge: ['',],
-                telefonoConyuge: ['',],
-                cedulaConyuge: ['',]
+                nombreConyuge: ['', []],
+                telefonoConyuge: ['', []],
+                cedulaConyuge: ['', []]
             }));
             this.formSolicitud.controls['sueldoConyuge'].setValue(0);
         }
@@ -389,11 +394,12 @@ export class SolicitudCreditosComponent implements OnInit {
         };
         this.calcularCredito();
 
+        const newJson = JSON.parse(localStorage.getItem('grpPersonasUser'));
+        newJson.persona.empresaInfo = values.empresaInfo;
+        localStorage.setItem('grpPersonasUser', JSON.stringify(newJson));
+        this._coreMenuService.grpPersonasUser = newJson;
         this._serviceUpdateEmpresa.actualiarEmpresa(values).subscribe((valor) => {
             console.log('guardado', valor);
-            const newJson = JSON.parse(localStorage.getItem('grpPersonasUser'));
-            newJson.persona.empresaInfo = values.empresaInfo;
-            localStorage.setItem('grpPersonasUser', JSON.stringify(newJson));
             this._router.navigate([`/personas/requisitosCredito/${localStorage.getItem('montoCreditoFinal')}`]);
         });
         console.log('values', this.formSolicitud.value, values);

@@ -11,7 +11,7 @@
                         <div class="misc-inner">
                             <div class="text-center">
                                 <a href="javascript:void(0);">
-                                    <img src="assets/images/logo/creditopagos.png" alt="brand-logo" width="300"/>
+                                    <img src="assets/images/logo/san-jose-v.png" alt="brand-logo" width="300"/>
                                     <h2 class="azul2 text-bold m-1">ESTÁ EN EL PASO 2 DE 3</h2>
                                     <h2 class="azul2 text-bold m-1">Complete sus datos</h2>
                                 </a>
@@ -20,7 +20,7 @@
                     </div>
                     <div class=" mb-2 text-center">
                         <h4>
-                            Para acceder a la Línea de Crédito para realizar pagos a sus proveedores,
+                            Para acceder a la Línea de Crédito para realizar pagos a sus proveedores y/o empleados,
                             por favor registre los siguientes datos:
                         </h4>
                     </div>
@@ -486,6 +486,9 @@
                                                                  style="display: block;">
                                                                 <div *ngIf="formSolicitud.get('conyuge')['controls'].cedulaConyuge.errors?.required">
                                                                     Cédula es requerido
+                                                                </div>
+                                                                <div *ngIf="formSolicitud.get('conyuge')['controls'].cedulaConyuge.errors?.cedulaInvalid">
+                                                                    Cédula no valida
                                                                 </div>
                                                             </div>
                                                         </div>

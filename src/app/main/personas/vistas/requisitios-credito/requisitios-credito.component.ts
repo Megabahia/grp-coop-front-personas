@@ -43,6 +43,7 @@ export class RequisitiosCreditoComponent implements OnInit {
         private rutaActiva: ActivatedRoute,
         private paramService: ParametrizacionesService,
     ) {
+        this.usuario = this._coreMenuService.grpPersonasUser;
         const casados = ['UNIÓN LIBRE', 'CASADO'];
         if (casados.find(item => item === localStorage.getItem('estadoCivil').toUpperCase())) {
             this.estadoCivil = 'CASADO_UNION_LIBRE';
@@ -124,6 +125,7 @@ export class RequisitiosCreditoComponent implements OnInit {
             }
         );
         if (localStorage.getItem('credito') !== null) {
+            console.log('entra if credito', JSON.parse(localStorage.getItem('grpPersonasUser')).persona.empresaInfo);
             this.solicitarCredito = JSON.parse(localStorage.getItem('credito'));
             this.solicitarCredito.tipoCredito = '';
             this.solicitarCredito.empresaInfo = JSON.parse(localStorage.getItem('grpPersonasUser')).persona.empresaInfo;
@@ -135,7 +137,7 @@ export class RequisitiosCreditoComponent implements OnInit {
 
     ngOnInit(): void {
 
-        this.usuario = this._coreMenuService.grpPersonasUser;
+        // this.usuario = this._coreMenuService.grpPersonasUser;
     }
 
     inicialidarSolicitudCredito(): SolicitarCredito {
@@ -170,6 +172,8 @@ export class RequisitiosCreditoComponent implements OnInit {
         this.solicitarCredito.razonSocial = this.usuario.persona.empresaInfo?.comercial;
         this.solicitarCredito.rucEmpresa = this.usuario.persona.empresaInfo?.rucEmpresa;
         this.solicitarCredito.empresaInfo = this.usuario.persona.empresaInfo;
+        console.log('this.usuario.persona.empresaInfo ', this.usuario.persona.empresaInfo);
+        console.log('enviar credito ', this.solicitarCredito.empresaInfo);
         if (localStorage.getItem('credito') !== null) {
             this._creditosAutonomosService.actualizarCredito(this.solicitarCredito).subscribe((info) => {
             });

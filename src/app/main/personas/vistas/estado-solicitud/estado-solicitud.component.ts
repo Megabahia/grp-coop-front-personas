@@ -85,6 +85,7 @@ export class EstadoSolicitudComponent implements OnInit {
     }
 
     cerrarSesion() {
+        window.location.href = 'https://todomegacentro.com/';
         localStorage.clear();
     }
 }
