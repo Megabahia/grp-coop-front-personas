@@ -36,6 +36,8 @@ export class RegistroComponent implements OnInit {
     private _unsubscribeAll: Subject<any>;
     public captcha: boolean;
     public siteKey: string;
+    public email = '';
+    public nombre = '';
 
     /**
      * Constructor
@@ -70,6 +72,10 @@ export class RegistroComponent implements OnInit {
                 enableLocalStorage: false
             }
         };
+        this._route.queryParams.subscribe(params => {
+            this.email = params['email'];
+            this.nombre = params['nombre'];
+        });
     }
 
     // convenience getter for easy access to form fields
@@ -150,7 +156,7 @@ export class RegistroComponent implements OnInit {
      */
     ngOnInit(): void {
         this.registerForm = this._formBuilder.group({
-            correo: ['', [Validators.required, Validators.email]],
+            correo: [this.email, [Validators.required, Validators.email]],
             // password: ['', [Validators.required]],
             // confirmPassword: ['', [Validators.required]],
             terminos: [false, [Validators.requiredTrue]]

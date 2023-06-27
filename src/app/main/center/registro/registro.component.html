@@ -24,7 +24,7 @@
         <!-- Login-->
         <div class="d-flex col-lg-4 align-items-center auth-bg px-2 p-lg-5">
             <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
-                <h2 class="card-title font-weight-bold mb-1">Registro</h2>
+                <h2 class="card-title font-weight-bold mb-1">Registro {{nombre}}</h2>
                 <p class="card-text mb-2 text-justify">
                     Recuerda que debes tener RUC, Facturación electrónica y Firma electrónica para acceder a tu Línea de
                     Crédito para pago a proveedores
@@ -41,7 +41,9 @@
                         <label class="form-label" for="login-correo">Correo</label>
                         <input type="text" formControlName="correo" class="form-control"
                                [ngClass]="{ 'is-invalid': submitted && f.correo.errors }" placeholder="admin@demo.com"
-                               aria-describedby="login-correo" autofocus="" tabindex="1"/>
+                               aria-describedby="login-correo" autofocus="" tabindex="1"
+                               disabled
+                        />
                         <div *ngIf="submitted && f.correo.errors" class="invalid-feedback">
                             <div *ngIf="f.correo.errors.required">Correo es requerido</div>
                             <div *ngIf="f.correo.errors.email">Debe ingresar una dirección de correo válida</div>
