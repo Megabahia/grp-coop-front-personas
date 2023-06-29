@@ -175,37 +175,43 @@ export class RequisitiosCreditoComponent implements OnInit {
         this.solicitarCredito.empresaInfo = this.usuario.persona.empresaInfo;
         console.log('this.usuario.persona.empresaInfo ', this.usuario.persona.empresaInfo);
         console.log('enviar credito ', this.solicitarCredito.empresaInfo);
-        let _id = '';
         if (localStorage.getItem('credito') !== null) {
             this._creditosAutonomosService.actualizarCredito(this.solicitarCredito).subscribe((info) => {
-                _id = info._id;
+                this._router.navigate(['/personas/finalizar-credito']);
             });
         } else {
-            this._creditosAutonomosService.crearCredito(this.solicitarCredito).subscribe((info) => {
-                _id = info._id;
-            });
-        }
-        const doc = new jsPDF();
+            const doc = new jsPDF();
 
-        const text = `Al autorizar el tratamiento de su información, usted acepta que la empresa Corporación OmniGlobal y todas sus marcas y/o productos a validar su información en las plataformas pertinentes.
+            const text = `Al autorizar el tratamiento de su información, usted acepta que la empresa Corporación OmniGlobal y todas sus marcas y/o productos a validar su información en las plataformas pertinentes.
         Al autorizar el tratamiento de su información, usted acepta que la empresa revise su información de Buró de Crédito para confirmar su estado crediticio.`;
 
-        const x = 10;
-        const y = 10;
-        const maxWidth = 180; // Ancho máximo del párrafo
+            const x = 10;
+            const y = 10;
+            const maxWidth = 180; // Ancho máximo del párrafo
 
-        doc.text(text, x, y, { maxWidth });
+            doc.text(text, x, y, { maxWidth });
 
-        // Convierte el documento en un archivo Blob
-        const pdfBlob = doc.output('blob');
+            // Convierte el documento en un archivo Blob
+            const pdfBlob = doc.output('blob');
 
-        // Crea un objeto FormData y agrega el archivo Blob
-        const formData: FormData = new FormData();
-        formData.append('autorizacion', pdfBlob, 'autorizacion.pdf');
-        formData.append('_id', _id);
-        this._creditosAutonomosService.updateCreditoFormData(formData).subscribe((info) => {
-            this._router.navigate(['/personas/finalizar-credito']);
-        });
+            // Crea un objeto FormData y agrega el archivo Blob
+            const formData: FormData = new FormData();
+            const creditoValores = Object.values(this.solicitarCredito);
+            const creditoLlaves = Object.keys(this.solicitarCredito);
+
+            creditoLlaves.map((llaves, index) => {
+                if (creditoValores[index]) {
+                    formData.delete(llaves);
+                    formData.append(llaves, creditoValores[index]);
+                }
+            });
+            formData.delete('empresaInfo');
+            formData.append('empresaInfo', JSON.stringify(this.solicitarCredito.empresaInfo));
+            formData.append('autorizacion', pdfBlob, 'autorizacion.pdf');
+            this._creditosAutonomosService.crearCredito(formData).subscribe((info) => {
+                this._router.navigate(['/personas/finalizar-credito']);
+            });
+        }
     }
 
 }
