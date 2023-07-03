@@ -212,22 +212,53 @@ export class CompletarPerfilComponent implements OnInit {
                         this._router.navigate(['/pages/solicitud-credito']);
                         return;
                     }
-                    if (info.info[0]?.estado === 'Aprobado') {
-                        localStorage.setItem('estadoCredito', 'aprobado');
-                    } else if (info.info[0]?.estado === 'Negado') {
-                        localStorage.setItem('estadoCredito', 'negado');
-                    } else if (info.info[0]?.estado === 'Por completar') {
-                        localStorage.setItem('estadoCredito', 'pendiente');
-                        localStorage.setItem('motivo', info.info[0].motivo);
-                    } else if (info.info[0]?.estado === 'Nuevo') {
-                        localStorage.setItem('estadoCredito', 'pendiente');
-                        localStorage.setItem('motivo', info.info[0].motivo);
+                    const aprobado = info.info.find((item) => {
+                        if (item?.estado === 'Aprobado') {
+                            localStorage.setItem('estadoCredito', 'aprobado');
+                            this._router.navigate(['/personas/estado-solicitud-credito']);
+                            return true;
+                        }
+                    });
+                    if (aprobado) {
                         this._router.navigate(['/personas/estado-solicitud-credito']);
                         return;
-                    } else {
-                        this._router.navigate(['/personas/solucitudCredito']);
                     }
-                    this._router.navigate(['/personas/estado-solicitud-credito']);
+                    const negado = info.info.find((item) => {
+                        if (item?.estado === 'Negado') {
+                            localStorage.setItem('estadoCredito', 'negado');
+                            this._router.navigate(['/personas/estado-solicitud-credito']);
+                            return true;
+                        }
+                    });
+                    if (negado) {
+                        this._router.navigate(['/personas/estado-solicitud-credito']);
+                        return;
+                    }
+                    const pendiente = info.info.find((item) => {
+                        if (item?.estado === 'Por completar') {
+                            localStorage.setItem('estadoCredito', 'pendiente');
+                            localStorage.setItem('motivo', item.motivo);
+                            this._router.navigate(['/personas/estado-solicitud-credito']);
+                            return true;
+                        }
+                    });
+                    if (pendiente) {
+                        this._router.navigate(['/personas/estado-solicitud-credito']);
+                        return;
+                    }
+                    const nuevo = info.info.find((item) => {
+                        if (item?.estado === 'Nuevo') {
+                            localStorage.setItem('estadoCredito', 'pendiente');
+                            localStorage.setItem('motivo', item.motivo);
+                            this._router.navigate(['/personas/estado-solicitud-credito']);
+                            return true;
+                        }
+                    });
+                    if (nuevo) {
+                        this._router.navigate(['/personas/estado-solicitud-credito']);
+                        return;
+                    }
+                    this._router.navigate(['/personas/solucitudCredito']);
                 });
                 console.log(usuario);
             } else {
@@ -241,22 +272,53 @@ export class CompletarPerfilComponent implements OnInit {
                         this._router.navigate(['/personas/solucitudCredito']);
                         return;
                     }
-                    if (info.info[0]?.estado === 'Aprobado') {
-                        localStorage.setItem('estadoCredito', 'aprobado');
-                    } else if (info.info[0]?.estado === 'Negado') {
-                        localStorage.setItem('estadoCredito', 'negado');
-                    } else if (info.info[0]?.estado === 'Por completar') {
-                        localStorage.setItem('estadoCredito', 'pendiente');
-                        localStorage.setItem('motivo', info.info[0].motivo);
-                    } else if (info.info[0]?.estado === 'Nuevo') {
-                        localStorage.setItem('estadoCredito', 'pendiente');
-                        localStorage.setItem('motivo', info.info[0].motivo);
+                    const aprobado = info.info.find((item) => {
+                        if (item?.estado === 'Aprobado') {
+                            localStorage.setItem('estadoCredito', 'aprobado');
+                            this._router.navigate(['/personas/estado-solicitud-credito']);
+                            return true;
+                        }
+                    });
+                    if (aprobado) {
                         this._router.navigate(['/personas/estado-solicitud-credito']);
                         return;
-                    } else {
-                        this._router.navigate(['/personas/solucitudCredito']);
                     }
-                    this._router.navigate(['/personas/estado-solicitud-credito']);
+                    const negado = info.info.find((item) => {
+                        if (item?.estado === 'Negado') {
+                            localStorage.setItem('estadoCredito', 'negado');
+                            this._router.navigate(['/personas/estado-solicitud-credito']);
+                            return true;
+                        }
+                    });
+                    if (negado) {
+                        this._router.navigate(['/personas/estado-solicitud-credito']);
+                        return;
+                    }
+                    const pendiente = info.info.find((item) => {
+                        if (item?.estado === 'Por completar') {
+                            localStorage.setItem('estadoCredito', 'pendiente');
+                            localStorage.setItem('motivo', item.motivo);
+                            this._router.navigate(['/personas/estado-solicitud-credito']);
+                            return true;
+                        }
+                    });
+                    if (pendiente) {
+                        this._router.navigate(['/personas/estado-solicitud-credito']);
+                        return;
+                    }
+                    const nuevo = info.info.find((item) => {
+                        if (item?.estado === 'Nuevo') {
+                            localStorage.setItem('estadoCredito', 'pendiente');
+                            localStorage.setItem('motivo', item.motivo);
+                            this._router.navigate(['/personas/estado-solicitud-credito']);
+                            return true;
+                        }
+                    });
+                    if (nuevo) {
+                        this._router.navigate(['/personas/estado-solicitud-credito']);
+                        return;
+                    }
+                    this._router.navigate(['/personas/solucitudCredito']);
                 });
             }
         });
