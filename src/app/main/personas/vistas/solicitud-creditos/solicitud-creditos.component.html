@@ -292,6 +292,29 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>
+                                                        Dirección de la empresa o negocio:
+                                                    </label>
+                                                    <input type="text" formControlName="direccionEmpresa"
+                                                           class="form-control"
+                                                           value="">
+                                                </div>
+                                                <div *ngIf="submitted && controlsFrom.direccionEmpresa.errors"
+                                                     class="invalid-feedback"
+                                                     style="display: block;">
+                                                    <div *ngIf="controlsFrom.direccionEmpresa.errors.required">
+                                                        Dirección es requerido
+                                                    </div>
+                                                    <div *ngIf="controlsFrom.direccionEmpresa.errors.minlength">
+                                                        Ingrese minimo 8 caracteres
+                                                    </div>
+                                                    <div *ngIf="controlsFrom.direccionEmpresa.errors.pattern">
+                                                        Ingrese solo letras
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>
                                                         Estado civil del representante legal o dueño de la empresa o
                                                         negocio:
                                                     </label>
