@@ -99,9 +99,15 @@ export class ApprovedEndConsumerBpComponent implements OnInit {
     }
 
     actionContinue() {
-        this._routerN.navigate([
-            `/`,
-        ]);
-        localStorage.setItem('simulador', 'ok');
+        if (localStorage.getItem('alcance') === 'OMNIGLOBAL') {
+            window.location.href = 'https://credicompra.bigpuntos.com/';
+        } else {
+            // localStorage.setItem('simulador', 'ok');
+            const credito = JSON.parse(localStorage.getItem('credito'));
+            localStorage.setItem('pagina', 'https://credicompra.com/');
+            this._routerN.navigate([
+                `/grp/registro?email=${credito.empresaInfo.correo}&nombre=${credito.empresaInfo.reprsentante}`,
+            ]);
+        }
     }
 }
