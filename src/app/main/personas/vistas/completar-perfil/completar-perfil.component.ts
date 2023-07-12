@@ -130,14 +130,15 @@ export class CompletarPerfilComponent implements OnInit {
     ngOnInit(): void {
         this.obtenerEmpresaId();
 
-        this.formSolicitud = this._formBuilder.group(
-            {
-                reprsentante: ['', [Validators.required, Validators.minLength(8), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]],
-                rucEmpresa: ['', [Validators.required, Validators.minLength(13),
-                    Validators.maxLength(13), Validators.pattern('^[0-9]+001$'), ValidacionesPropias.rucValido]],
-                comercial: ['', [Validators.required, Validators.minLength(4), Validators.pattern('[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\\s]+')]],
-                correo: [this.usuario.email, [Validators.required, Validators.email]],
-            });
+        this.formSolicitud = this._formBuilder.group({
+            reprsentante: [this.usuario.persona.empresaInfo.reprsentante ?? '', [Validators.required, Validators.minLength(8),
+                Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]],
+            rucEmpresa: [this.usuario.persona.empresaInfo.rucEmpresa ?? '', [Validators.required, Validators.minLength(13),
+                Validators.maxLength(13), Validators.pattern('^[0-9]+001$'), ValidacionesPropias.rucValido]],
+            comercial: [this.usuario.persona.empresaInfo.comercial ?? '', [Validators.required, Validators.minLength(4), Validators.pattern('[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\\s]+')]],
+            correo: [this.usuario.email ?? '', [Validators.required, Validators.email]],
+        });
+
         // Subscribe to config changes
         this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
             this.coreConfig = config;
@@ -199,128 +200,18 @@ export class CompletarPerfilComponent implements OnInit {
             const newJson = JSON.parse(localStorage.getItem('grpPersonasUser'));
             newJson.persona.empresaInfo = values.empresaInfo;
             localStorage.setItem('grpPersonasUser', JSON.stringify(newJson));
-            const simulador = localStorage.getItem('simulador');
-            if (simulador !== 'ok') {
-                const usuario = this._coreMenuService.grpPersonasUser;
-                this._creditosPreAprobadosService.obtenerListaCreditos({
-                    page: 0,
-                    page_size: 10,
-                    user_id: this.usuario.id
-                }).subscribe((info) => {
-                    console.log('creditos', info.info[0]?.estado);
-                    if (info.cont === 0) {
-                        this._router.navigate(['/pages/solicitud-credito']);
-                        return;
-                    }
-                    const aprobado = info.info.find((item) => {
-                        if (item?.estado === 'Aprobado') {
-                            localStorage.setItem('estadoCredito', 'aprobado');
-                            this._router.navigate(['/personas/estado-solicitud-credito']);
-                            return true;
-                        }
-                    });
-                    if (aprobado) {
-                        this._router.navigate(['/personas/estado-solicitud-credito']);
-                        return;
-                    }
-                    const negado = info.info.find((item) => {
-                        if (item?.estado === 'Negado') {
-                            localStorage.setItem('estadoCredito', 'negado');
-                            this._router.navigate(['/personas/estado-solicitud-credito']);
-                            return true;
-                        }
-                    });
-                    if (negado) {
-                        this._router.navigate(['/personas/estado-solicitud-credito']);
-                        return;
-                    }
-                    const pendiente = info.info.find((item) => {
-                        if (item?.estado === 'Por completar') {
-                            localStorage.setItem('estadoCredito', 'pendiente');
-                            localStorage.setItem('motivo', item.motivo);
-                            this._router.navigate(['/personas/estado-solicitud-credito']);
-                            return true;
-                        }
-                    });
-                    if (pendiente) {
-                        this._router.navigate(['/personas/estado-solicitud-credito']);
-                        return;
-                    }
-                    const nuevo = info.info.find((item) => {
-                        if (item?.estado === 'Nuevo') {
-                            localStorage.setItem('estadoCredito', 'pendiente');
-                            localStorage.setItem('motivo', item.motivo);
-                            this._router.navigate(['/personas/estado-solicitud-credito']);
-                            return true;
-                        }
-                    });
-                    if (nuevo) {
-                        this._router.navigate(['/personas/estado-solicitud-credito']);
-                        return;
-                    }
-                    this._router.navigate(['/personas/solucitudCredito']);
-                });
-                console.log(usuario);
-            } else {
-                this._creditosPreAprobadosService.obtenerListaCreditos({
-                    page: 0,
-                    page_size: 10,
-                    user_id: this.usuario.id
-                }).subscribe((info) => {
-                    console.log('creditos', info);
-                    if (info.cont === 0) {
-                        this._router.navigate(['/personas/solucitudCredito']);
-                        return;
-                    }
-                    const aprobado = info.info.find((item) => {
-                        if (item?.estado === 'Aprobado') {
-                            localStorage.setItem('estadoCredito', 'aprobado');
-                            this._router.navigate(['/personas/estado-solicitud-credito']);
-                            return true;
-                        }
-                    });
-                    if (aprobado) {
-                        this._router.navigate(['/personas/estado-solicitud-credito']);
-                        return;
-                    }
-                    const negado = info.info.find((item) => {
-                        if (item?.estado === 'Negado') {
-                            localStorage.setItem('estadoCredito', 'negado');
-                            this._router.navigate(['/personas/estado-solicitud-credito']);
-                            return true;
-                        }
-                    });
-                    if (negado) {
-                        this._router.navigate(['/personas/estado-solicitud-credito']);
-                        return;
-                    }
-                    const pendiente = info.info.find((item) => {
-                        if (item?.estado === 'Por completar') {
-                            localStorage.setItem('estadoCredito', 'pendiente');
-                            localStorage.setItem('motivo', item.motivo);
-                            this._router.navigate(['/personas/estado-solicitud-credito']);
-                            return true;
-                        }
-                    });
-                    if (pendiente) {
-                        this._router.navigate(['/personas/estado-solicitud-credito']);
-                        return;
-                    }
-                    const nuevo = info.info.find((item) => {
-                        if (item?.estado === 'Nuevo') {
-                            localStorage.setItem('estadoCredito', 'pendiente');
-                            localStorage.setItem('motivo', item.motivo);
-                            this._router.navigate(['/personas/estado-solicitud-credito']);
-                            return true;
-                        }
-                    });
-                    if (nuevo) {
-                        this._router.navigate(['/personas/estado-solicitud-credito']);
-                        return;
-                    }
-                    this._router.navigate(['/personas/solucitudCredito']);
-                });
-            }
+            this._coreMenuService.grpPersonasUser = newJson;
+            const usuario = this._coreMenuService.grpPersonasUser;
+            this._creditosPreAprobadosService.obtenerListaCreditos({
+                page: 0,
+                page_size: 10,
+                user_id: this.usuario.id,
+                estado: 'Aprobado',
+            }).subscribe((info) => {
+                console.log('creditos', info.info[0]?.estado);
+                this._router.navigate(['/personas/registroFirmaElectronica']);
+            });
+            console.log(usuario);
         });
     }
 }

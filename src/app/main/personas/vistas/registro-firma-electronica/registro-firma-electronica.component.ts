@@ -5,6 +5,8 @@ import {FirmaElectronicaService} from './firma-electronica.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
+import {Subject} from 'rxjs';
+import {CoreConfigService} from '../../../../../@core/services/config.service';
 
 @Component({
     selector: 'app-registro-firma-electronica',
@@ -19,13 +21,34 @@ export class RegistroFirmaElectronicaComponent implements OnInit {
     public submitted = false;
     public mensaje = 'Su información ha sido almacenada con éxito.';
 
+    // configuracion
+    public coreConfig: any;
+    private _unsubscribeAll: Subject<any>;
+
     constructor(
         private _formBuilder: FormBuilder,
         private _firmaElectronica: FirmaElectronicaService,
         private modalService: NgbModal,
         private _router: Router,
         private toastr: ToastrService,
+        private _coreConfigService: CoreConfigService,
     ) {
+        this._unsubscribeAll = new Subject();
+        this._coreConfigService.config = {
+            layout: {
+                navbar: {
+                    hidden: true,
+                },
+                footer: {
+                    hidden: true,
+                },
+                menu: {
+                    hidden: true,
+                },
+                customizer: false,
+                enableLocalStorage: false,
+            },
+        };
     }
 
     ngOnInit(): void {

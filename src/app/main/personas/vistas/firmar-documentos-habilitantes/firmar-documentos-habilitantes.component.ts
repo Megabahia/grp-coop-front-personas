@@ -6,6 +6,8 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ValidacionesPropias} from '../../../../../utils/customer.validators';
 import {ToastrService} from 'ngx-toastr';
+import {Subject} from 'rxjs';
+import {CoreConfigService} from '../../../../../@core/services/config.service';
 
 
 @Component({
@@ -27,6 +29,10 @@ export class FirmarDocumentosHabilitantesComponent implements OnInit {
     public firmaElectronica = new FormData();
     private creditSelected;
 
+    // configuracion
+    public coreConfig: any;
+    private _unsubscribeAll: Subject<any>;
+
     constructor(
         private _creditosPreAprobadosService: CreditosPreAprobadosService,
         private _coreMenuService: CoreMenuService,
@@ -34,7 +40,7 @@ export class FirmarDocumentosHabilitantesComponent implements OnInit {
         private _modalService: NgbModal,
         private _formBuilder: FormBuilder,
         private toastr: ToastrService,
-
+        private _coreConfigService: CoreConfigService,
     ) {
         this.usuario = this._coreMenuService.grpPersonasUser;
         this.documentoFirmaForm = this._formBuilder.group({
@@ -42,6 +48,22 @@ export class FirmarDocumentosHabilitantesComponent implements OnInit {
             claveFirma: ['', [Validators.required]],
             certificado: ['', [Validators.required, ValidacionesPropias.firmaElectronicaValido]],
         });
+        this._unsubscribeAll = new Subject();
+        this._coreConfigService.config = {
+            layout: {
+                navbar: {
+                    hidden: true,
+                },
+                footer: {
+                    hidden: true,
+                },
+                menu: {
+                    hidden: true,
+                },
+                customizer: false,
+                enableLocalStorage: false,
+            },
+        };
     }
 
     ngOnInit(): void {
@@ -98,6 +120,24 @@ export class FirmarDocumentosHabilitantesComponent implements OnInit {
             user_id: this.usuario.id
         }).subscribe((info) => {
             this.credito = info.info[0];
+            if (this.credito.solicitudCreditoFirmado && this.credito.solicitudCreditoFirmado &&
+                this.credito.solicitudCreditoFirmado && this.credito.solicitudCreditoFirmado) {
+                this._coreConfigService.config = {
+                    layout: {
+                        navbar: {
+                            hidden: false,
+                        },
+                        footer: {
+                            hidden: false,
+                        },
+                        menu: {
+                            hidden: false,
+                        },
+                        customizer: false,
+                        enableLocalStorage: false,
+                    },
+                };
+            }
             console.log(info);
         });
     }
@@ -111,6 +151,7 @@ export class FirmarDocumentosHabilitantesComponent implements OnInit {
         this.firmaElectronica = new FormData();
         this.documentoAFimar = docFirmado;
         console.log('pagareFirmado', docFirmado);
+        console.log('credito', credito);
         this.creditSelected = credito;
         this._modalService.open(modalSM, {
             centered: true,

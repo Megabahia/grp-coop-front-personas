@@ -9,6 +9,9 @@
 <div class="card mb-0">
   <div class="card-body">
     <div class="card profile-header mb-2">
+      <h3 style="color: red !important;">
+        ALERTA: por su seguridad validaremos la información de su Negocio y enviaremos un código al correo registrado.
+      </h3>
       <!-- profile cover photo -->
 
       <form class="auth-login-form mt-2" [formGroup]="formSolicitud">
@@ -23,7 +26,7 @@
               </label>
               <input type="text" formControlName="correo"
                      class="form-control"
-                     value="">
+                     disabled>
             </div>
             <div *ngIf="submitted && controlsFrom.correo.errors"
                  class="invalid-feedback"
