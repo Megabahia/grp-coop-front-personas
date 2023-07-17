@@ -70,6 +70,7 @@ import {
     ResumenRequisitosCreditoComponent
 } from './vistas/creditos-autonomos/resumen-requisitos-credito/resumen-requisitos-credito.component';
 import {ValidacionDatosComponent} from './vistas/creditos-autonomos/validacion-datos/validacion-datos.component';
+import { PagoEmpleadosComponent } from './vistas/pago-empleados/pago-empleados.component';
 
 const maskConfig: Partial<IConfig> = {
     validation: false,
@@ -304,6 +305,14 @@ const routes = [
         // data: { animation: 'auth' }
     },
     {
+        path: 'pagoEmpleados',
+        component: PagoEmpleadosComponent,
+        data: {activacion: [8, 1, 2, 3, 4, 5, 6, 7, 0]},
+        canActivate: [AuthGuard],
+
+        // data: { animation: 'auth' }
+    },
+    {
         path: 'saldoDisponible/:proveedor',
         component: SaldoProveedoresComponent,
         data: {activacion: [8, 1, 2, 3, 4, 5, 6, 7, 0]},
@@ -396,6 +405,7 @@ const routes = [
         SolicitudCreditoComponent,
         ResumenRequisitosCreditoComponent,
         ValidacionDatosComponent,
+        PagoEmpleadosComponent,
     ],
     imports: [
         CoreCommonModule,

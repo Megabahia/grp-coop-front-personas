@@ -67,6 +67,15 @@ export const menu: CoreMenu[] = [
         url: 'personas/pagoProveedores',
     },
     {
+        id: 'pagoEmpleados',
+        title: 'Pago a empleados',
+        // translate: 'MENU.HOME',
+        role: [Role.SuperMonedas],
+        type: 'item',
+        icon: '',
+        url: 'personas/pagoEmpleados',
+    },
+    {
         id: 'saldoDisponible',
         title: 'Estado de línia de crédito',
         // translate: 'MENU.HOME',

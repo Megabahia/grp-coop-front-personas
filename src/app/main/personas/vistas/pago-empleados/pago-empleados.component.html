@@ -1,0 +1,352 @@
+<div class="content-wrapper">
+    <div class="content-header row">
+        <div class="col-12 mb-2">
+            <div class="row breadcrumbs-top">
+                <div class="col-12">
+                    <h2 class="content-header-title float-left mb-0">Pago a proveedores</h2>
+                    <div class="breadcrumb-wrapper">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a class="text-primary" href="index.html">Inicio</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a class="text-primary" href="mis-premios.html">
+                                    Pago a proveedores
+                                </a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-body">
+        <!-- users list start -->
+        <section class="app-user-list">
+            <div class="card card-company-table">
+                <div class="row m-75">
+                    <div class="col-lg-10 col-xl-6">
+                        <label>Mostrar</label>
+                        <select class="form-control-sm" [(ngModel)]="page_size" (click)="obtenerPagosEmpleados()">
+                            <option value="4">4</option>
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+
+                    </div>
+                    <div class="col-lg-2 col-xl-6 text-right">
+                        <a (click)="toggleSidebar('guardarEmpresa','')" class="btn btn-primary">
+                            Añadir pagos
+                        </a>
+                    </div>
+                </div>
+                <div class="card-datatable table-responsive pt-0">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Nombres y Apellidos</th>
+                            <th>Cédula</th>
+                            <th>Celular</th>
+                            <th>Correo</th>
+                            <th>Código del empleado</th>
+                            <th>Mes de pago</th>
+                            <th>Año</th>
+                            <th>Monto a pagar</th>
+                            <th>ACCIONES</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr *ngFor="let pagoEmpleado of listaPagoEmpleados">
+                            <td>{{pagoEmpleado.nombresCompletos}}</td>
+                            <td>{{pagoEmpleado.cedula}}</td>
+                            <td>{{pagoEmpleado.celular}}</td>
+                            <td>{{pagoEmpleado.correo}}</td>
+                            <td>{{pagoEmpleado.codigoEmpleado}}</td>
+                            <td>{{pagoEmpleado.mesPago}}</td>
+                            <td>{{pagoEmpleado.anio}}</td>
+                            <td>{{pagoEmpleado.montoPagar}}</td>
+                            <td>
+                                <div *ngIf="pagoEmpleado.estado !== 'Inactivo'">
+                                    <a href="javascript:void(0);" container="body" placement="top" ngbTooltip="Editar"
+                                       data-toggle="modal" data-target="#modals-slide-in"
+                                       (click)="toggleSidebarEmpleado('editarPagoEmpleado', pagoEmpleado)">
+                                        <i class="mr-1" size="18" data-feather="edit"></i>
+                                    </a>
+                                    <a href="javascript:void(0);" container="body" placement="top" ngbTooltip="Eliminar"
+                                       (click)="seguroNegarModal(pagoEmpleado._id)" alt="Procesar">
+                                        <i class="mr-1" size="18" data-feather="trash"></i>
+                                    </a>
+                                    <a href="javascript:void(0);" container="body" placement="top" ngbTooltip="Firmar"
+                                       (click)="procesarPago(firmarMdl, pagoEmpleado)" alt="Procesar">
+                                        <i class="mr-1" size="18" data-feather="check-circle"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <ngb-pagination #paginator [collectionSize]="collectionSize" [(page)]="page" [pageSize]="page_size"
+                                [maxSize]="5" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+            </div>
+            <!-- list section end -->
+        </section>
+        <!-- users list ends -->
+    </div>
+</div>
+
+<ng-template #negarMdl let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">
+            ¡CUIDADO!
+        </h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss( 'Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>
+            El siguiente usuario es parte de tu empresa, si usted lo elimina, usted no podrá realizar pagos a este
+            empleado.
+        </p>
+        <p>
+            ¿Desea continuar?
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="enviarNegar()">Continuar</button>
+        <button type="button" class="btn btn-light" (click)="modal.dismiss( 'Cross click')">Cancelar</button>
+    </div>
+</ng-template>
+
+<ng-template #firmarMdl let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">
+            CONFIRMACIÓN DE PAGO
+        </h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss( 'Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form class="form form-horizontal" [formGroup]="documentoFirmaForm">
+            <div class="form-group">
+                <p>
+                    Usted va a realizar un pago de {{monto}} al empleado {{empleado}}
+                </p>
+            </div>
+            <div class="form-group">
+                <div class="col-12 ">
+                    <label for="claveFirma">Clave de la firma:</label>
+                    <input type="password" id="claveFirma"
+                           class="form-control"
+                           formControlName="claveFirma"
+                           placeholder="Ingrese la clave de la Firma Electrónica"/>
+                    <div *ngIf="submitted && documentoFirmar.claveFirma.errors"
+                         class="invalid-feedback"
+                         style="display: block;">
+                        <div *ngIf="documentoFirmar.claveFirma.errors.required">
+                            Clave de la firma es requerido
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-12 col-form-label">
+                    <label for="customFile1">Firma electronica: </label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input"
+                               id="customFile2" required
+                               formControlName="certificado"
+                               (change)="subirDocumento($event)"
+                               accept=".p12"/>
+                        <label class="custom-file-label"
+                               for="customFile2">{{documentoFirmaForm.get('certificado').value}}</label>
+                        <div *ngIf="submitted && documentoFirmar.certificado.errors"
+                             class="invalid-feedback"
+                             style="display: block;">
+                            <div *ngIf="documentoFirmar.certificado.errors.required">
+                                Firma electronica
+                                requerido
+                            </div>
+                            <div *ngIf="documentoFirmar.certificado.errors.extensionInvalida">
+                                La extension de la firma electronica es
+                                incorrecta, suba un archivo (.p12)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <p>
+            ¿Desea continuar?
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="enviarFirmar()">Continuar</button>
+        <button type="button" class="btn btn-light" (click)="modal.dismiss( 'Cross click')">Cancelar</button>
+    </div>
+</ng-template>
+
+<core-sidebar class="modal modal-slide-in sidebar-todo-modal fade" name="guardarEmpresa" overlayClass="modal-backdrop">
+    <div class="slideout-content">
+        <!-- Modal to add new user starts-->
+        <div class="modalsd modal-slide-in sdfade new-user-modal" id="modals-slide-in">
+            <div class="modal-dialog">
+                <form class="add-new-user modal-content pt-0">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            (click)="toggleSidebar('guardarEmpresa',0)">
+                        ×
+                    </button>
+                    <div class="modal-header mb-1">
+                        <h5 class="modal-title" id="exampleModalLabel">Añadir pagos de empleados</h5>
+                    </div>
+                    <div class="modal-body flex-grow-1">
+                        <div class="form-group">
+                            <label>Nombre comercial de la Empresa</label>
+                            <input class="form-control" name="nombreComercial"
+                                   [value]="usuario.persona.empresaInfo.comercial" type="text" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Anexo: <a href="/assets/anexos/Anexo_pago_a_empleados.xlsx">Anexo para pago a
+                                empleados</a></label>
+                            <label for="customFile1">Archivo pagos empleados</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="customFile1"
+                                       (change)="subirImagen($event)"
+                                       accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
+                                <label class="custom-file-label" for="customFile1">{{ imagen }}</label>
+                                <div *ngIf="!this.imagen && this.pagosEmpleadoSubmitted" class="invalid-feedback"
+                                     style="display: block;">
+                                    <div>Archivo es requerido</div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mr-1" (click)="subirArchivo()"><span *ngIf="cargando"
+                                                                                            class="spinner-border spinner-border-sm mr-1"></span>
+                            Guardar
+                        </button>
+                        <button (click)="toggleSidebar('guardarEmpresa','')" class="btn btn-outline-secondary"
+                                data-dismiss="modal">Cancelar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Modal to add new user Ends-->
+    </div>
+
+</core-sidebar>
+
+
+<core-sidebar class="modal modal-slide-in sidebar-todo-modal fade" name="editarPagoEmpleado"
+              overlayClass="modal-backdrop">
+    <div class="slideout-content">
+        <!-- Modal to add new user starts-->
+        <div class="modalsd modal-slide-in sdfade new-user-modal" id="modals-slide-in1">
+            <div class="modal-dialog">
+                <form class="add-new-user modal-content pt-0" [formGroup]="empleadoForm">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            (click)="toggleSidebarEmpleado('editarPagoEmpleado',0)">
+                        ×
+                    </button>
+                    <div class="modal-header mb-1">
+                        <h5 class="modal-title" id="exampleModalLabel1">Editar pago empleado</h5>
+                    </div>
+                    <div class="modal-body flex-grow-1">
+                        <div class="form-group">
+                            <label>Nombre empleado</label>
+                            <input class="form-control" name="nombresCompletos" formControlName="nombresCompletos"
+                                   type="text">
+                            <div *ngIf="pagoSubmitted && empForm.nombresCompletos.errors" class="invalid-feedback"
+                                 style="display: block;">
+                                <div *ngIf="empForm.nombresCompletos.errors.required">
+                                    Nombres es requerido
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Cedula empleado</label>
+                            <input class="form-control" name="cedula" formControlName="cedula"
+                                   type="text">
+                            <div *ngIf="pagoSubmitted && empForm.cedula.errors" class="invalid-feedback"
+                                 style="display: block;">
+                                <div *ngIf="empForm.cedula.errors.required">
+                                    Cedula es requerido
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Celular empleado</label>
+                            <input class="form-control" name="celular" formControlName="celular"
+                                   type="text">
+                            <div *ngIf="pagoSubmitted && empForm.celular.errors" class="invalid-feedback"
+                                 style="display: block;">
+                                <div *ngIf="empForm.celular.errors.required">
+                                    Celular es requerido
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Correo empleado</label>
+                            <input class="form-control" name="correo" formControlName="correo"
+                                   type="text">
+                            <div *ngIf="pagoSubmitted && empForm.correo.errors" class="invalid-feedback"
+                                 style="display: block;">
+                                <div *ngIf="empForm.correo.errors.required">
+                                    Correo es requerido
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Monto pagar empleado</label>
+                            <input class="form-control" name="montoPagar" formControlName="montoPagar"
+                                   type="text">
+                            <div *ngIf="pagoSubmitted && empForm.montoPagar.errors" class="invalid-feedback"
+                                 style="display: block;">
+                                <div *ngIf="empForm.montoPagar.errors.required">
+                                    Monto pagar empleado es requerido
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Codigo empleado</label>
+                            <input class="form-control" name="codigoEmpleado" formControlName="codigoEmpleado"
+                                   type="text">
+                            <div *ngIf="pagoSubmitted && empForm.codigoEmpleado.errors" class="invalid-feedback"
+                                 style="display: block;">
+                                <div *ngIf="empForm.codigoEmpleado.errors.required">
+                                    Codigo empleado es requerido
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Estado</label>
+                            <select class="form-control select2" formControlName="estado">
+                                <option value="">- Seleccione -</option>
+                                <option value="Activo"> Activo</option>
+                                <option value="Inactivo"> Inactivo</option>
+                            </select>
+                            <div *ngIf="pagoSubmitted && empForm.estado.errors" class="invalid-feedback"
+                                 style="display: block;">
+                                <div *ngIf="empForm.estado.errors.required">
+                                    Estado es requerido
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mr-1" (click)="actualizarPago()"> Guardar</button>
+                        <button (click)="toggleSidebarEmpleado('editarPagoEmpleado','')"
+                                class="btn btn-outline-secondary" data-dismiss="modal">Cancelar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Modal to add new user Ends-->
+    </div>
+
+</core-sidebar>
