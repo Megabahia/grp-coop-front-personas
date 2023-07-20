@@ -81,15 +81,23 @@ export class FirmarDocumentosHabilitantesComponent implements OnInit {
         this.firmaElectronica.append('claveFirma', this.documentoFirmaForm.value.claveFirma);
         this.firmaElectronica.append('' + this.documentoAFimar, this.creditSelected.solicitudCredito.slice(40));
         this.firmaElectronica.append('_id', this.creditSelected._id);
+        this.firmaElectronica.append('rucEmpresa', this.usuario.persona.empresaInfo.rucEmpresa);
         console.log('data', this.firmaElectronica.get('_id'));
-        this._creditosPreAprobadosService.actualizarCredito(this.firmaElectronica).subscribe((info) => {
-                this._modalService.dismissAll();
-                this.obtenerCreditos();
-            }, (error) => {
-                this.message = 'Ocurrió un error al enviar fimar';
-                this.abrirModal(this.mensajeModalConfirm);
-            }
-        );
+        this._creditosPreAprobadosService.verificarPropietarioFirma(this.firmaElectronica).subscribe((data) => {
+                if (data?.message) {
+                    this.message = data?.message;
+                    this.abrirModal(this.mensajeModalConfirm);
+                } else {
+                    this._creditosPreAprobadosService.actualizarCredito(this.firmaElectronica).subscribe((info) => {
+                            this._modalService.dismissAll();
+                            this.obtenerCreditos();
+                        }, (error) => {
+                            this.message = 'Ocurrió un error al enviar fimar';
+                            this.abrirModal(this.mensajeModalConfirm);
+                        }
+                    );
+                }
+        });
     }
 
     abrirModal(modal) {
@@ -120,8 +128,8 @@ export class FirmarDocumentosHabilitantesComponent implements OnInit {
             user_id: this.usuario.id
         }).subscribe((info) => {
             this.credito = info.info[0];
-            if (this.credito.solicitudCreditoFirmado && this.credito.solicitudCreditoFirmado &&
-                this.credito.solicitudCreditoFirmado && this.credito.solicitudCreditoFirmado) {
+            if (this.credito.solicitudCreditoFirmado && this.credito.pagareFirmado &&
+                this.credito.contratosCuentaFirmado && this.credito.tablaAmortizacionFirmado) {
                 this._coreConfigService.config = {
                     layout: {
                         navbar: {
@@ -137,6 +145,8 @@ export class FirmarDocumentosHabilitantesComponent implements OnInit {
                         enableLocalStorage: false,
                     },
                 };
+                this._coreMenuService.grpPersonasUser.documentosFirmados = 1;
+                localStorage.setItem('grpPersonasUser', JSON.stringify(this._coreMenuService.grpPersonasUser));
             }
             console.log(info);
         });

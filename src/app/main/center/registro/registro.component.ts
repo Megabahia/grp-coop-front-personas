@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CoreConfigService} from '@core/services/config.service';
@@ -7,7 +7,7 @@ import {takeUntil} from 'rxjs/operators';
 import {RegistroService} from './registro.service';
 import {Role} from '../../../auth/models/role';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {environment} from "../../../../environments/environment";
+import {environment} from '../../../../environments/environment';
 import {ToastrService} from 'ngx-toastr';
 
 
@@ -16,7 +16,7 @@ import {ToastrService} from 'ngx-toastr';
     templateUrl: './registro.component.html',
     styleUrls: ['./registro.component.scss']
 })
-export class RegistroComponent implements OnInit {
+export class RegistroComponent implements OnInit, OnDestroy {
     @ViewChild('mensajeModal') mensajeModal;
     @ViewChild('mensajeConfirmModal') mensajeConfirmModal;
     //  Public
@@ -52,6 +52,7 @@ export class RegistroComponent implements OnInit {
         private _router: Router,
         private _modalService: NgbModal,
         private toastr: ToastrService,
+        private modalService: NgbModal,
     ) {
         this.siteKey = environment.setKey;
         this._unsubscribeAll = new Subject();
@@ -198,5 +199,12 @@ export class RegistroComponent implements OnInit {
 
     captchaValidado(evento) {
         this.captcha = true;
+    }
+
+    mostrarTerminos(event: Event, modal: any) {
+        event.preventDefault();
+        this.modalService.open(modal, {
+            size: 'lg'
+        });
     }
 }

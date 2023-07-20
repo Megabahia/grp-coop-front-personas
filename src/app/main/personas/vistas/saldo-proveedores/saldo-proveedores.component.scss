@@ -1,0 +1,15 @@
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+  img.brand-logo {
+    width: 100%;
+    height: auto;
+  }
+}
+
+/* Estilos para computadoras */
+@media (min-width: 769px) {
+  img.brand-logo {
+    width: 500px; /* ajusta el tamaño según tus necesidades */
+    height: auto;
+  }
+}

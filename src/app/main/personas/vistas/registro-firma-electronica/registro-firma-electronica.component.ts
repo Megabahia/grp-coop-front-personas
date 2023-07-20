@@ -7,6 +7,8 @@ import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {Subject} from 'rxjs';
 import {CoreConfigService} from '../../../../../@core/services/config.service';
+import {CoreMenuService} from '../../../../../@core/components/core-menu/core-menu.service';
+import {User} from '../../../../auth/models';
 
 @Component({
     selector: 'app-registro-firma-electronica',
@@ -24,8 +26,10 @@ export class RegistroFirmaElectronicaComponent implements OnInit {
     // configuracion
     public coreConfig: any;
     private _unsubscribeAll: Subject<any>;
+    public usuario: User;
 
     constructor(
+        private _coreMenuService: CoreMenuService,
         private _formBuilder: FormBuilder,
         private _firmaElectronica: FirmaElectronicaService,
         private modalService: NgbModal,
@@ -49,19 +53,24 @@ export class RegistroFirmaElectronicaComponent implements OnInit {
                 enableLocalStorage: false,
             },
         };
+        this.usuario = this._coreMenuService.grpPersonasUser;
     }
 
     ngOnInit(): void {
         this.firmaForm = this._formBuilder.group(
             {
                 aceptarTerminos: ['', [Validators.required, Validators.requiredTrue]],
-                nombreRepresentante: ['', [Validators.required]],
-                apellidoRepresentante: ['', [Validators.required]],
-                correoRepresentante: ['', [Validators.required, Validators.email]],
-                telefonoRepresentante: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*$')]],
-                whatsappRepresentante: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*$')]],
-                tipoIdentificacionRepresentante: ['', [Validators.required]],
-                identificacionRepresentante: ['', [Validators.required]],
+                nombreRepresentante: [this.usuario.persona.nombres, [Validators.required]],
+                apellidoRepresentante: [this.usuario.persona.apellidos, [Validators.required]],
+                correoRepresentante: [this.usuario.persona.correoRepresentante, [Validators.required, Validators.email]],
+                telefonoRepresentante: [this.usuario.persona.celularRepresentante, [
+                    Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*$')]
+                ],
+                whatsappRepresentante: [this.usuario.persona.whatsappRepresentante, [
+                    Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*$')]
+                ],
+                tipoIdentificacionRepresentante: [this.usuario.persona.tipoIdentificacion, [Validators.required]],
+                identificacionRepresentante: [this.usuario.persona.cedulaRepresentante, [Validators.required]],
             });
 
     }
@@ -95,7 +104,8 @@ export class RegistroFirmaElectronicaComponent implements OnInit {
             return;
         }
         this._firmaElectronica.crear(this.firmaForm.value).subscribe((info) => {
-            console.log(info);
+            this._coreMenuService.grpPersonasUser.persona = {...this.usuario.persona, ...this.firmaForm.value};
+            localStorage.setItem('grpPersonasUser', JSON.stringify(this._coreMenuService.grpPersonasUser));
             this.abrirModal(this.mensajeModal);
         });
         console.log('paso');

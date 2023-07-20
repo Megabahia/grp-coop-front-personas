@@ -11,7 +11,7 @@ export class CreditosPreAprobadosService {
     }
 
     obtenerCreditoUsuario(datos) {
-        return this._httpClient.post<any>(`${environment.apiUrl}/corp/creditoPersonas/listOne/usuario/${datos.id}`, datos );
+        return this._httpClient.post<any>(`${environment.apiUrl}/corp/creditoPersonas/listOne/usuario/${datos.id}`, datos);
     }
 
     obtenerListaCreditos(datos) {
@@ -26,32 +26,11 @@ export class CreditosPreAprobadosService {
         return this._httpClient.post<any>(`${environment.apiUrl}/corp/empresas/list/empresas/array/`, datos);
     }
 
-    actualizarCredito( datos) {
-
+    actualizarCredito(datos) {
         return this._httpClient.post<any>(`${environment.apiUrl}/corp/creditoPersonas/update/${datos.get('_id')}`, datos);
     }
 
-    // obtenerListaEmpresasIfis(datos) {
-    //   return this._httpClient.post<any>(`${environment.apiUrl}/corp/empresas/list/ifis`, datos);
-    // }
-    // obtenerDatosRuc(id) {
-    //   return this._httpClient.get<any>(`${environment.apiUrl}/personas/rucPersonas/listOne/${id}`);
-    // }
-    // actualizarDatosRuc(datos) {
-    //   return this._httpClient.post<any>(`${environment.apiUrl}/personas/rucPersonas/update/${datos.user_id}`, datos);
-    // }
-    // obtenerEmpresa(id){
-    //   return this._httpClient.get<any>(`${environment.apiUrl}/corp/empresas/listOne/${id}` );
-    // }
-    // guardarInformacion(datos) {
-    //   return this._httpClient.post<any>(`${environment.apiUrl}/personas/personas/updateSinImagen/${datos.user_id}`, datos);
-    // }
-    // obtenerInformacion(id) {
-    //   return this._httpClient.get<any>(`${environment.apiUrl}/personas/personas/listOne/${id}`,);
-    // }
-    // crearCredito(datos){
-    //   return this._httpClient.post<any>(`${environment.apiUrl}/corp/creditoPersonas/create/`, datos);
-    // }
-
-
+    verificarPropietarioFirma(datos) {
+        return this._httpClient.post<any>(`${environment.apiUrl}/corp/creditoPersonas/verificarPropietarioFirma`, datos);
+    }
 }

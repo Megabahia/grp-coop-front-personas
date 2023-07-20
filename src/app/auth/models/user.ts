@@ -15,4 +15,5 @@ export class User {
   identificacion: any;
   empresaInfo: any;
   creditoAprobado?: any;
+  documentosFirmados?: number;
 }

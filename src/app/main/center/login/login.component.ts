@@ -143,6 +143,14 @@ export class LoginComponent implements OnInit, OnDestroy {
                             page_size: 10,
                             user_id: data.id
                         }).subscribe((info) => {
+                            if (info.info[0].solicitudCreditoFirmado && info.info[0].pagareFirmado &&
+                                info.info[0].contratosCuentaFirmado && info.info[0].tablaAmortizacionFirmado) {
+                                this._coreMenuService.grpPersonasUser.documentosFirmados = 1;
+                                localStorage.setItem('grpPersonasUser', JSON.stringify(this._coreMenuService.grpPersonasUser));
+                            } else {
+                                this._coreMenuService.grpPersonasUser.documentosFirmados = 0;
+                                localStorage.setItem('grpPersonasUser', JSON.stringify(this._coreMenuService.grpPersonasUser));
+                            }
                             console.log('creditos', info.info[0]?.estado);
                             if (info.cont === 0) {
                                 this._router.navigate(['/personas/completarPerfil']);

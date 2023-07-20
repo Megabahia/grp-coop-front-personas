@@ -3,6 +3,8 @@ import {Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot} from '
 
 import {AuthenticationService} from 'app/auth/service';
 import moment from 'moment';
+import {CoreConfigService} from '../../../@core/services/config.service';
+import {CoreMenuService} from '../../../@core/components/core-menu/core-menu.service';
 
 @Injectable({providedIn: 'root'})
 export class AuthGuard implements CanActivate {
@@ -11,7 +13,10 @@ export class AuthGuard implements CanActivate {
      * @param {Router} _router
      * @param {AuthenticationService} _authenticationService
      */
-    constructor(private _router: Router, private _authenticationService: AuthenticationService) {
+    constructor(private _router: Router, private _authenticationService: AuthenticationService,
+                private _coreConfigService: CoreConfigService,
+                private _coreMenuService: CoreMenuService,
+    ) {
     }
 
     // canActivate
@@ -27,6 +32,39 @@ export class AuthGuard implements CanActivate {
                 this._authenticationService.logout();
             }
 
+            if (grpPersonasUser.documentosFirmados === 0) {
+                this._coreConfigService.config = {
+                    layout: {
+                        navbar: {
+                            hidden: true,
+                        },
+                        footer: {
+                            hidden: true,
+                        },
+                        menu: {
+                            hidden: true,
+                        },
+                        customizer: true,
+                        enableLocalStorage: true,
+                    },
+                };
+            } else {
+                this._coreConfigService.config = {
+                    layout: {
+                        navbar: {
+                            hidden: false,
+                        },
+                        footer: {
+                            hidden: false,
+                        },
+                        menu: {
+                            hidden: false,
+                        },
+                        customizer: false,
+                        enableLocalStorage: false,
+                    },
+                };
+            }
 
             // console.log(fechaActual.diff());
 

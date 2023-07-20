@@ -87,7 +87,7 @@ const routes = [
     },
     {
         path: 'inicio',
-        component: listadoEstadoCreditos,
+        component: EstadoSolicitudComponent,
         data: {roles: [Role.SuperMonedas], activacion: [8, 0]},
         canActivate: [AuthGuard],
         // data: { animation: 'auth' }

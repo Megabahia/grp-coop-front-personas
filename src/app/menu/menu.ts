@@ -12,15 +12,15 @@ export const menu: CoreMenu[] = [
         url: 'personas/inicio',
     },
 
-    {
-        id: 'microCreditosPreaprobados',
-        title: 'Créditos pre-aprobados',
-        // translate: 'MENU.HOME',
-        role: [Role.SuperMonedas],
-        type: 'item',
-        icon: '',
-        url: 'micro-creditos/preaprobados',
-    },
+    // {
+    //     id: 'microCreditosPreaprobados',
+    //     title: 'Créditos pre-aprobados',
+    //     // translate: 'MENU.HOME',
+    //     role: [Role.SuperMonedas],
+    //     type: 'item',
+    //     icon: '',
+    //     url: 'micro-creditos/preaprobados',
+    // },
     // {
     //     id: 'solucitudCredito',
     //     title: 'Solicitud de crédito',

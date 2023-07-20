@@ -16,124 +16,129 @@
                     <div class="content-body">
                         <!-- users list start -->
                         <section class="app-user-list">
-                            <div class="card-datatable table-responsive pt-0">
-                                <table class="table table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th>Fecha del Documento</th>
-                                        <th>Solicitud credito</th>
-                                        <th>Pagaré</th>
-                                        <th>Contratos cuenta</th>
-                                        <th>Tabla amortización</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>{{transformarFecha(credito?.created_at)}}</td>
-                                        <td>
+                            <div class="box d-flex justify-content-center">
+                                <div class="flex-basis text-center">
+                                    <h4>
+                                        Fecha del Documento
+                                    </h4>
+                                    <div>
+                                        {{transformarFecha(credito?.created_at)}}
+                                    </div>
+                                </div>
+                                <div class="flex-basis">
+                                    <h4>
+                                        Solicitud credito
+                                    </h4>
+                                    <div class="text-center">
+                                        <a *ngIf="credito?.solicitudCredito" href="{{credito?.solicitudCredito}}"
+                                           class="mr-1"
+                                           target="_blank">Ver</a>
+                                        <br>
+                                        <div
+                                                class="badge badge-pill my-1"
+                                                [ngClass]="credito?.solicitudCreditoFirmado ?'badge-light-success':'badge-light-warning' "
+                                        >
+                                                                                        <span *ngIf="credito?.solicitudCreditoFirmado"
+                                                                                              [class]="'mr-50 m-1' "> Firmado</span>
+                                            <span *ngIf="!credito?.solicitudCreditoFirmado"
+                                                  [class]="'mr-50 m-1' "> Pendiente </span>
+                                        </div>
 
-                                            <div class="text-center">
-                                                <a href="{{credito?.solicitudCreditoFirmado}}" class="mr-1"
-                                                   target="_blank">Ver</a>
-                                                <br>
-                                                <div
-                                                        class="badge badge-pill my-1"
-                                                        [ngClass]="credito?.solicitudCreditoFirmado ?'badge-light-success':'badge-light-warning' "
-                                                >
-                                                    <span *ngIf="credito?.solicitudCreditoFirmado"
-                                                          [class]="'mr-50 m-1' "> Firmado</span>
-                                                    <span *ngIf="!credito?.solicitudCreditoFirmado"
-                                                          [class]="'mr-50 m-1' "> Pendiente </span>
-                                                </div>
-
-                                                <div *ngIf="!credito?.solicitudCreditoFirmado">
-                                                    Firmar:  <i
-                                                        (click)="modalOpenSM(modalSM, credito,'solicitudCreditoFirmado')"
-                                                        ngbTooltip="Firmar"
-                                                        class="feather mx-50 font-medium-3"
-                                                        [ngClass]="'icon-check-square text-success'"
-                                                ></i>
-                                                </div>
+                                        <div *ngIf="!credito?.solicitudCreditoFirmado">
+                                            Firmar:  <i
+                                                (click)="modalOpenSM(modalSM, credito,'solicitudCreditoFirmado')"
+                                                ngbTooltip="Firmar"
+                                                class="feather mx-50 font-medium-3"
+                                                [ngClass]="'icon-check-square text-success'"
+                                        ></i>
+                                        </div>
 
 
+                                    </div>
+                                </div>
+                                <div class="flex-basis text-center" style="width: 150px">
+                                    <h4>
+                                        Pagaré
+                                    </h4>
+                                        <div class="text-center">
+                                            <a *ngIf="credito?.pagare" href="{{credito?.pagare}}"
+                                               target="_blank">Ver</a>
+                                            <br>
+                                            <div
+                                                    class="badge badge-pill my-1"
+                                                    [ngClass]="credito?.pagareFirmado ?'badge-light-success':'badge-light-warning' "
+                                            >
+                                                                                            <span *ngIf="credito?.pagareFirmado"
+                                                                                                  [class]="'mr-50 m-1' "> Firmado</span>
+                                                <span *ngIf="!credito?.pagareFirmado"
+                                                      [class]="'mr-50 m-1' "> Pendiente </span>
                                             </div>
 
-                                        </td>
-                                        <td>
-                                            <div class="text-center">
-                                                <a href="{{credito?.pagareFirmado}}" target="_blank">Ver</a>
-                                                <br>
-                                                <div
-                                                        class="badge badge-pill my-1"
-                                                        [ngClass]="credito?.pagareFirmado ?'badge-light-success':'badge-light-warning' "
-                                                >
-                                                    <span *ngIf="credito?.pagareFirmado"
-                                                          [class]="'mr-50 m-1' "> Firmado</span>
-                                                    <span *ngIf="!credito?.pagareFirmado"
-                                                          [class]="'mr-50 m-1' "> Pendiente </span>
-                                                </div>
-
-                                                <div *ngIf="!credito?.pagareFirmado">
-                                                    Firmar:  <i (click)="modalOpenSM(modalSM, credito,'pagareFirmado')"
-                                                                ngbTooltip="Firmar"
-                                                                class="feather mx-50 font-medium-3"
-                                                                [ngClass]="'icon-check-square text-success'"
-                                                ></i>
-                                                </div>
+                                            <div *ngIf="!credito?.pagareFirmado">
+                                                Firmar:  <i (click)="modalOpenSM(modalSM, credito,'pagareFirmado')"
+                                                            ngbTooltip="Firmar"
+                                                            class="feather mx-50 font-medium-3"
+                                                            [ngClass]="'icon-check-square text-success'"
+                                            ></i>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-center">
-                                                <a href="{{credito?.contratosCuentaFirmado}}" target="_blank">Ver</a>
-                                                <br>
-                                                <div
-                                                        class="badge badge-pill my-1"
-                                                        [ngClass]="credito?.contratosCuentaFirmado ?'badge-light-success':'badge-light-warning' "
-                                                >
-                                                    <span *ngIf="credito?.contratosCuentaFirmado"
-                                                          [class]="'mr-50 m-1' "> Firmado</span>
-                                                    <span *ngIf="!credito?.contratosCuentaFirmado"
-                                                          [class]="'mr-50 m-1' "> Pendiente </span>
-                                                </div>
+                                        </div>
+                                </div>
+                                <div class="flex-basis">
+                                    <h4>
+                                        Contratos cuenta
+                                    </h4>
+                                    <div class="text-center">
+                                        <a *ngIf="credito?.contratosCuenta" href="{{credito?.contratosCuenta}}"
+                                           target="_blank">Ver</a>
+                                        <br>
+                                        <div
+                                                class="badge badge-pill my-1"
+                                                [ngClass]="credito?.contratosCuentaFirmado ?'badge-light-success':'badge-light-warning' "
+                                        >
+                                                                                        <span *ngIf="credito?.contratosCuentaFirmado"
+                                                                                              [class]="'mr-50 m-1' "> Firmado</span>
+                                            <span *ngIf="!credito?.contratosCuentaFirmado"
+                                                  [class]="'mr-50 m-1' "> Pendiente </span>
+                                        </div>
 
-                                                <div *ngIf="!credito?.contratosCuentaFirmado">
-                                                    Firmar:  <i
-                                                        (click)="modalOpenSM(modalSM, credito,'contratosCuentaFirmado')"
-                                                        ngbTooltip="Firmar"
-                                                        class="feather mx-50 font-medium-3"
-                                                        [ngClass]="'icon-check-square text-success'"
-                                                ></i>
-                                                </div>
-                                            </div>
-                                            <!--                                            <a href="{{credito?.contratosCuentaFirmado}}" target="_blank">Ver</a>-->
-                                        </td>
-                                        <td>
-                                            <div class="text-center">
-                                                <a href="{{credito?.tablaAmortizacionFirmado}}" target="_blank">Ver</a>
-                                                <br>
-                                                <div
-                                                        class="badge badge-pill my-1"
-                                                        [ngClass]="credito?.tablaAmortizacionFirmado ?'badge-light-success':'badge-light-warning' "
-                                                >
-                                                    <span *ngIf="credito?.tablaAmortizacionFirmado"
-                                                          [class]="'mr-50 m-1' "> Firmado</span>
-                                                    <span *ngIf="!credito?.tablaAmortizacionFirmado"
-                                                          [class]="'mr-50 m-1' "> Pendiente </span>
-                                                </div>
+                                        <div *ngIf="!credito?.contratosCuentaFirmado">
+                                            Firmar:  <i
+                                                (click)="modalOpenSM(modalSM, credito,'contratosCuentaFirmado')"
+                                                ngbTooltip="Firmar"
+                                                class="feather mx-50 font-medium-3"
+                                                [ngClass]="'icon-check-square text-success'"
+                                        ></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex-basis">
+                                    <h4>
+                                        Tabla amortización
+                                    </h4>
+                                    <div class="text-center">
+                                        <a *ngIf="credito?.tablaAmortizacion" href="{{credito?.tablaAmortizacion}}"
+                                           target="_blank">Ver</a>
+                                        <br>
+                                        <div
+                                                class="badge badge-pill my-1"
+                                                [ngClass]="credito?.tablaAmortizacionFirmado ?'badge-light-success':'badge-light-warning' "
+                                        >
+                                                                                        <span *ngIf="credito?.tablaAmortizacionFirmado"
+                                                                                              [class]="'mr-50 m-1' "> Firmado</span>
+                                            <span *ngIf="!credito?.tablaAmortizacionFirmado"
+                                                  [class]="'mr-50 m-1' "> Pendiente </span>
+                                        </div>
 
-                                                <div *ngIf="!credito?.tablaAmortizacionFirmado">
-                                                    Firmar:  <i
-                                                        (click)="modalOpenSM(modalSM, credito,'tablaAmortizacionFirmado')"
-                                                        ngbTooltip="Firmar"
-                                                        class="feather mx-50 font-medium-3"
-                                                        [ngClass]="'icon-check-square text-success'"
-                                                ></i>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                        <div *ngIf="!credito?.tablaAmortizacionFirmado">
+                                            Firmar:  <i
+                                                (click)="modalOpenSM(modalSM, credito,'tablaAmortizacionFirmado')"
+                                                ngbTooltip="Firmar"
+                                                class="feather mx-50 font-medium-3"
+                                                [ngClass]="'icon-check-square text-success'"
+                                        ></i>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <!--                            <ngb-pagination #paginator [collectionSize]="collectionSize" [(page)]="page"-->
                             <!--                                            [maxSize]="5" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>-->

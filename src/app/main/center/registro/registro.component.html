@@ -26,8 +26,8 @@
             <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
                 <h2 class="card-title font-weight-bold mb-1">Registro {{nombre}}</h2>
                 <p class="card-text mb-2 text-justify">
-                    Recuerda que debes tener RUC, Facturación electrónica y Firma electrónica para acceder a tu Línea de
-                    Crédito para pago a proveedores
+                    Recuerda que debes tener RUC, Facturación electrónica y Firma electrónica para acceder a tu
+                    Línea de Crédito para realizar pagos a tus proveedores y/o empleados
                 </p>
 
                 <ngb-alert [type]="'danger'" [dismissible]="false" *ngIf="error">
@@ -105,7 +105,7 @@
                                    type="checkbox" tabindex="3"/>
                             <label class="custom-control-label" for="remember-me"><span>Aceptar</span><a
                                     class="text-primary"
-                                    routerLink="/grp/login"><span>&nbsp;términos y condiciones</span></a></label>
+                                    href="#" target="_self" (click)="mostrarTerminos($event, modalTerminos)"><span>&nbsp;términos y condiciones</span></a></label>
                             <div *ngIf="submitted && f.terminos.errors" class="invalid-feedback"
                                  [ngClass]="{ 'd-block': submitted && f.terminos.errors }">
                                 <div *ngIf="f.terminos.errors">Acepte los términos y condiciones para continuar</div>
@@ -151,5 +151,27 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-light" (click)="redirigir()">Continuar</button>
+    </div>
+</ng-template>
+
+<ng-template #modalTerminos let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Autorización de revisión y tratamiento de información</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss( 'Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div style="text-align: center;">
+            <p>
+                Al autorizar el tratamiento de su información, usted acepta que la empresa Corporación OmniGlobal y todas sus marcas y/o productos a validar su información en las plataformas pertinentes.
+            </p>
+            <p>
+                Al autorizar el tratamiento de su información, usted acepta que la empresa revise su información de Buró de Crédito para confirmar su estado crediticio.
+            </p>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.dismiss( 'Cross click')">Salir</button>
     </div>
 </ng-template>

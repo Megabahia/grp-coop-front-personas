@@ -50,7 +50,7 @@
             <!-- list section start -->
             <div class="card">
                 <div class="modal-header mb-1">
-                    <h5 class="modal-title" id="exampleModalLabel">INGRESA LOS DATOS DE LA FACTURA A PAGAR</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Ingrese los datos de la factura para realizar el pago a su proveedor</h5>
                 </div>
                 <div class="card-body mx-1">
                     <form class="form form-horizontal" [formGroup]="pagoFacturaForm" (submit)="pagar()">
@@ -68,7 +68,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="customFile1">Número de la factura</label>
+                            <label for="customFile1">Cargue la factura pendiente de pago</label>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="customFile1" required
                                        formControlName="factura"
@@ -78,8 +78,8 @@
                                 <div *ngIf="submitted && pagoFactura.factura.errors"
                                      class="invalid-feedback"
                                      style="display: block;">
-                                    <div *ngIf="pagoFactura.factura.errors.required">Numero de factura
-                                        requerido
+                                    <div *ngIf="pagoFactura.factura.errors.required">
+                                        Cargue la factura pendiente de pago requerido
                                     </div>
                                 </div>
                             </div>

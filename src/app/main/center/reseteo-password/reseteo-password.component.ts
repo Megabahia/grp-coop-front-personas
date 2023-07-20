@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { CoreConfigService } from '../../../../@core/services/config.service';
@@ -7,7 +7,7 @@ import { RecuperarPassService } from '../recuperar-pass/recuperar-pass.service';
 import { Subject } from 'rxjs';
 import { ReseteoPasswordService } from './reseteo-password.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {environment} from "../../../../environments/environment";
+import {environment} from '../../../../environments/environment';
 import {ToastrService} from 'ngx-toastr';
 
 @Component({
@@ -15,7 +15,7 @@ import {ToastrService} from 'ngx-toastr';
   templateUrl: './reseteo-password.component.html',
   styleUrls: ['./reseteo-password.component.scss']
 })
-export class ReseteoPasswordComponent implements OnInit {
+export class ReseteoPasswordComponent implements OnInit, OnDestroy {
   @ViewChild('mensajeModalConfirm') mensajeModalConfirm;
 
   // Public
@@ -29,7 +29,7 @@ export class ReseteoPasswordComponent implements OnInit {
   public confirmPasswordTextType: boolean;
   public passwordSimilar: boolean;
   public token;
-  public mensaje = "";
+  public mensaje = '';
   public email;
   // Private
   private _unsubscribeAll: Subject<any>;
@@ -92,7 +92,9 @@ export class ReseteoPasswordComponent implements OnInit {
     });
 
     this.forgotPasswordForm = this._formBuilder.group({
-      password: ['', [Validators.required]],
+      password: ['', [Validators.minLength(8),
+        Validators.pattern('(?=[A-Za-z0-9]+$)^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,}).*$'),
+        Validators.required]],
       confirmPassword: ['', [Validators.required]]
     });
 
@@ -131,16 +133,16 @@ export class ReseteoPasswordComponent implements OnInit {
     ).subscribe((info) => {
       this.error = null;
       if (info.status) {
-        this._reseteoPasswordService.updateUsuarioByEmail({email: this.email}).subscribe(info=>{
-          this.mensaje = "Contraseña actualizada correctamente, haga click en continuar para ir a la página de inicio";
+        this._reseteoPasswordService.updateUsuarioByEmail({email: this.email}).subscribe((info) => {
+          this.mensaje = 'Contraseña actualizada correctamente, haga click en continuar para ir a la página de inicio';
           this.abrirModal(this.mensajeModalConfirm);
-        },error=>{
+        }, (error) => {
           console.log(error);
-        })        
+        });
       }
     },
       (error) => {
-        this.error = ["Verifique si su contraseña es correcta"];
+        this.error = ['Verifique si su contraseña es correcta'];
         // console.log(error);
         // this.error = error.error.password;
       });
@@ -151,7 +153,7 @@ export class ReseteoPasswordComponent implements OnInit {
     }, 1000);
   }
   compararPassword() {
-    if (this.f.password.value == this.f.confirmPassword.value) {
+    if (this.f.password.value === this.f.confirmPassword.value) {
       this.passwordSimilar = true;
     } else {
       this.passwordSimilar = false;
