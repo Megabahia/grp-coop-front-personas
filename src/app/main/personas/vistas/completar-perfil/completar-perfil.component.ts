@@ -131,11 +131,13 @@ export class CompletarPerfilComponent implements OnInit {
         this.obtenerEmpresaId();
 
         this.formSolicitud = this._formBuilder.group({
-            reprsentante: [this.usuario.persona.empresaInfo.reprsentante ?? '', [Validators.required, Validators.minLength(8),
-                Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]],
+            // reprsentante: [this.usuario.persona.empresaInfo.reprsentante ?? '', [Validators.required, Validators.minLength(8),
+            //     Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]],
             rucEmpresa: [this.usuario.persona.empresaInfo.rucEmpresa ?? '', [Validators.required, Validators.minLength(13),
                 Validators.maxLength(13), Validators.pattern('^[0-9]+001$'), ValidacionesPropias.rucValido]],
-            comercial: [this.usuario.persona.empresaInfo.comercial ?? '', [Validators.required, Validators.minLength(4), Validators.pattern('[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\\s]+')]],
+            // comercial: [this.usuario.persona.empresaInfo.comercial ?? '', [
+            // Validators.required, Validators.minLength(4), Validators.pattern('[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\\s]+')]
+            // ],
             correo: [this.usuario.email ?? '', [Validators.required, Validators.email]],
         });
 

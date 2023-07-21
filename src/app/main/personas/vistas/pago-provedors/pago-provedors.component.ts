@@ -6,6 +6,7 @@ import {AuthenticationService} from '../../../../auth/service';
 import {PagoProvedorsService} from './pago-provedors.service';
 import {ToastrService} from 'ngx-toastr';
 import {log} from 'util';
+import {CoreConfigService} from '../../../../../@core/services/config.service';
 
 @Component({
     selector: 'app-pago-provedors',
@@ -26,8 +27,24 @@ export class PagoProvedorsComponent implements OnInit {
         private _pagoProvedorsService: PagoProvedorsService,
         private _formBuilder: FormBuilder,
         private _proveedorService: RegistroProveedorService,
+        private _coreConfigService: CoreConfigService,
         private toastr: ToastrService,
     ) {
+        this._coreConfigService.config = {
+            layout: {
+                navbar: {
+                    hidden: false,
+                },
+                footer: {
+                    hidden: false,
+                },
+                menu: {
+                    hidden: false,
+                },
+                customizer: false,
+                enableLocalStorage: false,
+            },
+        };
     }
 
     get pagoFactura() {

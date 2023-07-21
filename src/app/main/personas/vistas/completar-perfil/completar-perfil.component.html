@@ -36,29 +36,29 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <label>
-                Nombre del representante legal o dueño del negocio:
-              </label>
-              <input type="text" formControlName="reprsentante"
-                     class="form-control"
-                     value="">
-            </div>
-            <div *ngIf="submitted && controlsFrom.reprsentante.errors"
-                 class="invalid-feedback"
-                 style="display: block;">
-              <div *ngIf="controlsFrom.reprsentante.errors.required">
-                Nombre del representante es requerido
-              </div>
-              <div *ngIf="controlsFrom.reprsentante.errors.minlength">
-                Ingrese minimo 8 caracteres
-              </div>
-              <div *ngIf="controlsFrom.reprsentante.errors.pattern">
-                Ingrese solo letras
-              </div>
-            </div>
-          </div>
+<!--          <div class="col-md-4">-->
+<!--            <div class="form-group">-->
+<!--              <label>-->
+<!--                Nombre del representante legal o dueño del negocio:-->
+<!--              </label>-->
+<!--              <input type="text" formControlName="reprsentante"-->
+<!--                     class="form-control"-->
+<!--                     value="">-->
+<!--            </div>-->
+<!--            <div *ngIf="submitted && controlsFrom.reprsentante.errors"-->
+<!--                 class="invalid-feedback"-->
+<!--                 style="display: block;">-->
+<!--              <div *ngIf="controlsFrom.reprsentante.errors.required">-->
+<!--                Nombre del representante es requerido-->
+<!--              </div>-->
+<!--              <div *ngIf="controlsFrom.reprsentante.errors.minlength">-->
+<!--                Ingrese minimo 8 caracteres-->
+<!--              </div>-->
+<!--              <div *ngIf="controlsFrom.reprsentante.errors.pattern">-->
+<!--                Ingrese solo letras-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
           <div class="col-md-4">
             <div class="form-group">
               <label>
@@ -88,29 +88,29 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <label>
-                Nombre comercial de su empresa o negocio:
-              </label>
-              <input type="text" formControlName="comercial"
-                     class="form-control"
-                     value="">
-            </div>
-            <div *ngIf="submitted && controlsFrom.comercial.errors"
-                 class="invalid-feedback"
-                 style="display: block;">
-              <div *ngIf="controlsFrom.comercial.errors.required">
-                Nombre comercial es requerido
-              </div>
-              <div *ngIf="controlsFrom.comercial.errors.minlength">
-                Ingrese minimo 4 caracteres
-              </div>
-              <div *ngIf="controlsFrom.comercial.errors.pattern">
-                Ingrese solo letras
-              </div>
-            </div>
-          </div>
+<!--          <div class="col-md-4">-->
+<!--            <div class="form-group">-->
+<!--              <label>-->
+<!--                Nombre comercial de su empresa o negocio:-->
+<!--              </label>-->
+<!--              <input type="text" formControlName="comercial"-->
+<!--                     class="form-control"-->
+<!--                     value="">-->
+<!--            </div>-->
+<!--            <div *ngIf="submitted && controlsFrom.comercial.errors"-->
+<!--                 class="invalid-feedback"-->
+<!--                 style="display: block;">-->
+<!--              <div *ngIf="controlsFrom.comercial.errors.required">-->
+<!--                Nombre comercial es requerido-->
+<!--              </div>-->
+<!--              <div *ngIf="controlsFrom.comercial.errors.minlength">-->
+<!--                Ingrese minimo 4 caracteres-->
+<!--              </div>-->
+<!--              <div *ngIf="controlsFrom.comercial.errors.pattern">-->
+<!--                Ingrese solo letras-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
         </div>
         <div class="mt-2 text-center">
           <button class="btn btn-primary mr-1" (click)="guardar()" style="color: black !important;">

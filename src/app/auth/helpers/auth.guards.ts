@@ -32,7 +32,7 @@ export class AuthGuard implements CanActivate {
                 this._authenticationService.logout();
             }
 
-            if (grpPersonasUser.documentosFirmados === 0) {
+            if (this._coreMenuService.grpPersonasUser.documentosFirmados === 0) {
                 this._coreConfigService.config = {
                     layout: {
                         navbar: {

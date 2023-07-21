@@ -8,6 +8,7 @@ import {CoreSidebarService} from '../../../../../@core/components/core-sidebar/c
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ValidacionesPropias} from '../../../../../utils/customer.validators';
 import {jsPDF} from 'jspdf';
+import {CreditosPreAprobadosService} from '../creditos-pre-aprobados/creditos-pre-aprobados.service';
 
 @Component({
     selector: 'app-pago-empleados',
@@ -16,10 +17,11 @@ import {jsPDF} from 'jspdf';
     providers: [DatePipe]
 })
 export class PagoEmpleadosComponent implements OnInit, AfterViewInit {
-
+    @ViewChild('mensajeModalConfirm') mensajeModalConfirm;
     @ViewChild(NgbPagination) paginator: NgbPagination;
     @ViewChild('negarMdl') negarMdl;
     @ViewChild('procesarMdl') procesarMdl;
+    @ViewChild('firmarMdl') firmarMdl;
 
     // public
     public page = 1;
@@ -44,6 +46,7 @@ export class PagoEmpleadosComponent implements OnInit, AfterViewInit {
     public monto = '';
     public empleado = '';
     public firmarFormData = new FormData();
+    private message: any;
 
     constructor(
         private _coreSidebarService: CoreSidebarService,
@@ -52,6 +55,7 @@ export class PagoEmpleadosComponent implements OnInit, AfterViewInit {
         private _coreMenuService: CoreMenuService,
         private _modalService: NgbModal,
         private _formBuilder: FormBuilder,
+        private _creditosPreAprobadosService: CreditosPreAprobadosService,
     ) {
         this.empleadoForm = this._formBuilder.group({
             _id: ['', []],
@@ -141,10 +145,19 @@ export class PagoEmpleadosComponent implements OnInit, AfterViewInit {
         this.firmarFormData.append('archivoFirmado', pdfBlob, `${Date.now()}_comprobantePago`);
         this.firmarFormData.delete('claveFirma');
         this.firmarFormData.append('claveFirma', this.documentoFirmaForm.value.claveFirma);
-        this._pagoEmpleadosService.firmarPagoEmpleados(this.firmarFormData).subscribe((info) => {
-            console.log('info', info);
-        }, (error) => {
-            console.log('error', error);
+        this.firmarFormData.append('rucEmpresa', this.usuario.persona.empresaInfo.rucEmpresa);
+        this._creditosPreAprobadosService.verificarPropietarioFirma(this.firmarFormData).subscribe((data) => {
+            if (data?.message) {
+                this.message = data?.message;
+                this.abrirModal(this.mensajeModalConfirm);
+            } else {
+                this._pagoEmpleadosService.firmarPagoEmpleados(this.firmarFormData).subscribe((info) => {
+                    console.log('info', info);
+                    this.cerrarModal();
+                }, (error) => {
+                    console.log('error', error);
+                });
+            }
         });
     }
 
@@ -245,4 +258,7 @@ export class PagoEmpleadosComponent implements OnInit, AfterViewInit {
         console.log('paso');
     }
 
+    cerrarModal() {
+        this._modalService.dismissAll();
+    }
 }
