@@ -295,3 +295,20 @@
         <button type="button" class="btn btn-light" (click)="modal.dismiss('Cross click')">Cerrar</button>
     </div>
 </ng-template>
+
+
+<ng-template #mensajeModalConfirm let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Confirmación</h5>
+
+        <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+        <div [innerHTML]="this.message"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.dismiss('Cross click')">Aceptar</button>
+    </div>
+</ng-template>

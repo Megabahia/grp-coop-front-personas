@@ -12,6 +12,8 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 import {ValidacionesPropias} from '../../../../../utils/customer.validators';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
+import {CreditosPreAprobadosService} from '../creditos-pre-aprobados/creditos-pre-aprobados.service';
+import {CoreMenuService} from '../../../../../@core/components/core-menu/core-menu.service';
 
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -22,6 +24,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
     styleUrls: ['./saldo-proveedores.component.scss']
 })
 export class SaldoProveedoresComponent implements OnInit {
+    @ViewChild('mensajeModalConfirm') mensajeModalConfirm;
     @ViewChild('mensajeModal') mensajeModal;
 
     public coreConfig: any;
@@ -38,6 +41,8 @@ export class SaldoProveedoresComponent implements OnInit {
     public pdf;
     public mensaje = 'Cargue una firma electrónica válida';
     private descargarDocumento: any;
+    private message: any;
+    public usuario;
 
     constructor(
         private _coreConfigService: CoreConfigService,
@@ -49,7 +54,10 @@ export class SaldoProveedoresComponent implements OnInit {
         private _pagoProvedorsService: PagoProvedorsService,
         private modalService: NgbModal,
         private toastr: ToastrService,
+        private _creditosPreAprobadosService: CreditosPreAprobadosService,
+        private _coreMenuService: CoreMenuService,
     ) {
+        this.usuario = this._coreMenuService.grpPersonasUser;
         this.activatedRoute.params.subscribe(paramsId => {
             this.getOneProveedor(paramsId.proveedor);
         });
@@ -119,16 +127,24 @@ export class SaldoProveedoresComponent implements OnInit {
         this.firmaElectronica.append('claveFirma', this.documentoFirmaForm.get('claveFirma').value);
         this.firmaElectronica.delete('pdf');
         this.firmaElectronica.append('pdf', this.pdf);
-        this._pagoProvedorsService.actualizarCredito(this.firmaElectronica)
-            .subscribe((info) => {
-                    console.log('guardado', info);
-                    this.continuar = false;
-                    this.continuarPago = true;
-                },
-                error => {
-                    this.abrirModal(this.mensajeModal);
-                }
-            );
+        this.firmaElectronica.append('rucEmpresa', this.usuario.persona.empresaInfo.rucEmpresa);
+        this._creditosPreAprobadosService.verificarPropietarioFirma(this.firmaElectronica).subscribe((data) => {
+            if (data?.message) {
+                this.message = data?.message;
+                this.abrirModal(this.mensajeModalConfirm);
+            } else {
+                this._pagoProvedorsService.actualizarCredito(this.firmaElectronica)
+                    .subscribe((info) => {
+                            console.log('guardado', info);
+                            this.continuar = false;
+                            this.continuarPago = true;
+                        },
+                        error => {
+                            this.abrirModal(this.mensajeModal);
+                        }
+                    );
+            }
+        });
     }
 
     continuarClickResumen() {
