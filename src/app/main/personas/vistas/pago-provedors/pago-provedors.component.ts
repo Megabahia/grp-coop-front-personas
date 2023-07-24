@@ -7,6 +7,8 @@ import {PagoProvedorsService} from './pago-provedors.service';
 import {ToastrService} from 'ngx-toastr';
 import {log} from 'util';
 import {CoreConfigService} from '../../../../../@core/services/config.service';
+import {CoreMenuService} from '../../../../../@core/components/core-menu/core-menu.service';
+import {User} from '../../../../auth/models';
 
 @Component({
     selector: 'app-pago-provedors',
@@ -20,6 +22,7 @@ export class PagoProvedorsComponent implements OnInit {
     public proveedores = [];
     public pagoProveedor = new FormData();
     private proveedor;
+    private usuario: User;
 
     constructor(
         private _router: Router,
@@ -29,7 +32,9 @@ export class PagoProvedorsComponent implements OnInit {
         private _proveedorService: RegistroProveedorService,
         private _coreConfigService: CoreConfigService,
         private toastr: ToastrService,
+        private _coreMenuService: CoreMenuService,
     ) {
+        this.usuario = this._coreMenuService.grpPersonasUser;
         this._coreConfigService.config = {
             layout: {
                 navbar: {
@@ -63,7 +68,8 @@ export class PagoProvedorsComponent implements OnInit {
 
     obtenerProveedores() {
         this._proveedorService.list({
-            page: 0, page_size: 10
+            page: 0, page_size: 10,
+            user_id: this.usuario.id,
         }).subscribe(info => {
             this.proveedores = info.info;
         });

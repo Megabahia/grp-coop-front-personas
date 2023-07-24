@@ -5,6 +5,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CoreSidebarService} from '../../../../../@core/components/core-sidebar/core-sidebar.service';
 import {DatePipe} from '@angular/common';
 import {RegistroProveedorService} from './registro-proveedor.service';
+import {CoreMenuService} from '../../../../../@core/components/core-menu/core-menu.service';
+import {User} from '../../../../auth/models';
 
 @Component({
   selector: 'app-registro-proveedores',
@@ -39,6 +41,7 @@ export class RegistroProveedoresComponent implements OnInit, AfterViewInit, OnDe
 
   public pantalla = 0;
   public proveedor = {};
+  private usuario: User;
 
   constructor
   (
@@ -47,8 +50,9 @@ export class RegistroProveedoresComponent implements OnInit, AfterViewInit, OnDe
     private _coreSidebarService: CoreSidebarService,
     private _formBuilder: FormBuilder,
     private _modalService: NgbModal,
+    private _coreMenuService: CoreMenuService,
   ) {
-    this._unsubscribeAll = new Subject();
+    this.usuario = this._coreMenuService.grpPersonasUser;
     this.idEmpresa = '';
     this.empresa = this.inicializarEmpresa();
   }
@@ -130,7 +134,8 @@ export class RegistroProveedoresComponent implements OnInit, AfterViewInit, OnDe
 
   obtenerListaProveedores() {
     this._proveedorService.list({
-      page: this.page - 1, page_size: this.page_size
+      page: this.page - 1, page_size: this.page_size,
+      user_id: this.usuario.id
     }).subscribe(info => {
       this.proveedores = info.info;
       this.collectionSize = info.cont;

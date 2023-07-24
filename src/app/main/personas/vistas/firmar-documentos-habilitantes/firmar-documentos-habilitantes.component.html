@@ -10,8 +10,14 @@
 
                     <div class=" mb-2 text-center">
                         <h2>
-                            Firmar documentos firmantes
+                            Firma de Documentos Habilitantes
                         </h2>
+                        <br>
+                        <p class="text-justify">
+                            Para hacer uso de su Línea de Crédito debe firmar electrónicamente los documentos
+                            habilitantes que se muestran a continuación. Para obtener una guía de ayuda, presione
+                            en el siguiente <a [href]="['/personas/firmar-documentos']">ENLACE DE AYUDA</a>
+                        </p>
                     </div>
                     <div class="content-body">
                         <!-- users list start -->
@@ -30,7 +36,10 @@
                                         Solicitud credito
                                     </h4>
                                     <div class="text-center">
-                                        <a *ngIf="credito?.solicitudCredito" href="{{credito?.solicitudCredito}}"
+                                        <a *ngIf="credito?.solicitudCredito && !credito?.solicitudCreditoFirmado"
+                                           href="{{credito?.solicitudCredito}}"
+                                           class="mr-1" target="_blank">Ver</a>
+                                        <a *ngIf="credito?.solicitudCreditoFirmado" href="{{credito?.solicitudCreditoFirmado}}"
                                            class="mr-1"
                                            target="_blank">Ver</a>
                                         <br>
@@ -60,28 +69,30 @@
                                     <h4>
                                         Pagaré
                                     </h4>
-                                        <div class="text-center">
-                                            <a *ngIf="credito?.pagare" href="{{credito?.pagare}}"
-                                               target="_blank">Ver</a>
-                                            <br>
-                                            <div
-                                                    class="badge badge-pill my-1"
-                                                    [ngClass]="credito?.pagareFirmado ?'badge-light-success':'badge-light-warning' "
-                                            >
+                                    <div class="text-center">
+                                        <a *ngIf="credito?.pagare && !credito?.pagareFirmado" href="{{credito?.pagare}}"
+                                           target="_blank">Ver</a>
+                                        <a *ngIf="credito?.pagareFirmado" href="{{credito?.pagareFirmado}}"
+                                           target="_blank">Ver</a>
+                                        <br>
+                                        <div
+                                                class="badge badge-pill my-1"
+                                                [ngClass]="credito?.pagareFirmado ?'badge-light-success':'badge-light-warning' "
+                                        >
                                                                                             <span *ngIf="credito?.pagareFirmado"
                                                                                                   [class]="'mr-50 m-1' "> Firmado</span>
-                                                <span *ngIf="!credito?.pagareFirmado"
-                                                      [class]="'mr-50 m-1' "> Pendiente </span>
-                                            </div>
-
-                                            <div *ngIf="!credito?.pagareFirmado">
-                                                Firmar:  <i (click)="modalOpenSM(modalSM, credito,'pagareFirmado')"
-                                                            ngbTooltip="Firmar"
-                                                            class="feather mx-50 font-medium-3"
-                                                            [ngClass]="'icon-check-square text-success'"
-                                            ></i>
-                                            </div>
+                                            <span *ngIf="!credito?.pagareFirmado"
+                                                  [class]="'mr-50 m-1' "> Pendiente </span>
                                         </div>
+
+                                        <div *ngIf="!credito?.pagareFirmado">
+                                            Firmar:  <i (click)="modalOpenSM(modalSM, credito,'pagareFirmado')"
+                                                        ngbTooltip="Firmar"
+                                                        class="feather mx-50 font-medium-3"
+                                                        [ngClass]="'icon-check-square text-success'"
+                                        ></i>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="flex-basis">
                                     <h4>
@@ -169,27 +180,21 @@
               [formGroup]="documentoFirmaForm"
               (ngSubmit)="continuarCickPago()">
             <div class="form-group px-3 pt-3 pb-1 row">
-                <div class="col-3 col-form-label">
-                    <label>Clave de la firma:</label>
-                </div>
-                <div class="col-10 ">
-                    <input type="password" id="claveFirma"
-                           class="form-control"
-                           formControlName="claveFirma"
-                           placeholder="Ingrese la clave de la Firma Electrónica"/>
-                    <div *ngIf="submitted && documentoFirmar.claveFirma.errors"
-                         class="invalid-feedback"
-                         style="display: block;">
-                        <div *ngIf="documentoFirmar.claveFirma.errors.required">
-                            Clave de la firma es requerido
-                        </div>
+                <label>Clave de la firma:</label>
+                <input type="password" id="claveFirma"
+                       class="form-control"
+                       formControlName="claveFirma"
+                       placeholder="Ingrese la clave de la Firma Electrónica"/>
+                <div *ngIf="submitted && documentoFirmar.claveFirma.errors"
+                     class="invalid-feedback"
+                     style="display: block;">
+                    <div *ngIf="documentoFirmar.claveFirma.errors.required">
+                        Clave de la firma es requerido
                     </div>
                 </div>
             </div>
             <div class="form-group px-3 py-0 row">
-                <div class="col-3 col-form-label">
-                    <label for="customFile1">Firma electronica: </label>
-                </div>
+                <label for="customFile1">Firma electronica: </label>
                 <div class="custom-file">
                     <input type="file" class="custom-file-input"
                            id="customFile1" required

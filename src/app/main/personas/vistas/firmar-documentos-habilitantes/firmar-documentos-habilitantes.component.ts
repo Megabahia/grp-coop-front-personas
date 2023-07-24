@@ -89,7 +89,6 @@ export class FirmarDocumentosHabilitantesComponent implements OnInit {
                     this.abrirModal(this.mensajeModalConfirm);
                 } else {
                     this._creditosPreAprobadosService.actualizarCredito(this.firmaElectronica).subscribe((info) => {
-                            this._modalService.dismissAll();
                             this.obtenerCreditos();
                         }, (error) => {
                             this.message = 'Ocurrió un error al enviar fimar';
@@ -127,6 +126,7 @@ export class FirmarDocumentosHabilitantesComponent implements OnInit {
             estado: 'Aprobado',
             user_id: this.usuario.id
         }).subscribe((info) => {
+            this._modalService.dismissAll();
             this.credito = info.info[0];
             if (this.credito.solicitudCreditoFirmado && this.credito.pagareFirmado &&
                 this.credito.contratosCuentaFirmado && this.credito.tablaAmortizacionFirmado) {

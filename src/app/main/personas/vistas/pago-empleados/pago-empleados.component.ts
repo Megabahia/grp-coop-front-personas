@@ -65,6 +65,8 @@ export class PagoEmpleadosComponent implements OnInit, AfterViewInit {
             correo: ['', [Validators.required]],
             montoPagar: ['', [Validators.required]],
             codigoEmpleado: ['', [Validators.required]],
+            numeroCuentaEmpleado: ['', [Validators.required]],
+            bancoDestino: ['', [Validators.required]],
             mesPago: ['', [Validators.required]],
             anio: ['', [Validators.required]],
             estado: ['', [Validators.required]],
@@ -85,7 +87,6 @@ export class PagoEmpleadosComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit(): void {
-        this._unsubscribeAll = new Subject();
         this.usuario = this._coreMenuService.grpPersonasUser;
         this.obtenerPagosEmpleados();
     }
@@ -154,10 +155,21 @@ export class PagoEmpleadosComponent implements OnInit, AfterViewInit {
                 this._pagoEmpleadosService.firmarPagoEmpleados(this.firmarFormData).subscribe((info) => {
                     console.log('info', info);
                     this.cerrarModal();
+                    const fileUrl = info.archivoFirmado;
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = fileUrl;
+                    // downloadLink.target = '_blank'; // Abre el enlace en una nueva pestaña
+                    document.body.appendChild(downloadLink);
+                    downloadLink.click();
+                    document.body.removeChild(downloadLink);
                 }, (error) => {
                     console.log('error', error);
                 });
             }
+        }, (error) => {
+            this.message = '¡Lo sentimos! \n' +
+                'La clave de la firma electrónica ingresada es incorrecta. Verifique y vuelva a intentar.\n';
+            this.abrirModal(this.mensajeModalConfirm);
         });
     }
 
@@ -255,7 +267,10 @@ export class PagoEmpleadosComponent implements OnInit, AfterViewInit {
         if (this.empleadoForm.invalid) {
             return;
         }
-        console.log('paso');
+        this._pagoEmpleadosService.actualizarPagoEmpleados(this.empleadoForm.value).subscribe((info) => {
+            this.obtenerPagosEmpleados();
+            this._coreSidebarService.getSidebarRegistry('editarPagoEmpleado').close();
+        });
     }
 
     cerrarModal() {

@@ -80,6 +80,9 @@
                                                     <div *ngIf="proveedor.nombreRepresentante.errors.pattern">
                                                         Ingreso solo letras
                                                     </div>
+                                                    <div *ngIf="proveedor.nombreRepresentante.errors.minlength">
+                                                        Ingrese minimo 4 caracteres
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -99,6 +102,9 @@
                                                     </div>
                                                     <div *ngIf="proveedor.nombreComercial.errors.pattern">
                                                         Ingreso solo letras
+                                                    </div>
+                                                    <div *ngIf="proveedor.nombreComercial.errors.minlength">
+                                                        Ingrese minimo 4 caracteres
                                                     </div>
                                                 </div>
                                             </div>

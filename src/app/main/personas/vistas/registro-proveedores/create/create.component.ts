@@ -4,6 +4,8 @@ import {RegistroProveedorService} from '../registro-proveedor.service';
 import {ParametrizacionesService} from '../../../servicios/parametrizaciones.service';
 import {ValidacionesPropias} from '../../../../../../utils/customer.validators';
 import {ToastrService} from 'ngx-toastr';
+import {CoreMenuService} from '../../../../../../@core/components/core-menu/core-menu.service';
+import {User} from '../../../../../auth/models';
 
 @Component({
   selector: 'app-create',
@@ -20,13 +22,16 @@ export class CreateComponent implements OnInit {
   public submitted = false;
   public bancos = [];
   public tipoCuentas = [];
+  private usuario: User;
 
   constructor(
     private _formBuilder: FormBuilder,
     private _proveedorService: RegistroProveedorService,
     private paramService: ParametrizacionesService,
     private toastr: ToastrService,
+    private _coreMenuService: CoreMenuService,
   ) {
+    this.usuario = this._coreMenuService.grpPersonasUser;
   }
 
   ngOnInit(): void {
@@ -36,7 +41,8 @@ export class CreateComponent implements OnInit {
       identificacion: ['', [Validators.required, ValidacionesPropias.rucValido]],
       nombreRepresentante: ['', [Validators.required, Validators.minLength(4), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+')]],
       nombreComercial: ['', [Validators.required, Validators.minLength(4), Validators.pattern('[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ.\\s]+')]],
-      cuentas: this._formBuilder.array([], Validators.required)
+      cuentas: this._formBuilder.array([], Validators.required),
+      user_id: [this.usuario.id],
     });
     this.proveedorPadre?.cuentas.forEach(item => this.agregarCuenta());
     this.proveedorForm.patchValue({...this.proveedorPadre});

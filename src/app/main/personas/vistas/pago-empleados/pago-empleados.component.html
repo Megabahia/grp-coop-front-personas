@@ -3,7 +3,7 @@
         <div class="col-12 mb-2">
             <div class="row breadcrumbs-top">
                 <div class="col-12">
-                    <h2 class="content-header-title float-left mb-0">Pago a proveedores</h2>
+                    <h2 class="content-header-title float-left mb-0">Pago a Empleados</h2>
                     <div class="breadcrumb-wrapper">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
@@ -11,7 +11,7 @@
                             </li>
                             <li class="breadcrumb-item">
                                 <a class="text-primary" href="mis-premios.html">
-                                    Pago a proveedores
+                                    Pago a Empleados
                                 </a>
                             </li>
                         </ol>
@@ -38,7 +38,7 @@
                     </div>
                     <div class="col-lg-2 col-xl-6 text-right">
                         <a (click)="toggleSidebar('guardarEmpresa','')" class="btn btn-primary">
-                            Añadir pagos
+                            Añadir empleados
                         </a>
                     </div>
                 </div>
@@ -51,6 +51,8 @@
                             <th>Celular</th>
                             <th>Correo</th>
                             <th>Código del empleado</th>
+                            <th>Número de cuenta bancaria</th>
+                            <th>Banco destino </th>
                             <th>Mes de pago</th>
                             <th>Año</th>
                             <th>Monto a pagar</th>
@@ -65,6 +67,8 @@
                             <td>{{pagoEmpleado.celular}}</td>
                             <td>{{pagoEmpleado.correo}}</td>
                             <td>{{pagoEmpleado.codigoEmpleado}}</td>
+                            <td>{{pagoEmpleado.numeroCuentaEmpleado}}</td>
+                            <td>{{pagoEmpleado.bancoDestino}}</td>
                             <td>{{pagoEmpleado.mesPago}}</td>
                             <td>{{pagoEmpleado.anio}}</td>
                             <td>{{pagoEmpleado.montoPagar}}</td>
@@ -299,6 +303,28 @@
                                  style="display: block;">
                                 <div *ngIf="empForm.correo.errors.required">
                                     Correo es requerido
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Número de cuenta bancaria</label>
+                            <input class="form-control" name="numeroCuentaEmpleado" formControlName="numeroCuentaEmpleado"
+                                   type="text">
+                            <div *ngIf="pagoSubmitted && empForm.numeroCuentaEmpleado.errors" class="invalid-feedback"
+                                 style="display: block;">
+                                <div *ngIf="empForm.numeroCuentaEmpleado.errors.required">
+                                    Número de cuenta bancaria es requerido
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Banco destino</label>
+                            <input class="form-control" name="bancoDestino" formControlName="bancoDestino"
+                                   type="text">
+                            <div *ngIf="pagoSubmitted && empForm.bancoDestino.errors" class="invalid-feedback"
+                                 style="display: block;">
+                                <div *ngIf="empForm.bancoDestino.errors.required">
+                                    Banco destino es requerido
                                 </div>
                             </div>
                         </div>
