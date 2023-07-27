@@ -5,7 +5,8 @@
             <div class="row justify-content-center align-items-center py-5">
                 <div class="col-md-12 text-center mb-4">
                     <img src="/assets/images/logo/san-jose-v.png" alt="brand-logo" width="400px"/>
-                    <h1 class="azul2 mt-4 text-bold">Línea de Crédito Preaprobada</h1>
+                    <h2 class="azul2 mt-4 text-bold">Línea de Crédito Preaprobada</h2>
+                    <br>
                     <h3 class="user-name text-center">
                         Con tu Línea de Crédito otorgada por una Cooperativa de Ahorro y Crédito
                         regulada puedes realizar los pagos a tus proveedores y/o empleados de manera fácil y rápida.
@@ -13,8 +14,7 @@
                 </div>
                 <div class="col-md-12 text-center">
                     <h2 class="user-name font-weight-bolder azul2 text-center"> ¡FELICIDADES!</h2>
-
-
+                    <br>
                     <h3 class="user-name text-center">
                         Ingresa el código enviado a tu correo para Acceder a tu Línea de Crédito y realizar los pagos a tus proveedores y/o empleados.
 
@@ -26,7 +26,7 @@
                     <form [formGroup]="envioForm" (ngSubmit)="sentCode()">
                         <div class="col-12 align-items-center my-2">
                             <div class="form-group align-items-center">
-                                <span class="user-name font-weight-bolder">Ingrese el código recibido:</span>
+                                <span class="user-name font-weight-bolder">Ingresa el código recibido:</span>
                                 <input size="50" formControlName="code" type="text" class="form-control" name="code">
                                 <div *ngIf="submittedSimulador && getsimuladorForm.code.errors"
                                      class="invalid-feedback" style="display: block;">
@@ -38,7 +38,7 @@
                         <div class="col-12 align-items-center my-3">
                             <div class="form-group ">
                                 <span class="user-name font-weight-bolder">
-                                    Ingrese el número de cédula del representante legal o dueño de la empresa:
+                                    Ingresa el número de cédula del representante legal o dueño de la empresa/negocio
                                 </span>
                                 <input size="50" formControlName="document" type="text" class="form-control"
                                        name="document">

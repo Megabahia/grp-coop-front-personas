@@ -84,6 +84,15 @@ export const menu: CoreMenu[] = [
         icon: '',
         url: 'personas/saldoDisponible',
     },
+    {
+        id: 'movimientosLineaCredito',
+        title: 'Movimientos de Línea de crédito',
+        // translate: 'MENU.HOME',
+        role: [Role.SuperMonedas],
+        type: 'item',
+        icon: '',
+        url: 'personas/movimientosLineaCredito',
+    },
     // {
     //     id: 'apps',
     //     type: 'section',

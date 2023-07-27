@@ -71,6 +71,7 @@ import {
 } from './vistas/creditos-autonomos/resumen-requisitos-credito/resumen-requisitos-credito.component';
 import {ValidacionDatosComponent} from './vistas/creditos-autonomos/validacion-datos/validacion-datos.component';
 import { PagoEmpleadosComponent } from './vistas/pago-empleados/pago-empleados.component';
+import { TransaccionesCreditoComponent } from './vistas/transacciones-credito/transacciones-credito.component';
 
 const maskConfig: Partial<IConfig> = {
     validation: false,
@@ -321,6 +322,12 @@ const routes = [
         // data: { animation: 'auth' }
     },
     {
+        path: 'movimientosLineaCredito',
+        component: TransaccionesCreditoComponent,
+        data: {activacion: [8, 1, 2, 3, 4, 5, 6, 7, 0]},
+        canActivate: [AuthGuard],
+    },
+    {
         path: 'completarPerfil',
         component: CompletarPerfilComponent,
         data: {activacion: [8, 2, 3], animation: 'flatpickr'},
@@ -406,6 +413,7 @@ const routes = [
         ResumenRequisitosCreditoComponent,
         ValidacionDatosComponent,
         PagoEmpleadosComponent,
+        TransaccionesCreditoComponent,
     ],
     imports: [
         CoreCommonModule,

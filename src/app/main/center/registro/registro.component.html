@@ -26,8 +26,8 @@
             <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
                 <h2 class="card-title font-weight-bold mb-1">Registro {{nombre}}</h2>
                 <p class="card-text mb-2 text-justify">
-                    Recuerda que debes tener RUC, Facturación electrónica y Firma electrónica para acceder a tu
-                    Línea de Crédito para realizar pagos a tus proveedores y/o empleados
+                    Recuerde que debe tener RUC, Facturación electrónica y Firma electrónica para acceder a su Línea
+                    de Crédito y realizar pagos a sus proveedores y/o empleados.
                 </p>
 
                 <ngb-alert [type]="'danger'" [dismissible]="false" *ngIf="error">
@@ -117,7 +117,7 @@
                     </button>
                 </form>
                 <p class="text-center mt-2">
-                    <span>¿Ya tienes una cuenta?</span><a class="text-primary" routerLink="/grp/login"><span>&nbsp;Inicia sesión</span></a>
+                    <b><span>¿Ya tiene una cuenta?</span></b><a class="text-primary" routerLink="/grp/login"><b><span> Inicie sesión</span></b></a>
                 </p>
                 <app-footer></app-footer>
             </div>
