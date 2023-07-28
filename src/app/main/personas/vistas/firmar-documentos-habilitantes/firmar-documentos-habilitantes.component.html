@@ -9,6 +9,7 @@
                 <div class="card-body">
 
                     <div class=" mb-2 text-center">
+                        <img src="/assets/images/logo/san-jose-v.png" width="300px">
                         <h2>
                             Firma de Documentos Habilitantes
                         </h2>
@@ -28,7 +29,7 @@
                                         Fecha del Documento
                                     </h4>
                                     <div>
-                                        {{transformarFecha(credito?.created_at)}}
+                                        {{credito?.created_at | date: 'yyyy-mm-dd'}}
                                     </div>
                                 </div>
                                 <div class="flex-basis">
@@ -39,7 +40,8 @@
                                         <a *ngIf="credito?.solicitudCredito && !credito?.solicitudCreditoFirmado"
                                            href="{{credito?.solicitudCredito}}"
                                            class="mr-1" target="_blank">Ver</a>
-                                        <a *ngIf="credito?.solicitudCreditoFirmado" href="{{credito?.solicitudCreditoFirmado}}"
+                                        <a *ngIf="credito?.solicitudCreditoFirmado"
+                                           href="{{credito?.solicitudCreditoFirmado}}"
                                            class="mr-1"
                                            target="_blank">Ver</a>
                                         <br>
@@ -151,8 +153,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--                            <ngb-pagination #paginator [collectionSize]="collectionSize" [(page)]="page"-->
-                            <!--                                            [maxSize]="5" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>-->
+                            <div class="text-center justify-content-center m-2">
+                                <button class="btn btn-primary" (click)="mostrarMensaje(mensajeAviso)">Continuar</button>
+                            </div>
                         </section>
                         <!-- users list ends -->
                     </div>
@@ -164,6 +167,8 @@
         <!-- / Error page-->
     </div>
 </div>
+
+<app-footer></app-footer>
 
 
 <ng-template #modalSM let-modal>
@@ -242,6 +247,31 @@
     </div>
     <div class="modal-body" tabindex="0" ngbAutofocus>
         <div [innerHTML]="this.message"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.dismiss('Cross click')">Aceptar</button>
+    </div>
+</ng-template>
+
+<ng-template #mensajeAviso let-modal>
+    <div class="modal-header">
+        <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+        <div class="text-center">
+            <h5>
+                Los documentos firmados han sido enviados.
+            </h5>
+            <p>
+                La Cooperativa de Ahorro y Crédito regulada validará la información y activará su acceso a la plataforma
+                en las próximas horas.
+            </p>
+            <p>
+                Lo mantendremos informado a través de su correo electrónico registrado {{usuario.email}}
+            </p>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-light" (click)="modal.dismiss('Cross click')">Aceptar</button>

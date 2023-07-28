@@ -128,8 +128,7 @@ export class FirmarDocumentosHabilitantesComponent implements OnInit {
         }).subscribe((info) => {
             this._modalService.dismissAll();
             this.credito = info.info[0];
-            if (this.credito.solicitudCreditoFirmado && this.credito.pagareFirmado &&
-                this.credito.contratosCuentaFirmado && this.credito.tablaAmortizacionFirmado) {
+            if (this.credito?.activarMenu) {
                 this._coreConfigService.config = {
                     layout: {
                         navbar: {
@@ -164,6 +163,13 @@ export class FirmarDocumentosHabilitantesComponent implements OnInit {
         console.log('credito', credito);
         this.creditSelected = credito;
         this._modalService.open(modalSM, {
+            centered: true,
+            size: 'lg' // size: 'xs' | 'sm' | 'lg' | 'xl'
+        });
+    }
+
+    mostrarMensaje(mensajeAviso) {
+        this._modalService.open(mensajeAviso, {
             centered: true,
             size: 'lg' // size: 'xs' | 'sm' | 'lg' | 'xl'
         });

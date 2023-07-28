@@ -9,6 +9,7 @@
                 <div class="card-body">
 
                     <div class=" mb-2 text-center">
+                        <img src="/assets/images/logo/san-jose-v.png" width="300px">
                         <h2>
                             Para acceder a su Línea de Crédito, por favor confirme los datos de la Firma Electrónica
                         </h2>
@@ -70,7 +71,7 @@
                                                             Correo del representante de la empresa es requerido
                                                         </div>
                                                         <div *ngIf="firmaElectronica.correoRepresentante.errors.email">
-                                                            Email formato incorrecto
+                                                            Correo en formato incorrecto, recuerde NO insertar espacios al final del correo
                                                         </div>
                                                     </div>
                                                 </div>
@@ -210,6 +211,7 @@
         <!-- / Error page-->
     </div>
 </div>
+<app-footer></app-footer>
 
 <ng-template #mensajeModal let-modal>
     <div class="modal-header">
