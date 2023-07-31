@@ -9,6 +9,7 @@ import {Subject} from 'rxjs';
 import {CoreConfigService} from '../../../../../@core/services/config.service';
 import {CoreMenuService} from '../../../../../@core/components/core-menu/core-menu.service';
 import {User} from '../../../../auth/models';
+import {CreditosPreAprobadosService} from '../creditos-pre-aprobados/creditos-pre-aprobados.service';
 
 @Component({
     selector: 'app-registro-firma-electronica',
@@ -27,6 +28,7 @@ export class RegistroFirmaElectronicaComponent implements OnInit {
     public coreConfig: any;
     private _unsubscribeAll: Subject<any>;
     public usuario: User;
+    private representante = '';
 
     constructor(
         private _coreMenuService: CoreMenuService,
@@ -36,6 +38,7 @@ export class RegistroFirmaElectronicaComponent implements OnInit {
         private _router: Router,
         private toastr: ToastrService,
         private _coreConfigService: CoreConfigService,
+        private _creditosPreAprobadosService: CreditosPreAprobadosService,
     ) {
         this._unsubscribeAll = new Subject();
         this._coreConfigService.config = {
@@ -54,25 +57,41 @@ export class RegistroFirmaElectronicaComponent implements OnInit {
             },
         };
         this.usuario = this._coreMenuService.grpPersonasUser;
+        this._creditosPreAprobadosService.obtenerListaCreditos({
+            page: 0,
+            page_size: 10,
+            user_id: this.usuario.id
+        }).subscribe((info) => {
+            this.representante = JSON.parse(info.info[0]?.empresaInfo);
+            this.firmaForm.patchValue({
+                nombreRepresentante: this.representante?.['reprsentante'],
+                apellidoRepresentante: this.representante?.['apellidoRepresentante'],
+                correoRepresentante: this.representante?.['correo'],
+                telefonoRepresentante: this.representante?.['telefono'],
+                whatsappRepresentante: this.representante?.['whatsapp'],
+                tipoIdentificacionRepresentante: 'ruc',
+                identificacionRepresentante: this.representante?.['rucEmpresa'],
+            });
+            console.log('representante', this.representante);
+        });
     }
 
     ngOnInit(): void {
         this.firmaForm = this._formBuilder.group(
             {
                 aceptarTerminos: ['', [Validators.required, Validators.requiredTrue]],
-                nombreRepresentante: [this.usuario.persona.nombres, [Validators.required]],
-                apellidoRepresentante: [this.usuario.persona.apellidos, [Validators.required]],
-                correoRepresentante: [this.usuario.persona.correoRepresentante, [Validators.required, Validators.email]],
-                telefonoRepresentante: [this.usuario.persona.celularRepresentante, [
+                nombreRepresentante: ['', [Validators.required]],
+                apellidoRepresentante: ['', [Validators.required]],
+                correoRepresentante: ['', [Validators.required, Validators.email]],
+                telefonoRepresentante: ['', [
                     Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*$')]
                 ],
-                whatsappRepresentante: [this.usuario.persona.whatsappRepresentante, [
+                whatsappRepresentante: ['', [
                     Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*$')]
                 ],
-                tipoIdentificacionRepresentante: [this.usuario.persona.tipoIdentificacion, [Validators.required]],
-                identificacionRepresentante: [this.usuario.persona.cedulaRepresentante, [Validators.required]],
+                tipoIdentificacionRepresentante: ['', [Validators.required]],
+                identificacionRepresentante: ['', [Validators.required]],
             });
-
     }
 
     get firmaElectronica() {

@@ -32,7 +32,7 @@
                                                     <label>Nombre del representante legal</label>
                                                     <input class="form-control" name="nombreRepresentante"
                                                            formControlName="nombreRepresentante"
-                                                           type="text">
+                                                           type="text" disabled>
                                                     <div *ngIf="submitted && firmaElectronica.nombreRepresentante.errors"
                                                          class="invalid-feedback"
                                                          style="display: block;">
@@ -47,7 +47,7 @@
                                                     <label>Apellido del representante legal</label>
                                                     <input class="form-control" name="apellidoRepresentante"
                                                            formControlName="apellidoRepresentante"
-                                                           type="text">
+                                                           type="text" disabled>
                                                     <div *ngIf="submitted && firmaElectronica.apellidoRepresentante.errors"
                                                          class="invalid-feedback"
                                                          style="display: block;">
@@ -63,7 +63,7 @@
                                                     </label>
                                                     <input class="form-control" name="correoRepresentante"
                                                            formControlName="correoRepresentante"
-                                                           type="text">
+                                                           type="text" disabled>
                                                     <div *ngIf="submitted && firmaElectronica.correoRepresentante.errors"
                                                          class="invalid-feedback"
                                                          style="display: block;">
@@ -82,7 +82,7 @@
                                                     </label>
                                                     <input class="form-control" name="telefonoRepresentante"
                                                            formControlName="telefonoRepresentante"
-                                                           type="text">
+                                                           type="text" disabled>
                                                     <div *ngIf="submitted && firmaElectronica.telefonoRepresentante.errors"
                                                          class="invalid-feedback"
                                                          style="display: block;">
@@ -107,7 +107,7 @@
                                                     </label>
                                                     <input class="form-control" name="whatsappRepresentante"
                                                            formControlName="whatsappRepresentante"
-                                                           type="text">
+                                                           type="text" disabled>
                                                     <div *ngIf="submitted && firmaElectronica.whatsappRepresentante.errors"
                                                          class="invalid-feedback"
                                                          style="display: block;">
@@ -132,7 +132,7 @@
                                                     </label>
                                                     <input class="form-control" name="identificacionRepresentante"
                                                            formControlName="identificacionRepresentante"
-                                                           type="text">
+                                                           type="text" disabled>
                                                     <div *ngIf="submitted && firmaElectronica.identificacionRepresentante.errors"
                                                          class="invalid-feedback"
                                                          style="display: block;">
@@ -154,7 +154,7 @@
                                                     </label>
                                                     <select class="form-control select2"
                                                             formControlName="tipoIdentificacionRepresentante"
-                                                            (change)="obtenerTipoIdentificacion()">
+                                                            (change)="obtenerTipoIdentificacion()" disabled>
                                                         <option value="">- Seleccione -</option>
                                                         <option value="cedula">Cédula</option>
                                                         <option value="Ruc">Ruc</option>

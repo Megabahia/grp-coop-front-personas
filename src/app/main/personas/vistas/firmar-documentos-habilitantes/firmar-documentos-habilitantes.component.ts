@@ -91,7 +91,7 @@ export class FirmarDocumentosHabilitantesComponent implements OnInit {
                     this._creditosPreAprobadosService.actualizarCredito(this.firmaElectronica).subscribe((info) => {
                             this.obtenerCreditos();
                         }, (error) => {
-                            this.message = 'Ocurrió un error al enviar fimar';
+                            this.message = error;
                             this.abrirModal(this.mensajeModalConfirm);
                         }
                     );
