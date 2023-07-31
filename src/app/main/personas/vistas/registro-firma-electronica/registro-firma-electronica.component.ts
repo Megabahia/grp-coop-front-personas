@@ -62,14 +62,14 @@ export class RegistroFirmaElectronicaComponent implements OnInit {
             page_size: 10,
             user_id: this.usuario.id
         }).subscribe((info) => {
-            this.representante = JSON.parse(info.info[0]?.empresaInfo);
+            this.representante = info.info[0]?.empresaInfo;
             this.firmaForm.patchValue({
                 nombreRepresentante: this.representante?.['reprsentante'],
-                apellidoRepresentante: this.representante?.['apellidoRepresentante'],
+                apellidoRepresentante: this.representante?.['reprsentante'],
                 correoRepresentante: this.representante?.['correo'],
                 telefonoRepresentante: this.representante?.['telefono'],
                 whatsappRepresentante: this.representante?.['whatsapp'],
-                tipoIdentificacionRepresentante: 'ruc',
+                tipoIdentificacionRepresentante: 'Ruc',
                 identificacionRepresentante: this.representante?.['rucEmpresa'],
             });
             console.log('representante', this.representante);
