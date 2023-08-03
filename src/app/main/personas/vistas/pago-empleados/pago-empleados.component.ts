@@ -149,6 +149,8 @@ export class PagoEmpleadosComponent implements OnInit, AfterViewInit {
         this.firmarFormData.append('rucEmpresa', this.usuario.persona.empresaInfo.rucEmpresa);
         this.firmarFormData.delete('estado');
         this.firmarFormData.append('estado', 'Activo');
+        this.firmarFormData.delete('usuarioEmpresa');
+        this.firmarFormData.append('usuarioEmpresa', JSON.stringify(this.usuario.persona));
         this._creditosPreAprobadosService.verificarPropietarioFirma(this.firmarFormData).subscribe((data) => {
             if (data?.message) {
                 this.message = data?.message;
