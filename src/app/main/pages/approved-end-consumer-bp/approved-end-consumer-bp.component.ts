@@ -100,14 +100,14 @@ export class ApprovedEndConsumerBpComponent implements OnInit {
 
     actionContinue() {
         if (localStorage.getItem('alcance') === 'OMNIGLOBAL') {
-            window.location.href = 'https://credicompra.bigpuntos.com/';
+            window.location.href = 'https://credicompra-credit.netlify.app/';
         } else {
             // localStorage.setItem('simulador', 'ok');
             const credito = JSON.parse(localStorage.getItem('credito'));
             localStorage.setItem('pagina', 'https://credicompra.com/');
-            this._routerN.navigate([
-                `/grp/registro?email=${credito.empresaInfo.correo}&nombre=${credito.empresaInfo.reprsentante}`,
-            ]);
+            this._routerN.navigate(['/grp/registro'], {
+                queryParams: { email: credito.empresaInfo.correo, nombre: credito.empresaInfo.representante },
+            });
         }
     }
 }
