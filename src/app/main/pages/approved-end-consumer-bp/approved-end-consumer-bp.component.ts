@@ -106,7 +106,10 @@ export class ApprovedEndConsumerBpComponent implements OnInit {
             const credito = JSON.parse(localStorage.getItem('credito'));
             localStorage.setItem('pagina', 'https://credicompra.com/');
             this._routerN.navigate(['/grp/registro'], {
-                queryParams: { email: credito.empresaInfo.correo, nombre: credito.empresaInfo.representante },
+                queryParams: {
+                    email: credito.email,
+                    nombre: credito.nombresCompleto
+                }
             });
         }
     }
