@@ -100,7 +100,7 @@ export class ApprovedEndConsumerBpComponent implements OnInit {
 
     actionContinue() {
         if (localStorage.getItem('alcance') === 'OMNIGLOBAL') {
-            window.location.href = 'https://credicompra.bigpuntos.com/';
+            window.location.href = 'https://credicompra-credit.netlify.app/';
         } else {
             // localStorage.setItem('simulador', 'ok');
             const credito = JSON.parse(localStorage.getItem('credito'));
