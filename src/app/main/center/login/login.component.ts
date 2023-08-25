@@ -215,7 +215,11 @@ export class LoginComponent implements OnInit, OnDestroy {
                         }).subscribe((info) => {
                             console.log('creditos', info);
                             if (info.cont === 0) {
-                                this._router.navigate(['/personas/solucitudCredito']);
+                                if (localStorage.getItem('credito') !== null && JSON.parse(localStorage.getItem('credito')).tipoCredito.includes('Pymes')) {
+                                    this._router.navigate(['/personas/solucitudCredito']);
+                                } else {
+                                    this._router.navigate(['/personas/creditos-autonomos/solicitar-credito']);
+                                }
                                 return;
                             }
                             const aprobado = info.info.find((item) => {
