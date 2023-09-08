@@ -22,10 +22,10 @@ import {environment} from '../../../../environments/environment';
 
 @Component({
     selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
+    templateUrl: './login-personas.component.html',
+    styleUrls: ['./login-personas.component.scss'],
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginPersonasComponent implements OnInit, OnDestroy {
     //  Public
     @ViewChild('captchaElem') captchaElem;
 
@@ -136,153 +136,144 @@ export class LoginComponent implements OnInit, OnDestroy {
                     // this._router.navigate([this.returnUrl]);
                     const semilla = JSON.parse(localStorage.getItem('semillaPago'));
                     const simulador = localStorage.getItem('simulador');
-                    switch (simulador) {
-                        case 'ok':
-                            this._creditosPreAprobadosService.obtenerListaCreditos({
-                                page: 0,
-                                page_size: 10,
-                                user_id: data.id
-                            }).subscribe((info) => {
-                                console.log('creditos', info);
-                                if (info.cont === 0) {
-                                    if (localStorage.getItem('credito') !== null && JSON.parse(localStorage.getItem('credito')).tipoCredito.includes('Pymes')) {
-                                        this._router.navigate(['/personas/solucitudCredito']);
-                                    } else {
-                                        this._router.navigate(['/personas/creditos-autonomos/solicitar-credito']);
-                                    }
-                                    return;
+                    if (simulador !== 'ok') {
+                        const usuario = this._coreMenuService.grpPersonasUser;
+                        this._creditosPreAprobadosService.obtenerListaCreditos({
+                            page: 0,
+                            page_size: 10,
+                            user_id: data.id
+                        }).subscribe((info) => {
+                            if (info.info[0]?.activarMenu) {
+                                this._coreMenuService.grpPersonasUser.documentosFirmados = 1;
+                                localStorage.setItem('grpPersonasUser', JSON.stringify(this._coreMenuService.grpPersonasUser));
+                            } else {
+                                this._coreMenuService.grpPersonasUser.documentosFirmados = 0;
+                                localStorage.setItem('grpPersonasUser', JSON.stringify(this._coreMenuService.grpPersonasUser));
+                            }
+                            console.log('creditos', info.info[0]?.estado);
+                            if (info.cont === 0) {
+                                this._router.navigate(['/personas/completarPerfil']);
+                                return;
+                            }
+                            const aprobado = info.info.find((item) => {
+                                if (item?.estado === 'Aprobado') {
+                                    localStorage.setItem('estadoCredito', 'aprobado');
+                                    return true;
                                 }
-                                const aprobado = info.info.find((item) => {
-                                    if (item?.estado === 'Aprobado') {
-                                        localStorage.setItem('estadoCredito', 'aprobado');
-                                        return true;
-                                    }
-                                });
-                                if (aprobado) {
+                            });
+                            if (aprobado) {
+                                this._router.navigate(['/personas/estado-solicitud-credito']);
+                                return;
+                            }
+                            const negado = info.info.find((item) => {
+                                if (item?.estado === 'Negado') {
+                                    localStorage.setItem('estadoCredito', 'negado');
+                                    this._router.navigate(['/personas/estado-solicitud-credito']);
+                                    return true;
+                                }
+                            });
+                            if (negado) {
+                                this._router.navigate(['/personas/estado-solicitud-credito']);
+                                return;
+                            }
+                            const pendiente = info.info.find((item) => {
+                                if (item?.estado === 'Por completar') {
+                                    localStorage.setItem('estadoCredito', 'pendiente');
+                                    localStorage.setItem('motivo', item.motivo);
+                                    this._router.navigate(['/personas/estado-solicitud-credito']);
+                                    return true;
+                                }
+                            });
+                            if (pendiente) {
+                                this._router.navigate(['/personas/estado-solicitud-credito']);
+                                return;
+                            }
+                            const nuevo = info.info.find((item) => {
+                                if (item?.estado === 'Nuevo') {
+                                    localStorage.setItem('estadoCredito', 'pendiente');
+                                    localStorage.setItem('motivo', item.motivo);
                                     this._router.navigate(['/personas/estado-solicitud-credito']);
                                     return;
                                 }
-                                const negado = info.info.find((item) => {
-                                    if (item?.estado === 'Negado') {
-                                        localStorage.setItem('estadoCredito', 'negado');
-                                        this._router.navigate(['/personas/estado-solicitud-credito']);
-                                        return true;
-                                    }
-                                });
-                                if (negado) {
-                                    this._router.navigate(['/personas/estado-solicitud-credito']);
-                                    return;
-                                }
-                                const pendiente = info.info.find((item) => {
-                                    if (item?.estado === 'Por completar') {
-                                        localStorage.setItem('estadoCredito', 'pendiente');
-                                        localStorage.setItem('motivo', item.motivo);
-                                        this._router.navigate(['/personas/estado-solicitud-credito']);
-                                        return true;
-                                    }
-                                });
-                                if (pendiente) {
-                                    this._router.navigate(['/personas/estado-solicitud-credito']);
-                                    return;
-                                }
-                                const nuevo = info.info.find((item) => {
-                                    if (item?.estado === 'Nuevo') {
-                                        localStorage.setItem('estadoCredito', 'pendiente');
-                                        localStorage.setItem('motivo', item.motivo);
-                                        this._router.navigate(['/personas/estado-solicitud-credito']);
-                                        return;
-                                    }
-                                });
-                                if (nuevo) {
-                                    this._router.navigate(['/personas/estado-solicitud-credito']);
-                                    return;
-                                }
+                            });
+                            if (nuevo) {
+                                this._router.navigate(['/personas/estado-solicitud-credito']);
+                                return;
+                            }
+                            if (localStorage.getItem('credito') !== null && JSON.parse(localStorage.getItem('credito')).tipoCredito.includes('Pymes')) {
+                                this._router.navigate(['/personas/solucitudCredito']);
+                            } else {
+                                this._router.navigate(['/personas/creditos-autonomos/solicitar-credito']);
+                            }
+                        });
+                        console.log(usuario);
+                    } else {
+                        this._creditosPreAprobadosService.obtenerListaCreditos({
+                            page: 0,
+                            page_size: 10,
+                            user_id: data.id
+                        }).subscribe((info) => {
+                            console.log('creditos', info);
+                            if (info.cont === 0) {
                                 if (localStorage.getItem('credito') !== null && JSON.parse(localStorage.getItem('credito')).tipoCredito.includes('Pymes')) {
                                     this._router.navigate(['/personas/solucitudCredito']);
                                 } else {
                                     this._router.navigate(['/personas/creditos-autonomos/solicitar-credito']);
                                 }
-                            });
-
-                            break;
-                        case 'consumo':
-                            // Código mandar a los de consumo...
-                            break;
-                        default:
-                            const usuario = this._coreMenuService.grpPersonasUser;
-                            this._creditosPreAprobadosService.obtenerListaCreditos({
-                                page: 0,
-                                page_size: 10,
-                                user_id: data.id
-                            }).subscribe((info) => {
-                                if (info.info[0]?.activarMenu) {
-                                    this._coreMenuService.grpPersonasUser.documentosFirmados = 1;
-                                    localStorage.setItem('grpPersonasUser', JSON.stringify(this._coreMenuService.grpPersonasUser));
-                                } else {
-                                    this._coreMenuService.grpPersonasUser.documentosFirmados = 0;
-                                    localStorage.setItem('grpPersonasUser', JSON.stringify(this._coreMenuService.grpPersonasUser));
-                                }
-                                console.log('creditos', info.info[0]?.estado);
-                                if (info.cont === 0) {
-                                    this._router.navigate(['/personas/completarPerfil']);
-                                    return;
-                                }
-                                const aprobado = info.info.find((item) => {
-                                    if (item?.estado === 'Aprobado') {
-                                        localStorage.setItem('estadoCredito', 'aprobado');
-                                        return true;
-                                    }
-                                });
-                                if (aprobado) {
-                                    this._router.navigate(['/personas/estado-solicitud-credito']);
-                                    return;
-                                }
-                                const negado = info.info.find((item) => {
-                                    if (item?.estado === 'Negado') {
-                                        localStorage.setItem('estadoCredito', 'negado');
-                                        this._router.navigate(['/personas/estado-solicitud-credito']);
-                                        return true;
-                                    }
-                                });
-                                if (negado) {
-                                    this._router.navigate(['/personas/estado-solicitud-credito']);
-                                    return;
-                                }
-                                const pendiente = info.info.find((item) => {
-                                    if (item?.estado === 'Por completar') {
-                                        localStorage.setItem('estadoCredito', 'pendiente');
-                                        localStorage.setItem('motivo', item.motivo);
-                                        this._router.navigate(['/personas/estado-solicitud-credito']);
-                                        return true;
-                                    }
-                                });
-                                if (pendiente) {
-                                    this._router.navigate(['/personas/estado-solicitud-credito']);
-                                    return;
-                                }
-                                const nuevo = info.info.find((item) => {
-                                    if (item?.estado === 'Nuevo') {
-                                        localStorage.setItem('estadoCredito', 'pendiente');
-                                        localStorage.setItem('motivo', item.motivo);
-                                        this._router.navigate(['/personas/estado-solicitud-credito']);
-                                        return;
-                                    }
-                                });
-                                if (nuevo) {
-                                    this._router.navigate(['/personas/estado-solicitud-credito']);
-                                    return;
-                                }
-                                if (localStorage.getItem('credito') !== null && JSON.parse(localStorage.getItem('credito')).tipoCredito.includes('Pymes')) {
-                                    this._router.navigate(['/personas/solucitudCredito']);
-                                } else {
-                                    this._router.navigate(['/personas/creditos-autonomos/solicitar-credito']);
+                                return;
+                            }
+                            const aprobado = info.info.find((item) => {
+                                if (item?.estado === 'Aprobado') {
+                                    localStorage.setItem('estadoCredito', 'aprobado');
+                                    return true;
                                 }
                             });
-                            console.log(usuario);
-
-
+                            if (aprobado) {
+                                this._router.navigate(['/personas/estado-solicitud-credito']);
+                                return;
+                            }
+                            const negado = info.info.find((item) => {
+                                if (item?.estado === 'Negado') {
+                                    localStorage.setItem('estadoCredito', 'negado');
+                                    this._router.navigate(['/personas/estado-solicitud-credito']);
+                                    return true;
+                                }
+                            });
+                            if (negado) {
+                                this._router.navigate(['/personas/estado-solicitud-credito']);
+                                return;
+                            }
+                            const pendiente = info.info.find((item) => {
+                                if (item?.estado === 'Por completar') {
+                                    localStorage.setItem('estadoCredito', 'pendiente');
+                                    localStorage.setItem('motivo', item.motivo);
+                                    this._router.navigate(['/personas/estado-solicitud-credito']);
+                                    return true;
+                                }
+                            });
+                            if (pendiente) {
+                                this._router.navigate(['/personas/estado-solicitud-credito']);
+                                return;
+                            }
+                            const nuevo = info.info.find((item) => {
+                                if (item?.estado === 'Nuevo') {
+                                    localStorage.setItem('estadoCredito', 'pendiente');
+                                    localStorage.setItem('motivo', item.motivo);
+                                    this._router.navigate(['/personas/estado-solicitud-credito']);
+                                    return;
+                                }
+                            });
+                            if (nuevo) {
+                                this._router.navigate(['/personas/estado-solicitud-credito']);
+                                return;
+                            }
+                            if (localStorage.getItem('credito') !== null && JSON.parse(localStorage.getItem('credito')).tipoCredito.includes('Pymes')) {
+                                this._router.navigate(['/personas/solucitudCredito']);
+                            } else {
+                                this._router.navigate(['/personas/creditos-autonomos/solicitar-credito']);
+                            }
+                        });
                     }
-
                 },
                 (error) => {
                     this.error = 'Fallo en la autenticación, vuelva a intentarlo';

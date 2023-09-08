@@ -1,0 +1,61 @@
+<div class="row">
+    <section class="head-LP text-LP">
+        <div class="container pb-5">
+            <div class="row justify-content-center align-items-center py-5">
+                <div class="col-md-12 text-center">
+<!--                    <img src="{{ coreConfig.app.appLogoImage }}" width="300" alt="">-->
+
+                </div>
+                <div class="col-md-12 text-center">
+                    <div class="row mx-2 justify-content-center align-items-center py-2">
+                        <p [innerHTML]="descripcion.valor"></p>
+                    </div>
+                    <div class="row mx-2 justify-content-center align-items-center py-2">
+                        <div class="col-12">
+                            <button type="submit" rippleEffect class="btn btn-primary mr-1" (click)="guardarCredito()" style="color: black !important;">ENVIAR SOLICITUD
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row mx-2 justify-content-center align-items-center py-2">
+                        <h3>{{requisitos.valor}}</h3>
+                    </div>
+                    <div class="row mx-2 justify-content-center align-items-center py-2">
+                        <ul class="list-group">
+                            <li class="list-group-item" *ngFor="let item of requisitos.config">{{item}}</li>
+                        </ul>
+                    </div>
+                    <div class="row mx-2 justify-content-center align-items-center py-2">
+                        <p>
+                            Presione en el botón ENVIAR SOLICITUD.
+                        </p>
+                        <br>
+                        <p>
+                            Nuestro Agente Virtual se pondrá en contacto con usted para <span style="color: black"> Finalizar el Proceso </span> desde
+                            el siguiente número 0980283746 y/o desde el siguiente correo:
+                            <span>info@corporacionomniglobal.com</span>
+                        </p>
+                    </div>
+                    <div class="row mx-2 justify-content-center align-items-center py-2">
+                        <div class="col-12">
+                            <button type="submit" rippleEffect class="btn btn-primary mr-1" (click)="guardarCredito()" style="color: black !important;">ENVIAR SOLICITUD
+                            </button>
+                        </div>
+                    </div>
+                </div>
+<!--                <div class="row mx-2 justify-content-center align-items-center py-2">-->
+<!--                    <div class="col-12">-->
+<!--                        <button type="submit" rippleEffect class="btn btn-outline-dark mr-1" (click)="continue()">Continuar-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>-->
+            </div>
+<!--            <div class="text-center">-->
+<!--                <img src="../../../../assets/images/pages/logoCrediCompra.svg" height="50px" width="50px">-->
+<!--            </div>-->
+        </div>
+    </section>
+</div>
+
+
+<!-- Buynow Button-->
+<app-need-help [href]="'https://walink.co/9e8a9d'"> </app-need-help>

@@ -1,60 +1,72 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { LoginComponent } from './login/login.component';
-import { RouterModule } from '@angular/router';
-import { ContentHeaderModule } from '../../layout/components/content-header/content-header.module';
-import { TranslateModule } from '@ngx-translate/core';
-import { SwiperModule } from 'ngx-swiper-wrapper';
-import { CoreCommonModule } from '../../../@core/common.module';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from '@angular/forms';
-import { CoreTouchspinModule } from '../../../@core/components/core-touchspin/core-touchspin.module';
-import { CoreSidebarModule } from '../../../@core/components/core-sidebar/core-sidebar.module';
-import { RecuperarPassComponent } from './recuperar-pass/recuperar-pass.component';
-import { RegistroComponent } from './registro/registro.component';
-import { AuthGuard } from '../../auth/helpers/auth.guards';
-import { ReseteoPasswordComponent } from './reseteo-password/reseteo-password.component';
-import { Ng2FlatpickrModule } from 'ng2-flatpickr';
-import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
-import { Role } from 'app/auth/models';
-import { NgxCaptchaModule } from 'ngx-captcha';
-import { FacebookLoginProvider, SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {LoginComponent} from './login/login.component';
+import {RouterModule} from '@angular/router';
+import {ContentHeaderModule} from '../../layout/components/content-header/content-header.module';
+import {TranslateModule} from '@ngx-translate/core';
+import {SwiperModule} from 'ngx-swiper-wrapper';
+import {CoreCommonModule} from '../../../@core/common.module';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {FormsModule} from '@angular/forms';
+import {CoreTouchspinModule} from '../../../@core/components/core-touchspin/core-touchspin.module';
+import {CoreSidebarModule} from '../../../@core/components/core-sidebar/core-sidebar.module';
+import {RecuperarPassComponent} from './recuperar-pass/recuperar-pass.component';
+import {RegistroComponent} from './registro/registro.component';
+import {AuthGuard} from '../../auth/helpers/auth.guards';
+import {ReseteoPasswordComponent} from './reseteo-password/reseteo-password.component';
+import {Ng2FlatpickrModule} from 'ng2-flatpickr';
+import {PerfilUsuarioComponent} from './perfil-usuario/perfil-usuario.component';
+import {Role} from 'app/auth/models';
+import {NgxCaptchaModule} from 'ngx-captcha';
+import {FacebookLoginProvider, SocialLoginModule, SocialAuthServiceConfig} from 'angularx-social-login';
 import {SharedModule} from '../shared/shared.module';
+import {LoginPersonasComponent} from './login-personas/login-personas.component';
+import {RegistroPersonasComponent} from './registro-personas/registro-personas.component';
 
 const routes = [
-  {
-    path: '', redirectTo: 'login', pathMatch: 'full'
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
-    data: { animation: 'auth', activacion: [8] }
-  },
-  {
-    path: 'registro',
-    component: RegistroComponent,
-    data: { animation: 'auth', activacion: [8] }
-  },
-  {
-    path: 'recuperarPass',
-    component: RecuperarPassComponent,
-    data: { animation: 'auth', activacion: [8] }
-  },
-  {
-    path: 'reseteoPassword',
-    component: ReseteoPasswordComponent,
-    data: { animation: 'auth', activacion: [8] }
-  },
-  {
-    path: 'perfil',
-    component: PerfilUsuarioComponent,
-    data: { roles: [Role.SuperMonedas, Role.Autonomo, Role.Empleado], activacion: [8] },
-    canActivate: [AuthGuard]
-  }
+    {
+        path: '', redirectTo: 'login', pathMatch: 'full'
+    },
+    {
+        path: 'login',
+        component: LoginComponent,
+        data: {animation: 'auth', activacion: [8]}
+    },
+    {
+        path: 'login-personas',
+        component: LoginPersonasComponent,
+        data: {animation: 'auth', activacion: [8]}
+    },
+    {
+        path: 'registro',
+        component: RegistroComponent,
+        data: {animation: 'auth', activacion: [8]}
+    },
+    {
+        path: 'registro-personas',
+        component: RegistroPersonasComponent,
+        data: {animation: 'auth', activacion: [8]}
+    },
+    {
+        path: 'recuperarPass',
+        component: RecuperarPassComponent,
+        data: {animation: 'auth', activacion: [8]}
+    },
+    {
+        path: 'reseteoPassword',
+        component: ReseteoPasswordComponent,
+        data: {animation: 'auth', activacion: [8]}
+    },
+    {
+        path: 'perfil',
+        component: PerfilUsuarioComponent,
+        data: {roles: [Role.SuperMonedas, Role.Autonomo, Role.Empleado], activacion: [8]},
+        canActivate: [AuthGuard]
+    }
 ];
 
 @NgModule({
-  declarations: [LoginComponent, RecuperarPassComponent, RegistroComponent, ReseteoPasswordComponent],
+    declarations: [LoginComponent, LoginPersonasComponent, RecuperarPassComponent, RegistroComponent, RegistroPersonasComponent, ReseteoPasswordComponent],
     imports: [
         RouterModule.forChild(routes),
         ContentHeaderModule,
@@ -70,9 +82,7 @@ const routes = [
         SharedModule,
         // SocialLoginModule
     ],
-  providers: [
-    
-    
-  ]
+    providers: []
 })
-export class CenterModule { }
+export class CenterModule {
+}

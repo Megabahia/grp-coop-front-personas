@@ -72,6 +72,10 @@ import {
 import {ValidacionDatosComponent} from './vistas/creditos-autonomos/validacion-datos/validacion-datos.component';
 import { PagoEmpleadosComponent } from './vistas/pago-empleados/pago-empleados.component';
 import { TransaccionesCreditoComponent } from './vistas/transacciones-credito/transacciones-credito.component';
+import {CreditosAutonomosDigitalComponent} from './vistas/creditos-autonomos-digital/creditos-autonomos-digital.component';
+import {
+    ValidacionDatosDigitalComponent
+} from './vistas/creditos-autonomos-digital/validacion-datos-digital/validacion-datos-digital.component';
 
 const maskConfig: Partial<IConfig> = {
     validation: false,
@@ -176,6 +180,26 @@ const routes = [
             {
                 path: 'validacion-datos',
                 component: ValidacionDatosComponent,
+                data: {roles: [Role.SuperMonedas], activacion: [8, 0]},
+                canActivate: [AuthGuard]
+                // data: { animation: 'auth' }
+            },
+        ],
+    },
+    {
+        path: 'creditos-autonomos-digital',
+        children: [
+            {path: '', redirectTo: 'solicitar-credito-digital', pathMatch: 'full'},
+            {
+                path: 'solicitar-credito-digital',
+                component: CreditosAutonomosDigitalComponent,
+                data: {roles: [Role.SuperMonedas], activacion: [8, 0]},
+                canActivate: [AuthGuard],
+                // data: { animation: 'auth' }
+            },
+            {
+                path: 'validacion-datos-digital',
+                component: ValidacionDatosDigitalComponent,
                 data: {roles: [Role.SuperMonedas], activacion: [8, 0]},
                 canActivate: [AuthGuard]
                 // data: { animation: 'auth' }
@@ -383,6 +407,7 @@ const routes = [
         PerfilUsuarioComponent,
         PagarConSuperMonedasComponent,
         CreditosAutonomosComponent,
+        CreditosAutonomosDigitalComponent,
         VideoExplicativoAutComponent,
         PerfilPersonaAutComponent,
         EstablecimientosComercialesAutComponent,
@@ -412,6 +437,7 @@ const routes = [
         SolicitudCreditoComponent,
         ResumenRequisitosCreditoComponent,
         ValidacionDatosComponent,
+        ValidacionDatosDigitalComponent,
         PagoEmpleadosComponent,
         TransaccionesCreditoComponent,
     ],

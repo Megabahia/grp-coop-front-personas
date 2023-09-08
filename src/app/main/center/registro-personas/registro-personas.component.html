@@ -1,0 +1,179 @@
+<div class="auth-wrapper auth-v2">
+    <div class="auth-inner row m-0">
+        <!-- Left Text-->
+        <div class="mt-2 d-none d-lg-flex col-lg-8 align-items-center p-5 mt-5">
+            <div class="d-block">
+                <div class="text-center pl-5">
+                    <img src="/assets/images/logo/san-jose-v.png" alt="brand-logo" width="300"/>
+
+                </div>
+                <h2 class="pl-5 text-primary"><b>
+                    Accede hoy a tu Línea de Crédito y paga a tus proveedores y/o empleados de forma fácil y rápida.
+                </b></h2>
+                <div class="text-center pl-5">
+                    <img [src]="
+                  coreConfig.layout.skin === 'dark'
+                    ? 'assets/images/pages/login/login-2.png'
+                    : 'assets/images/pages/login/login-2.png'
+                " alt="Super monedas" width="75%"/>
+                </div>
+
+            </div>
+        </div>
+        <!-- /Left Text-->
+        <!-- Login-->
+        <div class="d-flex col-lg-4 align-items-center auth-bg px-2 p-lg-5">
+            <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
+                <h2 class="card-title font-weight-bold mb-1">Registro {{nombre}}</h2>
+                <p class="card-text mb-2 text-justify">
+                    Recuerde que debe tener RUC, Facturación electrónica y Firma electrónica para acceder a su Línea
+                    de Crédito y realizar pagos a sus proveedores y/o empleados.
+                </p>
+
+                <ngb-alert [type]="'danger'" [dismissible]="false" *ngIf="error">
+                    <div class="alert-body">
+                        <p>{{ error }}</p>
+                    </div>
+                </ngb-alert>
+
+                <form class="auth-login-form mt-2" [formGroup]="registerForm" (ngSubmit)="registrarUsuario()">
+                    <div class="form-group">
+                        <label class="form-label" for="login-correo">Correo</label>
+                        <input type="text" formControlName="correo" class="form-control"
+                               [ngClass]="{ 'is-invalid': submitted && f.correo.errors }" placeholder="admin@demo.com"
+                               aria-describedby="login-correo" autofocus="" tabindex="1"
+                        />
+                        <div *ngIf="submitted && f.correo.errors" class="invalid-feedback">
+                            <div *ngIf="f.correo.errors.required">Correo es requerido</div>
+                            <div *ngIf="f.correo.errors.email">Debe ingresar una dirección de correo válida</div>
+                        </div>
+                    </div>
+                    <!--                    <div class="form-group">-->
+                    <!--                        <div class="d-flex justify-content-between">-->
+                    <!--                            <label for="login-password">Contraseña</label>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="input-group input-group-merge form-password-toggle">-->
+                    <!--                            <input [type]="passwordTextType ? 'text' : 'password'" formControlName="password" class="form-control form-control-merge" [ngClass]="{ 'is-invalid error': submitted && f.password.errors }" placeholder="············" aria-describedby="login-password" tabindex="2"-->
+                    <!--                                (change)="compararPassword()" />-->
+                    <!--                            <div class="input-group-append">-->
+                    <!--                                <span class="input-group-text cursor-pointer"><i class="feather font-small-4" [ngClass]="{-->
+                    <!--                      'icon-eye-off': passwordTextType,-->
+                    <!--                      'icon-eye': !passwordTextType-->
+                    <!--                    }" (click)="togglePasswordTextType()"></i></span>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback" [ngClass]="{ 'd-block': submitted && f.password.errors }">-->
+                    <!--                            <div *ngIf="f.password.errors.required">Contraseña es requerida</div>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+                    <!--                    <div class="form-group">-->
+                    <!--                        <div class="d-flex justify-content-between">-->
+                    <!--                            <label for="login-confirmPassword">Repita contraseña</label>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="input-group input-group-merge">-->
+                    <!--                            <input [type]="confirmPasswordTextType ? 'text' : 'password'" formControlName="confirmPassword" class="form-control form-control-merge" [ngClass]="{ 'is-invalid error': submitted && f.confirmPassword.errors }" placeholder="············" aria-describedby="login-confirmPassword"-->
+                    <!--                                tabindex="2" (change)="compararPassword()" />-->
+                    <!--                            <div class="input-group-append">-->
+                    <!--                                <span class="input-group-text cursor-pointer"><i class="feather font-small-4" [ngClass]="{-->
+                    <!--          'icon-eye-off': confirmPasswordTextType,-->
+                    <!--          'icon-eye': !confirmPasswordTextType-->
+                    <!--        }" (click)="toggleConfirmPasswordTextType()"></i></span>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                        <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback" [ngClass]="{ 'd-block': submitted && f.confirmPassword.errors }">-->
+                    <!--                            <div *ngIf="f.confirmPassword.errors.required">Contraseña es requerida</div>-->
+                    <!--                        </div>-->
+                    <!--                        <div *ngIf="submitted && !passwordSimilar" class="invalid-feedback" [ngClass]="{ 'd-block': submitted && !passwordSimilar }">-->
+                    <!--                            <div *ngIf="!passwordSimilar">Las contraseñas no coinciden</div>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+                    <div class="form-group">
+                        <div class="d-flex justify-content-center">
+                            <ngx-recaptcha2 [(ngModel)]="captcha" [ngModelOptions]="{standalone: true}"
+                                            [siteKey]=" siteKey"
+                                            (success)="captchaValidado($event) ">
+                            </ngx-recaptcha2>
+
+                        </div>
+                        <div *ngIf="submitted && !captcha" style="display: block;" class="invalid-feedback">
+                            <div>Captcha requerido</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input class="custom-control-input" id="remember-me" formControlName="terminos"
+                                   type="checkbox" tabindex="3"/>
+                            <label class="custom-control-label" for="remember-me"><span>Aceptar</span><a
+                                    class="text-primary"
+                                    href="#" target="_self" (click)="mostrarTerminos($event, modalTerminos)"><span>&nbsp;términos y condiciones</span></a></label>
+                            <div *ngIf="submitted && f.terminos.errors" class="invalid-feedback"
+                                 [ngClass]="{ 'd-block': submitted && f.terminos.errors }">
+                                <div *ngIf="f.terminos.errors">Acepte los términos y condiciones para continuar</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button [disabled]="loading" class="btn btn-primary btn-block" tabindex="4" rippleEffect>
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>Registrarme
+                    </button>
+                </form>
+                <p class="text-center mt-2">
+                    <b><span>¿Ya tiene una cuenta?</span></b><a class="text-primary" routerLink="/grp/login"><b><span> Inicie sesión</span></b></a>
+                </p>
+                <app-footer></app-footer>
+            </div>
+        </div>
+        <!-- /Login-->
+    </div>
+</div>
+<ng-template #mensajeModal let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Mensaje</h5>
+        <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+        <div [innerHTML]="mensaje"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="cerrarModal()">Cerrar</button>
+    </div>
+</ng-template>
+<ng-template #mensajeConfirmModal let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Confirmación</h5>
+        <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+        <div [innerHTML]="mensajeConfirm"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="redirigir()">Continuar</button>
+    </div>
+</ng-template>
+
+<ng-template #modalTerminos let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Autorización de revisión y tratamiento de información</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss( 'Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div style="text-align: center;">
+            <p>
+                Al autorizar el tratamiento de su información, usted acepta que la empresa Corporación OmniGlobal y
+                todas sus marcas y/o productos a validar su información en las plataformas pertinentes.
+            </p>
+            <p>
+                Al autorizar el tratamiento de su información, usted acepta que la empresa revise su información de Buró
+                de Crédito para confirmar su estado crediticio.
+            </p>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.dismiss( 'Cross click')">Salir</button>
+    </div>
+</ng-template>
