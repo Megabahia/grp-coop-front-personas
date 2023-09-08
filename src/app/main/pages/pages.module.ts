@@ -14,9 +14,6 @@ import {PagesViewsComponent} from './pages-views/pages-views.component';
 import {RouterModule, Routes} from '@angular/router';
 import {MensajeProductosComponent} from './mensaje-productos/mensaje-productos.component';
 import {MensajeProductosFreeComponent} from './mensaje-productos-free/mensaje-productos-free.component';
-import {CreditRequestComponent} from './credit-request/credit-request.component';
-import {SimulatorCrediCompraComponent} from './simulator-credi-compra/simulator-credi-compra.component';
-import {CreditRequirementsComponent} from './credit-requirements/credit-requirements.component';
 import {PreApprovedCreditLineComponent} from './pre-approved-credit-consumer/pre-approved-credit-line.component';
 import {ApprovedEndConsumerComponent} from './approved-end-consumer/approved-end-consumer.component';
 import {CreditRequestBpComponent} from './credit-request-bp/credit-request-bp.component';
@@ -46,19 +43,14 @@ const routes: Routes = [
         data: {animation: 'misc', activacion: [8]},
     },
     {
-        path: 'solicitud-credito',
-        component: CreditRequestComponent,
-        data: {animation: 'misc', activacion: [8]},
+        path: 'credito-consumo',
+        loadChildren: () =>
+            import('./simulador-consumo/similador-conusmo.module').then((m) => m.SimiladorConusmoModule)
     },
     {
-        path: 'simulador-de-credito',
-        component: SimulatorCrediCompraComponent,
-        data: {animation: 'misc', activacion: [8]},
-    },
-    {
-        path: 'requisitos-de-credito',
-        component: CreditRequirementsComponent,
-        data: {animation: 'misc', activacion: [8]},
+        path: 'microcreditos',
+        loadChildren: () =>
+            import('./simulador-microcreditos/similador-microcreditos.module').then((m) => m.SimiladorMicrocreditosModule)
     },
     {
         path: 'preApprovedCreditLine',
@@ -109,9 +101,6 @@ const routes: Routes = [
         PagesViewsComponent,
         MensajeProductosComponent,
         MensajeProductosFreeComponent,
-        CreditRequestComponent,
-        SimulatorCrediCompraComponent,
-        CreditRequirementsComponent,
         PreApprovedCreditLineComponent,
         ApprovedEndConsumerComponent,
         CreditRequestBpComponent,

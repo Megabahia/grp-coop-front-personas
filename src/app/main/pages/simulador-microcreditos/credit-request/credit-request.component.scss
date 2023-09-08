@@ -8631,7 +8631,7 @@ category-result .card-header {
 }
 //escritorio
 .footer-LP {
-  background:  url(../../../../assets/images/pages/logoCrediCompra.svg) no-repeat center top 10px;
+  background:  url(/assets/images/pages/logoCrediCompra.svg) no-repeat center top 10px;
   //margin-top: 220px;
   background-size: 50px;
   //height: 150px;
@@ -8640,7 +8640,7 @@ category-result .card-header {
 //movil
 @media only screen and (max-width: 600px) {
   .footer-LP {
-    background:  url(../../../../assets/images/pages/logoCrediCompra.svg) no-repeat center bottom;
+    background:  url(/assets/images/pages/logoCrediCompra.svg) no-repeat center bottom;
     //margin-top: 100px;
     background-size: 50px;
     //height: 100px;

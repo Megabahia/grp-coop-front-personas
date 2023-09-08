@@ -1,25 +1,19 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {CoreConfigService} from '../../../../@core/services/config.service';
+import { Component, OnInit } from '@angular/core';
+
 import {Router} from '@angular/router';
-import {takeUntil} from 'rxjs/operators';
-import {Subject} from 'rxjs';
+import {CoreConfigService} from '../../../../../@core/services/config.service';
 
 @Component({
   selector: 'app-credit-request',
   templateUrl: './credit-request.component.html',
-  styleUrls: ['./credit-request.component.scss']
+  styleUrls: ['../simulator-credi-compra/simulator-credi-compra.component.scss']
 })
-export class CreditRequestComponent implements OnInit, OnDestroy {
-
-    public coreConfig: any;
-    // Private
-    private _unsubscribeAll: Subject<any>;
+export class CreditRequestComponent implements OnInit {
 
   constructor(
     private _router: Router,
       private _coreConfigService: CoreConfigService,
   ) {
-      this._unsubscribeAll = new Subject();
     this._coreConfigService.config = {
       layout: {
         navbar: {
@@ -36,8 +30,9 @@ export class CreditRequestComponent implements OnInit, OnDestroy {
       },
     };
     // Verificar dominio pagina
-    // const ref = document.referrer;
-    // const host = document.location.host;
+    const ref = document.referrer;
+    const host = document.location.host;
+    console.log('ref', ref, 'host', host);
     // if (ref !== 'https://credicompra.com/') {
     //   if (host !== '209.145.61.41:4201') {
     //     this._router.navigate([
@@ -49,20 +44,9 @@ export class CreditRequestComponent implements OnInit, OnDestroy {
     // }
     // localStorage.setItem('pagina', ref);
     localStorage.setItem('pagina', 'https://credicompra.com/');
-    localStorage.setItem('simulador', 'ok');
   }
 
   ngOnInit(): void {
-      // Subscribe to config changes
-      this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
-          this.coreConfig = config;
-      });
   }
-
-    ngOnDestroy(): void {
-        // Unsubscribe from all subscriptions
-        this._unsubscribeAll.next();
-        this._unsubscribeAll.complete();
-    }
 
 }

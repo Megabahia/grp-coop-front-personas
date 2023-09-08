@@ -1,13 +1,13 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {CoreConfigService} from '../../../../@core/services/config.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ParametrizacionesService} from '../../personas/servicios/parametrizaciones.service';
 import Decimal from 'decimal.js';
 import {Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {ToastrService} from 'ngx-toastr';
+import {CoreConfigService} from '../../../../../@core/services/config.service';
+import {ParametrizacionesService} from '../../../personas/servicios/parametrizaciones.service';
 
 @Component({
     selector: 'app-simulator-credi-compra',
@@ -189,7 +189,7 @@ export class SimulatorCrediCompraComponent implements OnInit, OnDestroy {
         localStorage.setItem('coutaMensual', cuotaMensual.toString());
         localStorage.setItem('montoCreditoFinal', montoCreditoFinal.toString());
         localStorage.setItem('estadoCivil', this.infoCreditForm.value['estadoCivil']);
-        this._router.navigate(['/pages/requisitos-de-credito']);
+        this._router.navigate(['/pages/microcreditos/requisitos']);
     }
 
     abrirModalLg(modal) {

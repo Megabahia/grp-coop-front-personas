@@ -1,10 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import Decimal from 'decimal.js';
-import {ParametrizacionesService} from '../../personas/servicios/parametrizaciones.service';
-import {CoreConfigService} from '../../../../@core/services/config.service';
 import {Router} from '@angular/router';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
+import {CoreConfigService} from '../../../../../@core/services/config.service';
+import {ParametrizacionesService} from '../../../personas/servicios/parametrizaciones.service';
 
 @Component({
     selector: 'app-credit-requirements',
