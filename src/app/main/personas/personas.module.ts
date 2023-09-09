@@ -76,6 +76,8 @@ import {CreditosAutonomosDigitalComponent} from './vistas/creditos-autonomos-dig
 import {
     ValidacionDatosDigitalComponent
 } from './vistas/creditos-autonomos-digital/validacion-datos-digital/validacion-datos-digital.component';
+import {SolicitudCreditosDigitalComponent} from './vistas/solicitud-creditos-digital/solicitud-creditos-digital.component';
+import {EstadoSolicitudDigitalComponent} from './vistas/estado-solicitud-digital/estado-solicitud-digital.component';
 
 const maskConfig: Partial<IConfig> = {
     validation: false,
@@ -300,6 +302,14 @@ const routes = [
         // data: { animation: 'auth' }
     },
     {
+        path: 'solucitudCreditoDigital',
+        component: SolicitudCreditosDigitalComponent,
+        data: {activacion: [1, 2, 3, 4, 5, 6, 7]},
+        canActivate: [AuthGuard],
+
+        // data: { animation: 'auth' }
+    },
+    {
         path: 'requisitosCredito/:monto',
         component: RequisitiosCreditoComponent,
         data: {activacion: [8, 1, 2, 3, 4, 5, 6, 7]},
@@ -380,7 +390,13 @@ const routes = [
         component: EstadoSolicitudComponent,
         data: {activacion: [2]},
         canActivate: [AuthGuard],
-
+        // data: { animation: 'auth' }
+    },
+    {
+        path: 'estado-solicitud-credito-digital',
+        component: EstadoSolicitudDigitalComponent,
+        data: {activacion: [2]},
+        canActivate: [AuthGuard],
         // data: { animation: 'auth' }
     },
     {
@@ -421,6 +437,7 @@ const routes = [
         listadoPagoCuotas,
         RegistroDatosPagosProvedoresComponent,
         SolicitudCreditosComponent,
+        SolicitudCreditosDigitalComponent,
         RegistroProveedoresComponent,
         PagoProvedorsComponent,
         SaldoProveedoresComponent,
@@ -432,6 +449,7 @@ const routes = [
         RequisitiosCreditoComponent,
         FinalizarSolicitudComponent,
         EstadoSolicitudComponent,
+        EstadoSolicitudDigitalComponent,
         FirmarDocumentosHabilitantesComponent,
         TerminosComponent,
         SolicitudCreditoComponent,

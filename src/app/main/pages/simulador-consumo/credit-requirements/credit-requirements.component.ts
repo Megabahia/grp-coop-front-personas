@@ -97,7 +97,7 @@ export class CreditRequirementsComponent implements OnInit {
     }
 
     simulador() {
-        localStorage.setItem('simulador', 'ok');
+        localStorage.setItem('simulador', 'consumo');
     }
 
     cancelar() {
