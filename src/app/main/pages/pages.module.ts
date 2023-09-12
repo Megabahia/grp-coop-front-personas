@@ -24,6 +24,9 @@ import {
     PreApprovedCreditConsumerBpComponent
 } from './pre-approved-credit-consumer-bp/pre-approved-credit-consumer-bp.component';
 import {ApprovedEndConsumerBpComponent} from './approved-end-consumer-bp/approved-end-consumer-bp.component';
+import {
+    PreApprovedCreditConsumerDigtalComponent
+} from './pre-approved-credit-consumer-digital/pre-approved-credit-consumer-digtal.component';
 
 // routing
 const routes: Routes = [
@@ -55,6 +58,11 @@ const routes: Routes = [
     {
         path: 'preApprovedCreditLine',
         component: PreApprovedCreditLineComponent,
+        data: {animation: 'misc'},
+    },
+    {
+        path: 'preApprovedCreditDigital',
+        component: PreApprovedCreditConsumerDigtalComponent,
         data: {animation: 'misc'},
     },
     {
@@ -102,6 +110,7 @@ const routes: Routes = [
         MensajeProductosComponent,
         MensajeProductosFreeComponent,
         PreApprovedCreditLineComponent,
+        PreApprovedCreditConsumerDigtalComponent,
         ApprovedEndConsumerComponent,
         CreditRequestBpComponent,
         SimulatorCrediCompraBpComponent,
