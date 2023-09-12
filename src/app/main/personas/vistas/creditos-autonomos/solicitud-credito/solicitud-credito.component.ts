@@ -132,7 +132,7 @@ export class SolicitudCreditoComponent implements OnInit {
     ngOnInit(): void {
         this.valoresLocalStorage();
         const fechaSolicitud = moment().format('L');
-        this.usuario.whatsapp = this.usuario.whatsapp.replace('+593', '0');
+        // this.usuario.whatsapp = this.usuario.whatsapp.replace('+593', '0');
         console.log('TIPO_PERSONA', this.tipoPersonaStorage);
         this.personaForm = this._formBuilder.group({
                 tipoIdentificacion: [this.usuario.tipoIdentificacion, [Validators.required]],

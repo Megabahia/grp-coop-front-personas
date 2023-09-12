@@ -207,7 +207,6 @@ export class LoginComponent implements OnInit, OnDestroy {
                             break;
                         case 'consumo':
                             console.log('llega de consumo----');
-
                             this._creditosPreAprobadosService.obtenerListaCreditos({
                                 page: 0,
                                 page_size: 10,
@@ -219,7 +218,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                                         console.log('inhreso..');
                                         this._router.navigate(['/personas/solucitudCreditoDigital']);
                                     } else {
-                                        this._router.navigate(['/personas/creditos-autonomos-digital/solicitar-credito-diigital']);
+                                        this._router.navigate(['/personas/creditos-autonomos-digital/solicitar-credito-digital']);
                                     }
                                     return;
                                 }
@@ -271,7 +270,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                                 if (localStorage.getItem('credito') !== null && JSON.parse(localStorage.getItem('credito')).tipoCredito.includes('Pymes')) {
                                     this._router.navigate(['/personas/solucitudCreditoDigital']);
                                 } else {
-                                    this._router.navigate(['/personas/creditos-autonomos-digital/solicitar-credito-diigital']);
+                                    this._router.navigate(['/personas/creditos-autonomos-digital/solicitar-credito-digital']);
                                 }
                             });
 

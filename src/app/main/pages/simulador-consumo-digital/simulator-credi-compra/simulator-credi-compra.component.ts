@@ -173,7 +173,7 @@ export class SimulatorCrediCompraComponent implements OnInit {
         localStorage.setItem('montoCreditoFinal', montoCreditoFinal.toString());
         localStorage.setItem('estadoCivil', this.infoCreditForm.value['estadoCivil']);
         localStorage.setItem('tipoPersona', this.infoCreditForm.value['tipoPersona']);
-        this._router.navigate(['/pages/credito-consumo/requisitos']);
+        this._router.navigate(['/pages/credito-consumo-digital/requisitos']);
     }
 
     abrirModalLg(modal) {

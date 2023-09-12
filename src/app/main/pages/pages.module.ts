@@ -43,9 +43,9 @@ const routes: Routes = [
         data: {animation: 'misc', activacion: [8]},
     },
     {
-        path: 'credito-consumo',
+        path: 'credito-consumo-digital',
         loadChildren: () =>
-            import('./simulador-consumo/similador-conusmo.module').then((m) => m.SimiladorConusmoModule)
+            import('./simulador-consumo-digital/similador-conusmo.module').then((m) => m.SimiladorConusmoModule)
     },
     {
         path: 'microcreditos',

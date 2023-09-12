@@ -69,11 +69,11 @@ export class ResumenRequisitosCreditoComponent implements OnInit {
     public checks;
     public soltero = false;
     public tiposNormales = {
-        'Empleado': 'Empleado',
+        'Empleado': 'Credito Consumo Empleado',
         'Alfa': 'null'
     };
     public tiposPreaprobados = {
-        'Empleado': 'Empleado-PreAprobado',
+        'Empleado': 'Credito Consumo Empleado-PreAprobado',
         'Alfa': 'null'
     };
 
@@ -124,8 +124,8 @@ export class ResumenRequisitosCreditoComponent implements OnInit {
         this.getInfo();
         if (localStorage.getItem('credito') !== null) {
             this.solicitarCredito = JSON.parse(localStorage.getItem('credito'));
-            this.solicitarCredito.canal = this.tiposPreaprobados[localStorage.getItem('tipoPersona')] || 'Negocio-PreAprobado';
-            this.solicitarCredito.tipoCredito = this.tiposPreaprobados[localStorage.getItem('tipoPersona')] || 'Negocio-PreAprobado';
+            this.solicitarCredito.canal = this.tiposPreaprobados[localStorage.getItem('tipoPersona')] || 'Credito Consumo Negocio-PreAprobado';
+            this.solicitarCredito.tipoCredito = this.tiposPreaprobados[localStorage.getItem('tipoPersona')] || 'Credito Consumo Negocio-PreAprobado';
         } else {
             this.solicitarCredito = this.inicialidarSolicitudCredito();
         }
@@ -146,9 +146,9 @@ export class ResumenRequisitosCreditoComponent implements OnInit {
             cuota: this.coutaMensual,
             plazo: 12,
             user_id: this.usuario.id,
-            canal: this.tiposNormales[localStorage.getItem('tipoPersona')] || 'Negocio propio',
-            tipoCredito: this.tiposNormales[localStorage.getItem('tipoPersona')] || 'Negocio propio',
-            concepto: this.tiposNormales[localStorage.getItem('tipoPersona')] || 'Negocio propio',
+            canal: this.tiposNormales[localStorage.getItem('tipoPersona')] || 'Credito Consumo Negocio propio',
+            tipoCredito: this.tiposNormales[localStorage.getItem('tipoPersona')] || 'Credito Consumo Negocio propio',
+            concepto: this.tiposNormales[localStorage.getItem('tipoPersona')] || 'Credito Consumo Negocio propio',
             cargarOrigen: 'BIGPUNTOS',
             nombres: '',
             apellidos: '',
@@ -170,6 +170,7 @@ export class ResumenRequisitosCreditoComponent implements OnInit {
 
     guardarCredito() {
         // Agregar informacion al credito
+        this.solicitarCredito.alcance = 'LOCAL';
         this.solicitarCredito.nombres = this.usuario.persona.nombres;
         this.solicitarCredito.apellidos = this.usuario.persona.apellidos;
         this.solicitarCredito.numeroIdentificacion = this.usuario.persona.identificacion;
@@ -204,7 +205,7 @@ export class ResumenRequisitosCreditoComponent implements OnInit {
         const y = 10;
         const maxWidth = 180; // Ancho máximo del párrafo
 
-        doc.text(text, x, y, { maxWidth });
+        doc.text(text, x, y, {maxWidth});
 
         // Convierte el documento en un archivo Blob
         const pdfBlob = doc.output('blob');
