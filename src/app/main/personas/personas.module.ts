@@ -72,6 +72,12 @@ import {
 import {ValidacionDatosComponent} from './vistas/creditos-autonomos/validacion-datos/validacion-datos.component';
 import { PagoEmpleadosComponent } from './vistas/pago-empleados/pago-empleados.component';
 import { TransaccionesCreditoComponent } from './vistas/transacciones-credito/transacciones-credito.component';
+import {CreditosAutonomosDigitalComponent} from './vistas/creditos-autonomos-digital/creditos-autonomos-digital.component';
+import {
+    ValidacionDatosDigitalComponent
+} from './vistas/creditos-autonomos-digital/validacion-datos-digital/validacion-datos-digital.component';
+import {SolicitudCreditosDigitalComponent} from './vistas/solicitud-creditos-digital/solicitud-creditos-digital.component';
+import {EstadoSolicitudDigitalComponent} from './vistas/estado-solicitud-digital/estado-solicitud-digital.component';
 
 const maskConfig: Partial<IConfig> = {
     validation: false,
@@ -183,6 +189,26 @@ const routes = [
         ],
     },
     {
+        path: 'creditos-autonomos-digital',
+        children: [
+            {path: '', redirectTo: 'solicitar-credito-digital', pathMatch: 'full'},
+            {
+                path: 'solicitar-credito-digital',
+                component: CreditosAutonomosDigitalComponent,
+                data: {roles: [Role.SuperMonedas], activacion: [8, 0]},
+                canActivate: [AuthGuard],
+                // data: { animation: 'auth' }
+            },
+            {
+                path: 'validacion-datos-digital',
+                component: ValidacionDatosDigitalComponent,
+                data: {roles: [Role.SuperMonedas], activacion: [8, 0]},
+                canActivate: [AuthGuard]
+                // data: { animation: 'auth' }
+            },
+        ],
+    },
+    {
         path: 'creditos-empleados',
         children: [
             {path: '', redirectTo: 'creditos-pre-aprobados', pathMatch: 'full'},
@@ -276,6 +302,14 @@ const routes = [
         // data: { animation: 'auth' }
     },
     {
+        path: 'solucitudCreditoDigital',
+        component: SolicitudCreditosDigitalComponent,
+        data: {activacion: [1, 2, 3, 4, 5, 6, 7]},
+        canActivate: [AuthGuard],
+
+        // data: { animation: 'auth' }
+    },
+    {
         path: 'requisitosCredito/:monto',
         component: RequisitiosCreditoComponent,
         data: {activacion: [8, 1, 2, 3, 4, 5, 6, 7]},
@@ -356,7 +390,13 @@ const routes = [
         component: EstadoSolicitudComponent,
         data: {activacion: [2]},
         canActivate: [AuthGuard],
-
+        // data: { animation: 'auth' }
+    },
+    {
+        path: 'estado-solicitud-credito-digital',
+        component: EstadoSolicitudDigitalComponent,
+        data: {activacion: [2]},
+        canActivate: [AuthGuard],
         // data: { animation: 'auth' }
     },
     {
@@ -383,6 +423,7 @@ const routes = [
         PerfilUsuarioComponent,
         PagarConSuperMonedasComponent,
         CreditosAutonomosComponent,
+        CreditosAutonomosDigitalComponent,
         VideoExplicativoAutComponent,
         PerfilPersonaAutComponent,
         EstablecimientosComercialesAutComponent,
@@ -396,6 +437,7 @@ const routes = [
         listadoPagoCuotas,
         RegistroDatosPagosProvedoresComponent,
         SolicitudCreditosComponent,
+        SolicitudCreditosDigitalComponent,
         RegistroProveedoresComponent,
         PagoProvedorsComponent,
         SaldoProveedoresComponent,
@@ -407,11 +449,13 @@ const routes = [
         RequisitiosCreditoComponent,
         FinalizarSolicitudComponent,
         EstadoSolicitudComponent,
+        EstadoSolicitudDigitalComponent,
         FirmarDocumentosHabilitantesComponent,
         TerminosComponent,
         SolicitudCreditoComponent,
         ResumenRequisitosCreditoComponent,
         ValidacionDatosComponent,
+        ValidacionDatosDigitalComponent,
         PagoEmpleadosComponent,
         TransaccionesCreditoComponent,
     ],

@@ -14,9 +14,6 @@ import {PagesViewsComponent} from './pages-views/pages-views.component';
 import {RouterModule, Routes} from '@angular/router';
 import {MensajeProductosComponent} from './mensaje-productos/mensaje-productos.component';
 import {MensajeProductosFreeComponent} from './mensaje-productos-free/mensaje-productos-free.component';
-import {CreditRequestComponent} from './credit-request/credit-request.component';
-import {SimulatorCrediCompraComponent} from './simulator-credi-compra/simulator-credi-compra.component';
-import {CreditRequirementsComponent} from './credit-requirements/credit-requirements.component';
 import {PreApprovedCreditLineComponent} from './pre-approved-credit-consumer/pre-approved-credit-line.component';
 import {ApprovedEndConsumerComponent} from './approved-end-consumer/approved-end-consumer.component';
 import {CreditRequestBpComponent} from './credit-request-bp/credit-request-bp.component';
@@ -27,6 +24,9 @@ import {
     PreApprovedCreditConsumerBpComponent
 } from './pre-approved-credit-consumer-bp/pre-approved-credit-consumer-bp.component';
 import {ApprovedEndConsumerBpComponent} from './approved-end-consumer-bp/approved-end-consumer-bp.component';
+import {
+    PreApprovedCreditConsumerDigtalComponent
+} from './pre-approved-credit-consumer-digital/pre-approved-credit-consumer-digtal.component';
 
 // routing
 const routes: Routes = [
@@ -46,23 +46,23 @@ const routes: Routes = [
         data: {animation: 'misc', activacion: [8]},
     },
     {
-        path: 'solicitud-credito',
-        component: CreditRequestComponent,
-        data: {animation: 'misc', activacion: [8]},
+        path: 'credito-consumo-digital',
+        loadChildren: () =>
+            import('./simulador-consumo-digital/similador-conusmo.module').then((m) => m.SimiladorConusmoModule)
     },
     {
-        path: 'simulador-de-credito',
-        component: SimulatorCrediCompraComponent,
-        data: {animation: 'misc', activacion: [8]},
-    },
-    {
-        path: 'requisitos-de-credito',
-        component: CreditRequirementsComponent,
-        data: {animation: 'misc', activacion: [8]},
+        path: 'microcreditos',
+        loadChildren: () =>
+            import('./simulador-microcreditos/similador-microcreditos.module').then((m) => m.SimiladorMicrocreditosModule)
     },
     {
         path: 'preApprovedCreditLine',
         component: PreApprovedCreditLineComponent,
+        data: {animation: 'misc'},
+    },
+    {
+        path: 'preApprovedCreditDigital',
+        component: PreApprovedCreditConsumerDigtalComponent,
         data: {animation: 'misc'},
     },
     {
@@ -96,6 +96,11 @@ const routes: Routes = [
         component: ApprovedEndConsumerBpComponent,
         data: {animation: 'misc'},
     },
+    {
+        path: 'credito-automotriz',
+        loadChildren: () =>
+            import('./simulador-automotriz/similador-automotriz.module').then((m) => m.SimiladorAutomotrizModule)
+    },
 
 ];
 
@@ -104,10 +109,8 @@ const routes: Routes = [
         PagesViewsComponent,
         MensajeProductosComponent,
         MensajeProductosFreeComponent,
-        CreditRequestComponent,
-        SimulatorCrediCompraComponent,
-        CreditRequirementsComponent,
         PreApprovedCreditLineComponent,
+        PreApprovedCreditConsumerDigtalComponent,
         ApprovedEndConsumerComponent,
         CreditRequestBpComponent,
         SimulatorCrediCompraBpComponent,

@@ -1,0 +1,181 @@
+<div class="content-wrapper">
+
+    <div class="content-body">
+        <div id="user-profile">
+            <!-- profile header -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card p-2">
+                        <h4>Para solicitud de crédito por favor completa la siguiente información</h4>
+                    </div>
+
+                </div>
+            </div>
+            <!--/ profile header -->
+
+            <!-- profile info section -->
+            <section>
+                <div class="tab-content">
+
+
+                    <div class="tab-pane active" id="tab2" aria-labelledby="account-tab" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header border-bottom mb-2 bg-light">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h5 class="text-info">Los datos de RUC deben corresponder a la persona que solicita el préstamo con la siguiente cédula de identidad: <b>{{rucPersona.identificacion}}</b></h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form [formGroup]="rucPersonaForm">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">Número de cédula</label>
+                                                <input type="text" class="form-control" value="{{rucPersona.identificacion}}" disabled>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">RUC</label>
+                                                <input type="text" formControlName="ruc" class="form-control" [(ngModel)]="rucPersona.ruc">
+                                                <div *ngIf="submittedRuc && rucPersForm.ruc.errors" class="invalid-feedback" style="display: block;">
+                                                    <div *ngIf="rucPersForm.ruc.errors.required">Ruc es requerido</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">Nombre comercial</label>
+                                                <input type="text" formControlName="nombreComercial" class="form-control" [(ngModel)]="rucPersona.nombreComercial">
+                                                <div *ngIf="submittedRuc && rucPersForm.nombreComercial.errors" class="invalid-feedback" style="display: block;">
+                                                    <div *ngIf="rucPersForm.nombreComercial.errors.required">Nombre comercial es requerido</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">Razón social</label>
+                                                <input type="text" formControlName="razonSocial" class="form-control" [(ngModel)]="rucPersona.razonSocial">
+                                                <div *ngIf="submittedRuc && rucPersForm.razonSocial.errors" class="invalid-feedback" style="display: block;">
+                                                    <div *ngIf="rucPersForm.razonSocial.errors.required">Razón social es requerida</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">País</label>
+                                                <select class="form-control select2" formControlName="pais" [(ngModel)]="rucPersona.pais" (change)="obtenerProvinciaOpciones()">
+                                                    <option value="">- Seleccione -</option>
+                                                    <option *ngFor="let paisOp of paisOpciones" value="{{paisOp.nombre}}">{{paisOp.nombre}}</option>
+                                             </select>
+                                                <div *ngIf="submittedRuc && rucPersForm.pais.errors" class="invalid-feedback" style="display: block;">
+                                                    <div *ngIf="rucPersForm.pais.errors.required">País es requerido</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">Provincia</label>
+                                                <select class="form-control select2" formControlName="provincia" [(ngModel)]="rucPersona.provincia" (change)="obtenerCiudadOpciones()">
+                                                    <option value="">- Seleccione -</option>
+                                                    <option *ngFor="let provinciaOp of provinciaOpciones" value="{{provinciaOp.nombre}}">{{provinciaOp.nombre}}</option>
+                    
+                                             </select>
+                                                <div *ngIf="submittedRuc && rucPersForm.provincia.errors" class="invalid-feedback" style="display: block;">
+                                                    <div *ngIf="rucPersForm.provincia.errors.required">Provincia es requerida</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">Ciudad</label>
+                                                <select class="form-control select2" formControlName="ciudad" [(ngModel)]="rucPersona.ciudad">
+                                                    <option value="">- Seleccione -</option>
+                                                    <option *ngFor="let ciudadOp of ciudadOpciones" value="{{ciudadOp.nombre}}">{{ciudadOp.nombre}}</option>
+                    
+                                             </select>
+                                                <div *ngIf="submittedRuc && rucPersForm.ciudad.errors" class="invalid-feedback" style="display: block;">
+                                                    <div *ngIf="rucPersForm.ciudad.errors.required">Ciudad es requerida</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">Años de antigueadad de RUC</label>
+                                                <input type="text" class="form-control" formControlName="anioAntiguedad" [(ngModel)]="rucPersona.antiguedadRuc">
+                                                <div *ngIf="submittedRuc && rucPersForm.anioAntiguedad.errors" class="invalid-feedback" style="display: block;">
+                                                    <div *ngIf="rucPersForm.anioAntiguedad.errors.required">Años de antigüedad son requeridos</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">Actividad comercial</label>
+                                                <select class="form-control select2" formControlName="actividadComercial" [(ngModel)]="rucPersona.actividadComercial">
+                                                    <option value="">- Seleccione -</option>
+                                                    <option *ngFor="let categoriaEmpresaOp of categoriaEmpresaOpciones" value="{{categoriaEmpresaOp.nombre}}">{{categoriaEmpresaOp.nombre}}</option>
+                    
+                                             </select>
+                                                <div *ngIf="submittedRuc && rucPersForm.actividadComercial.errors" class="invalid-feedback" style="display: block;">
+                                                    <div *ngIf="rucPersForm.actividadComercial.errors.required">Actividad comercial es requerida</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <hr>
+                                            <h5 class="text-primary mb-2"><b>Datos financieros</b></h5>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">Monto de ventas mensual</label>
+                                                <input type="text" class="form-control" formControlName="monto" [(ngModel)]="rucPersona.ventaMensual">
+                                                <div *ngIf="submittedRuc && rucPersForm.monto.errors" class="invalid-feedback" style="display: block;">
+                                                    <div *ngIf="rucPersForm.monto.errors.required">Monto de ventas mensual es requerida</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="username">Gasto mensual</label>
+                                                <input type="text" class="form-control" formControlName="gastos" [(ngModel)]="rucPersona.gastoMensual">
+                                                <div *ngIf="submittedRuc && rucPersForm.gastos.errors" class="invalid-feedback" style="display: block;">
+                                                    <div *ngIf="rucPersForm.gastos.errors.required">Gasto es requerida</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="col-12 d-flex flex-sm-row flex-column mt-2">
+                                            <a href="javascript:void(0)" class="btn btn-primary mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-float waves-light" (click)="continuar()">Continuar</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+            </section>
+            <!--/ profile info section -->
+        </div>
+
+    </div>
+
+
+</div>

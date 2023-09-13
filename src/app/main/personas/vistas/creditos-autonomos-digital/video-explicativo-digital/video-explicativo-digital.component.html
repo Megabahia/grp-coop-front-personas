@@ -1,0 +1,46 @@
+<div class="content-wrapper">
+<!--    <div class="card-body text-center">-->
+<!--        <img src="{{ coreConfig.app.appLogoImage }}" width="300">-->
+<!--    </div>-->
+    <div class="content-body">
+        <!-- users list start -->
+        <div class="text-center mt-1 azul2  text-bold mb-3">
+            <div class="col-md-12 text-center">
+                <h2 class="card-title azul2  text-bold " >
+                    Está en el paso 2 de 3
+                </h2>
+                <h4 class="card-title azul2  text-bold " >COMPLETE SUS DATOS</h4>
+            </div>
+        </div>
+        <section class="app-ecommerce-details">
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="m-2">
+                            <ul class="list-group">
+                                <li class="list-group-item" *ngFor="let item of requisitos?.config">
+                                    <img src="/assets/images/flecha.png" width="50px" style="float: left; margin-right: 10px;">
+                                    <div [innerHTML]="item"></div>
+                                 </li>
+                            </ul>
+                        </div>
+                        <div class="card-footer text-center p-2">
+                            <a href="javascript:void(0)" class="btn btn-primary"
+                               style="color: black !important;"
+                               (click)="continuar()">Continuar</a>
+                        </div>
+<!--                        <div class="text-center">-->
+<!--                            <img src="../../../../assets/images/pages/logoCrediCompra.svg" height="50px" width="50px">-->
+<!--                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- users list ends -->
+    </div>
+</div>
+
+
+<!-- Buynow Button-->
+<app-need-help [href]="'https://walink.co/9e8a9d'"> </app-need-help>

@@ -5,7 +5,7 @@ import {CoreConfigService} from '../../../../../../@core/services/config.service
 import {ParametrizacionesService} from '../../../servicios/parametrizaciones.service';
 import moment from 'moment';
 import {CoreMenuService} from '../../../../../../@core/components/core-menu/core-menu.service';
-import {CreditosAutonomosService} from '../creditos-autonomos.service';
+import {CreditosAutonomosDigitalService} from '../creditos-autonomos-digital.service';
 import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import Decimal from 'decimal.js';
@@ -15,10 +15,10 @@ import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-solicitud-credito',
-    templateUrl: './solicitud-credito.component.html',
-    styleUrls: ['./solicitud-credito.component.scss']
+    templateUrl: './solicitud-credito-digital.component.html',
+    styleUrls: ['./solicitud-credito-digital.component.scss']
 })
-export class SolicitudCreditoComponent implements OnInit {
+export class SolicitudCreditoDigitalComponent implements OnInit {
     @Output() estado = new EventEmitter<number>();
     @ViewChild('modalAviso') modalAviso;
 
@@ -85,7 +85,7 @@ export class SolicitudCreditoComponent implements OnInit {
     public alfa = false;
 
     constructor(
-        private _creditosAutonomosService: CreditosAutonomosService,
+        private _creditosAutonomosService: CreditosAutonomosDigitalService,
         private paramService: ParametrizacionesService,
         private _coreMenuService: CoreMenuService,
         private _coreConfigService: CoreConfigService,
@@ -132,7 +132,7 @@ export class SolicitudCreditoComponent implements OnInit {
     ngOnInit(): void {
         this.valoresLocalStorage();
         const fechaSolicitud = moment().format('L');
-        // this.usuario.whatsapp = this.usuario.whatsapp.replace('+593', '0');
+        this.usuario.whatsapp = this.usuario.whatsapp.replace('+593', '0');
         console.log('TIPO_PERSONA', this.tipoPersonaStorage);
         this.personaForm = this._formBuilder.group({
                 tipoIdentificacion: [this.usuario.tipoIdentificacion, [Validators.required]],
