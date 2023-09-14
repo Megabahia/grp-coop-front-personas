@@ -1,24 +1,24 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {FlatpickrOptions} from 'ng2-flatpickr';
 import {CoreConfigService} from '../../../../../../@core/services/config.service';
 import {ParametrizacionesService} from '../../../servicios/parametrizaciones.service';
 import moment from 'moment';
 import {CoreMenuService} from '../../../../../../@core/components/core-menu/core-menu.service';
-import {CreditosAutonomosDigitalService} from '../creditos-autonomos-digital.service';
 import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import Decimal from 'decimal.js';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ValidacionesPropias} from '../../../../../../utils/customer.validators';
 import {ToastrService} from 'ngx-toastr';
+import {CreditoConsumoDigitalService} from '../credito-consumo-digital.service';
 
 @Component({
-    selector: 'app-solicitud-credito',
-    templateUrl: './solicitud-credito-digital.component.html',
-    styleUrls: ['./solicitud-credito-digital.component.scss']
+    selector: 'app-solicitud-consumo-digital',
+    templateUrl: './solicitud-consumo-digital.component.html',
+    styleUrls: ['./solicitud-consumo-digital.component.scss']
 })
-export class SolicitudCreditoDigitalComponent implements OnInit {
+export class SolicitudConsumoDigitalComponent implements OnInit, AfterViewInit {
     @Output() estado = new EventEmitter<number>();
     @ViewChild('modalAviso') modalAviso;
 
@@ -66,6 +66,9 @@ export class SolicitudCreditoDigitalComponent implements OnInit {
     public paises;
     public provincias;
     public ciudades;
+    public paisGarante;
+    public provinciaGarante;
+    public ciudadGarante;
     public paisEmpresa;
     public provinciaEmpresa;
     public ciudadEmpresa;
@@ -85,7 +88,7 @@ export class SolicitudCreditoDigitalComponent implements OnInit {
     public alfa = false;
 
     constructor(
-        private _creditosAutonomosService: CreditosAutonomosDigitalService,
+        private _creditosAutomotrizService: CreditoConsumoDigitalService,
         private paramService: ParametrizacionesService,
         private _coreMenuService: CoreMenuService,
         private _coreConfigService: CoreConfigService,
@@ -96,7 +99,7 @@ export class SolicitudCreditoDigitalComponent implements OnInit {
         this._unsubscribeAll = new Subject();
         this.usuario = this._coreMenuService.grpPersonasUser.persona;
         this.user_id = this._coreMenuService.grpPersonasUser.id;
-        this._creditosAutonomosService.obtenerInformacion(this.user_id).subscribe((info) => {
+        this._creditosAutomotrizService.obtenerInformacion(this.user_id).subscribe((info) => {
             const grpPersonasUser = JSON.parse(localStorage.getItem('grpPersonasUser'));
             grpPersonasUser.persona = info;
             localStorage.setItem('grpPersonasUser', JSON.stringify(grpPersonasUser));
@@ -133,7 +136,6 @@ export class SolicitudCreditoDigitalComponent implements OnInit {
         this.valoresLocalStorage();
         const fechaSolicitud = moment().format('L');
         this.usuario.whatsapp = this.usuario.whatsapp.replace('+593', '0');
-        console.log('TIPO_PERSONA', this.tipoPersonaStorage);
         this.personaForm = this._formBuilder.group({
                 tipoIdentificacion: [this.usuario.tipoIdentificacion, [Validators.required]],
                 tipoPersona: [this.tipoPersonaStorage, [Validators.required]],
@@ -163,19 +165,15 @@ export class SolicitudCreditoDigitalComponent implements OnInit {
                 direccionDomicilio: [this.usuario.direccionDomicilio, [Validators.required, Validators.minLength(20), Validators.pattern('[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\\s]+')]],
                 referenciaDomicilio: [this.usuario.referenciaDomicilio, Validators.required],
                 estadoCivil: [this.estadoCivilStorage, Validators.required],
+                nombreApellidosConyuge: [this.usuario.nombreApellidosConyuge, Validators.required],
+                cedulaConyuge: [this.usuario.cedulaConyuge, Validators.required],
                 ocupacionSolicitante: this._formBuilder.group({
-                    nombreNegocio: [this.usuario.ocupacionSolicitante?.nombreNegocio, [
-                        Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]
-                    ],
+                    nombreNegocio: [this.usuario.ocupacionSolicitante?.nombreNegocio, [Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]],
                     direccionNegocio: [this.usuario.ocupacionSolicitante?.direccionNegocio, [
                         Validators.required, Validators.minLength(20), Validators.pattern('[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\\s]+')
                     ]],
-                    tiempoTrabajo: [this.usuario.ocupacionSolicitante?.tiempoTrabajo, [
-                        Validators.required, Validators.pattern('^([0-9])+$')]
-                    ],
-                    cargoDesempeno: [this.usuario.ocupacionSolicitante?.cargoDesempeno, [
-                        Validators.required, Validators.minLength(4), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]
-                    ],
+                    tiempoTrabajo: [this.usuario.ocupacionSolicitante?.tiempoTrabajo, [Validators.required, Validators.pattern('^([0-9])+$')]],
+                    cargoDesempeno: [this.usuario.ocupacionSolicitante?.cargoDesempeno, [Validators.required, Validators.minLength(4), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]],
                     // sueldoPercibe: ['', [Validators.required, Validators.pattern('^([0-9])+$')]],
                 }),
                 referenciasSolicitante: this._formBuilder.array([
@@ -188,7 +186,7 @@ export class SolicitudCreditoDigitalComponent implements OnInit {
                             Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]
                         ],
                         direccion: [this.usuario.referenciasSolicitante[0]?.direccion, [
-                            Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\\s]+')]
+                            Validators.required, Validators.minLength(20), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\\s]+')]
                         ],
                         telefono: [this.usuario.referenciasSolicitante[0]?.telefono, [Validators.required,
                             Validators.maxLength(10),
@@ -207,7 +205,7 @@ export class SolicitudCreditoDigitalComponent implements OnInit {
                             Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]
                         ],
                         direccion: [this.usuario.referenciasSolicitante[1]?.direccion, [
-                            Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\\s]+')]
+                            Validators.required, Validators.minLength(20), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\\s]+')]
                         ],
                         telefono: [this.usuario.referenciasSolicitante[1]?.telefono, [Validators.required,
                             Validators.maxLength(10),
@@ -226,7 +224,7 @@ export class SolicitudCreditoDigitalComponent implements OnInit {
                             Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]
                         ],
                         direccion: [this.usuario.referenciasSolicitante[2]?.direccion, [
-                            Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\\s]+')]
+                            Validators.required, Validators.minLength(20), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\\s]+')]
                         ],
                         telefono: [this.usuario.referenciasSolicitante[2]?.telefono, [Validators.required,
                             Validators.maxLength(10),
@@ -274,6 +272,7 @@ export class SolicitudCreditoDigitalComponent implements OnInit {
                     direccionTipoPersona: [this.usuario.garante?.direccionTipoPersona, []],
                     rucGarante: [this.usuario.garante?.rucGarante, []],
                     nombreNegocioGarante: [this.usuario.garante?.nombreNegocioGarante, []],
+                    correoGarante: [this.usuario.garante?.correoGarante, []],
                 }),
             }
         );
@@ -287,17 +286,22 @@ export class SolicitudCreditoDigitalComponent implements OnInit {
         this.obtenerProvinciaTipoPersonaOpciones();
         this.obtenerCiudadTipoPersonaOpciones();
         this.alfa = (this.tipoPersonaStorage === 'Alfa');
+        this.tipoEstadocivilSelected();
+    }
+
+    ngAfterViewInit() {
+        this.calculos();
     }
 
     obtenerArrays() {
         this.paramService.obtenerListaTipo('PAIS').subscribe((info) => {
-            this.paises = this.paisEmpresa = this.paisReferido1 = this.paisReferido2 = this.paisReferido3 = info;
+            this.paises = this.paisGarante = this.paisEmpresa = this.paisReferido1 = this.paisReferido2 = this.paisReferido3 = info;
         });
         this.paramService.obtenerListaTipo('PROVINCIA').subscribe((info) => {
-            this.provincias = this.provinciaEmpresa = this.provinciaReferido1 = this.provinciaReferido2 = this.provinciaReferido3 = info;
+            this.provincias = this.provinciaGarante = this.provinciaEmpresa = this.provinciaReferido1 = this.provinciaReferido2 = this.provinciaReferido3 = info;
         });
         this.paramService.obtenerListaTipo('Ciudad').subscribe((info) => {
-            this.ciudades = this.ciudadEmpresa = this.ciudadReferido1 = this.ciudadReferido2 = this.ciudadReferido3 = info;
+            this.ciudades = this.ciudadGarante = this.ciudadEmpresa = this.ciudadReferido1 = this.ciudadReferido2 = this.ciudadReferido3 = info;
         });
     }
     obtenerPaisOpciones(event = null, variablePais) {
@@ -350,6 +354,7 @@ export class SolicitudCreditoDigitalComponent implements OnInit {
             );
             this.personaForm.get('garante')['controls']['identificacion'].updateValueAndValidity();
         }
+        this.validarRucGarante();
     }
 
     tipoPersonaGarante($event) {
@@ -391,6 +396,7 @@ export class SolicitudCreditoDigitalComponent implements OnInit {
                 direccionTipoPersona: ['', []],
                 rucGarante: ['', []],
                 nombreNegocioGarante: ['', []],
+                correoGarante: ['', []],
             }));
         } else {
             this.alfa = true;
@@ -411,6 +417,7 @@ export class SolicitudCreditoDigitalComponent implements OnInit {
                     Validators.minLength(20), Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\\s]+')]],
                 rucGarante: [this.usuario.garante?.rucGarante, []],
                 nombreNegocioGarante: [this.usuario.garante?.nombreNegocioGarante, []],
+                correoGarante: [this.usuario.garante?.correoGarante, [Validators.required, Validators.email]],
             }));
         }
     }
@@ -449,7 +456,7 @@ export class SolicitudCreditoDigitalComponent implements OnInit {
 
     obtenerListas() {
 
-        this.paramService.obtenerListaPadresSinToken('VALORES_CALCULAR_CREDITO_CREDICOMPRA').subscribe((info) => {
+        this.paramService.obtenerListaPadresSinToken('VALORES_CALCULAR_CREDITO_CONSUMO_DIGITAL').subscribe((info) => {
             info.map(item => {
                 if (item.nombre === 'PORCENTAJE_CONYUGE') {
                     this.porcentajeConyuge = new Decimal(item.valor).toNumber();
@@ -550,7 +557,15 @@ export class SolicitudCreditoDigitalComponent implements OnInit {
     tipoEstadocivilSelected() {
         if (this.personaForm.get('estadoCivil').value === 'Casado' || this.personaForm.get('estadoCivil').value === 'Unión libre') {
             this.casado = true;
+            this.personaForm.get('nombreApellidosConyuge').setValidators(Validators.required);
+            this.personaForm.get('cedulaConyuge').setValidators(Validators.required);
+            this.personaForm.get('nombreApellidosConyuge').updateValueAndValidity(); // Actualizando la validez del campo
+            this.personaForm.get('cedulaConyuge').updateValueAndValidity(); // Actualizando la validez del campo
         } else {
+            this.personaForm.get('nombreApellidosConyuge').clearValidators();
+            this.personaForm.get('cedulaConyuge').clearValidators();
+            this.personaForm.get('nombreApellidosConyuge').updateValueAndValidity(); // Actualizando la validez del campo
+            this.personaForm.get('cedulaConyuge').updateValueAndValidity(); // Actualizando la validez del campo
             this.casado = false;
         }
     }
@@ -668,7 +683,7 @@ export class SolicitudCreditoDigitalComponent implements OnInit {
             return;
         }
 
-        this.personaForm.get('fechaNacimiento').setValue(moment(this.personaForm.get('fechaNacimiento').value[0]).format('YYYY-MM-DD'));
+        this.personaForm.get('fechaNacimiento').setValue(moment(this.personaForm.get('fechaNacimiento').value).format('YYYY-MM-DD'));
         const persona = {
             identificacion: this.personaForm.get('documento').value,
             ...this.personaForm.value,
@@ -678,9 +693,10 @@ export class SolicitudCreditoDigitalComponent implements OnInit {
         const grpPersonasUser = this._coreMenuService.grpPersonasUser;
         grpPersonasUser.persona = persona;
         localStorage.setItem('grpPersonasUser', JSON.stringify(grpPersonasUser));
-        this._creditosAutonomosService.guardarInformacion(persona)
+        this._creditosAutomotrizService.guardarInformacion(persona)
             .subscribe((info) => {
                 localStorage.setItem('tipoPersona', this.personaForm.get('tipoPersona').value);
+                localStorage.setItem('estadoCivil', this.personaForm.get('estadoCivil').value);
                 this.estado.emit(3);
 
             });
@@ -700,14 +716,31 @@ export class SolicitudCreditoDigitalComponent implements OnInit {
     }
 
     comprobarOtrosGastos(event) {
+        // Obtener referencia al control 'descripcion'
+        const descripcionControl = this.gasSolicitanteForm.descripcion;
         if (event.target.value > 0) {
-            console.log('validar');
-            (this.personaForm as FormGroup).setControl('especificaGastos',
-                new FormControl(this.personaForm.value?.descripcion,
-                    [Validators.required, Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s]+')]));
+            // Agregar validación al control 'descripcion'
+            descripcionControl.setValidators(Validators.required);
         } else {
-            (this.personaForm as FormGroup).setControl('especificaGastos',
-                new FormControl(this.personaForm.value?.descripcion));
+            // Agregar validación al control 'descripcion'
+            descripcionControl.clearValidators();
         }
+        descripcionControl.updateValueAndValidity();
+    }
+
+    validarCorreoGarante(event) {
+        const garanteControl = this.garanteForm['correoGarante'];
+        if (garanteControl.value === this.usuario.email) {
+            garanteControl.setErrors({repetidoGarante: true});
+        }
+    }
+
+    validarRucGarante() {
+        const garanteControl = this.garanteForm['identificacion'];
+        const errors = garanteControl['errors'];
+        if (garanteControl.value === this.personaForm.get('documento').value) {
+            garanteControl.setErrors({...errors, repetidoGarante: true});
+        }
+        console.log('garanteControl', garanteControl);
     }
 }

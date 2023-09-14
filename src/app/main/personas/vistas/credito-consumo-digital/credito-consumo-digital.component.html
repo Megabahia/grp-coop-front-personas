@@ -1,0 +1,4 @@
+<app-explicacion-credito-consumo-digital *ngIf="proceso==1" (estado)="continuar($event)"></app-explicacion-credito-consumo-digital>
+<app-solicitud-consumo-digital *ngIf="proceso==2" (estado)="continuar($event)"></app-solicitud-consumo-digital>
+<app-resumen-requisitos-consumo-digital *ngIf="proceso==3"></app-resumen-requisitos-consumo-digital>
+<app-footer></app-footer>

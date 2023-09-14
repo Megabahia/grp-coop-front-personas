@@ -87,7 +87,7 @@ export class SimulatorCrediCompraComponent implements OnInit {
         this.paramService.obtenerListaPadresSinToken('ESTADO_CIVIL').subscribe((info) => {
             this.listEstadoCivil = info;
         });
-        this.paramService.obtenerListaPadresSinToken('VALORES_CALCULAR_CREDITO_CREDICOMPRA').subscribe((info) => {
+        this.paramService.obtenerListaPadresSinToken('VALORES_CALCULAR_CREDITO_CONSUMO_DIGITAL').subscribe((info) => {
             info.map(item => {
                 if (item.nombre === 'PORCENTAJE_CONYUGE') {
                     this.porcentajeConyuge = new Decimal(item.valor).toNumber();
