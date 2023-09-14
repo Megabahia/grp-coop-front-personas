@@ -3,12 +3,11 @@ import {ParametrizacionesService} from '../../../servicios/parametrizaciones.ser
 import {SolicitarCredito} from '../../../models/persona';
 import {CoreMenuService} from '../../../../../../@core/components/core-menu/core-menu.service';
 import {Router} from '@angular/router';
-import {Parser} from '@angular/compiler';
 import {takeUntil} from 'rxjs/operators';
 import {CoreConfigService} from '../../../../../../@core/services/config.service';
 import {Subject} from 'rxjs';
 import {jsPDF} from 'jspdf';
-import {CreditosAutonomosService} from '../../creditos-autonomos/creditos-autonomos.service';
+import {CreditoConsumoDigitalService} from '../credito-consumo-digital.service';
 
 @Component({
     selector: 'app-resumen-requisitos-consumo-digital',
@@ -39,18 +38,18 @@ export class ResumenConsumoDigitalComponent implements OnInit {
     public checks;
     public soltero = false;
     public tiposNormales = {
-        'Credito Automotriz Empleado': 'Credito Automotriz Empleado',
-        'Credito Automotriz Alfa': 'null'
+        'Credito Consumo Digital Empleado': 'Credito Consumo Digital Empleado',
+        'Credito Consumo Digital Alfa': 'null'
     };
     public tiposPreaprobados = {
-        'Credito Automotriz Empleado': 'Credito Automotriz Empleado-PreAprobado',
-        'Credito Automotriz Alfa': 'null'
+        'Credito Consumo Digital Empleado': 'Credito Consumo Digital Empleado-PreAprobado',
+        'Credito Consumo Digital Alfa': 'null'
     };
 
     constructor(
         private _router: Router,
         private paramService: ParametrizacionesService,
-        private _creditosAutomotrizService: CreditosAutonomosService,
+        private _creditosAutomotrizService: CreditoConsumoDigitalService,
         private _coreMenuService: CoreMenuService,
         private _coreConfigService: CoreConfigService,
     ) {
@@ -81,8 +80,8 @@ export class ResumenConsumoDigitalComponent implements OnInit {
         this.getInfo();
         if (localStorage.getItem('credito') !== null) {
             this.solicitarCredito = JSON.parse(localStorage.getItem('credito'));
-            this.solicitarCredito.canal = this.tiposPreaprobados[localStorage.getItem('tipoPersona')] || 'Credito Automotriz Negocio-PreAprobado';
-            this.solicitarCredito.tipoCredito = this.tiposPreaprobados[localStorage.getItem('tipoPersona')] || 'Credito Automotriz Negocio-PreAprobado';
+            this.solicitarCredito.canal = this.tiposPreaprobados['Credito Consumo Digital ' + localStorage.getItem('tipoPersona')] || 'Credito Consumo Digital Negocio-PreAprobado';
+            this.solicitarCredito.tipoCredito = this.tiposPreaprobados['Credito Consumo Digital ' + localStorage.getItem('tipoPersona')] === 'null' ? 'null' : 'Credito Consumo Digital Negocio-PreAprobado';
         } else {
             this.solicitarCredito = this.inicialidarSolicitudCredito();
         }
@@ -103,10 +102,10 @@ export class ResumenConsumoDigitalComponent implements OnInit {
             cuota: this.coutaMensual,
             plazo: 12,
             user_id: this.usuario.id,
-            canal: this.tiposNormales[localStorage.getItem('tipoPersona')] || 'Credito Automotriz Negocio propio',
-            tipoCredito: this.tiposNormales[localStorage.getItem('tipoPersona')] || 'Credito Automotriz Negocio propio',
-            concepto: this.tiposNormales[localStorage.getItem('tipoPersona')] || 'Credito Automotriz Negocio propio',
-            cargarOrigen: 'BIGPUNTOS',
+            canal: this.tiposNormales['Credito Consumo Digital ' + localStorage.getItem('tipoPersona')] === 'null' ? 'Credito Consumo Digital ' + localStorage.getItem('tipoPersona') : 'Credito Consumo Negocio propio',
+            tipoCredito: this.tiposNormales['Credito Consumo Digital ' + localStorage.getItem('tipoPersona')] === 'null' ? 'null' : 'Credito Consumo Negocio propio',
+            concepto: this.tiposNormales['Credito Consumo Digital ' + localStorage.getItem('tipoPersona')] === 'null' ? 'Credito Consumo Digital ' + localStorage.getItem('tipoPersona') : 'Credito Consumo Negocio propio',
+            cargarOrigen: 'IFIS',
             nombres: '',
             apellidos: '',
             numeroIdentificacion: '',
@@ -119,17 +118,17 @@ export class ResumenConsumoDigitalComponent implements OnInit {
             this.requisitos = info[0];
             this.checks = this.requisitos.config.map(item => {
                 if (!this.soltero) {
-                    return {'label': item, 'valor': false };
+                    return {'label': item, 'valor': false};
                 }
             });
             this.checks.push({'label': 'Autorización y validación de información', 'valor': true});
         });
         this.paramService.obtenerListaPadresSinToken('CREDITO_CONSUMO_DIGITAL_TITULO_REQUISITOS_ULTIMA_PANTALLA')
             .subscribe((info) => {
-            this.descripcion = info[0];
-            this.descripcion.valor = this.descripcion.valor.replace('${{montoCreditoFinal}}', this.montoCreditoFinal);
-            this.descripcion.valor = this.descripcion.valor.replace('${{coutaMensual}}', this.coutaMensual);
-        });
+                this.descripcion = info[0];
+                this.descripcion.valor = this.descripcion.valor.replace('${{montoCreditoFinal}}', this.montoCreditoFinal);
+                this.descripcion.valor = this.descripcion.valor.replace('${{coutaMensual}}', this.coutaMensual);
+            });
     }
 
     guardarCredito() {

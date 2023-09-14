@@ -107,7 +107,7 @@ export class ResumenRequisitosCreditoAutomotrizDigitalComponent implements OnIni
             canal: this.tiposNormales['Credito Automotriz Digital ' + localStorage.getItem('tipoPersona')] === 'null' ? 'Credito Automotriz Digital ' + localStorage.getItem('tipoPersona') : 'Credito Automotriz Digital Negocio propio',
             tipoCredito: this.tiposNormales['Credito Automotriz Digital ' + localStorage.getItem('tipoPersona')] === 'null' ? 'null' : 'Credito Automotriz Digital Negocio propio',
             concepto: this.tiposNormales['Credito Automotriz Digital ' + localStorage.getItem('tipoPersona')] === 'null' ? 'Credito Automotriz Digital ' + localStorage.getItem('tipoPersona') : 'Credito Automotriz Digital Negocio propio',
-            cargarOrigen: 'BIGPUNTOS',
+            cargarOrigen: 'IFIS',
             nombres: '',
             apellidos: '',
             numeroIdentificacion: '',

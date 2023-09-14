@@ -57,13 +57,13 @@ import {CreateComponent} from './vistas/registro-proveedores/create/create.compo
 import {ValidarResultadosComponent} from './vistas/validar-resultados/validar-resultados.component';
 import {RegistroFirmaElectronicaComponent} from './vistas/registro-firma-electronica/registro-firma-electronica.component';
 import {OldUserComponent} from './vistas/old-user/old-user.component';
-import { PerfilCompletarComponent } from './vistas/perfil-completar/perfil-completar.component';
-import { RequisitiosCreditoComponent } from './vistas/requisitios-credito/requisitios-credito.component';
-import { FinalizarSolicitudComponent } from './vistas/finalizar-solicitud/finalizar-solicitud.component';
+import {PerfilCompletarComponent} from './vistas/perfil-completar/perfil-completar.component';
+import {RequisitiosCreditoComponent} from './vistas/requisitios-credito/requisitios-credito.component';
+import {FinalizarSolicitudComponent} from './vistas/finalizar-solicitud/finalizar-solicitud.component';
 import {IConfig, NgxMaskModule} from 'ngx-mask';
-import { EstadoSolicitudComponent } from './vistas/estado-solicitud/estado-solicitud.component';
-import { FirmarDocumentosHabilitantesComponent } from './vistas/firmar-documentos-habilitantes/firmar-documentos-habilitantes.component';
-import {SharedModule} from "../shared/shared.module";
+import {EstadoSolicitudComponent} from './vistas/estado-solicitud/estado-solicitud.component';
+import {FirmarDocumentosHabilitantesComponent} from './vistas/firmar-documentos-habilitantes/firmar-documentos-habilitantes.component';
+import {SharedModule} from '../shared/shared.module';
 import {TerminosComponent} from './vistas/terminos/terminos.component';
 import {SolicitudCreditoComponent} from './vistas/creditos-autonomos/solicitud-credito/solicitud-credito.component';
 import {

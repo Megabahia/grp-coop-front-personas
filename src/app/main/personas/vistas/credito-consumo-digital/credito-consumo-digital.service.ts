@@ -39,7 +39,7 @@ export class CreditoConsumoDigitalService {
   }
 
   crearCredito(datos) {
-    return this._httpClient.post<any>(`${environment.apiUrl}/corp/creditoPersonas/create/`, datos);
+    return this._httpClient.post<any>(`${environment.apiUrl}/corp/creditoPersonas/create/local/`, datos);
   }
 
   updateCredito(datos) {
