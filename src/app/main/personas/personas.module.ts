@@ -57,27 +57,33 @@ import {CreateComponent} from './vistas/registro-proveedores/create/create.compo
 import {ValidarResultadosComponent} from './vistas/validar-resultados/validar-resultados.component';
 import {RegistroFirmaElectronicaComponent} from './vistas/registro-firma-electronica/registro-firma-electronica.component';
 import {OldUserComponent} from './vistas/old-user/old-user.component';
-import { PerfilCompletarComponent } from './vistas/perfil-completar/perfil-completar.component';
-import { RequisitiosCreditoComponent } from './vistas/requisitios-credito/requisitios-credito.component';
-import { FinalizarSolicitudComponent } from './vistas/finalizar-solicitud/finalizar-solicitud.component';
+import {PerfilCompletarComponent} from './vistas/perfil-completar/perfil-completar.component';
+import {RequisitiosCreditoComponent} from './vistas/requisitios-credito/requisitios-credito.component';
+import {FinalizarSolicitudComponent} from './vistas/finalizar-solicitud/finalizar-solicitud.component';
 import {IConfig, NgxMaskModule} from 'ngx-mask';
-import { EstadoSolicitudComponent } from './vistas/estado-solicitud/estado-solicitud.component';
-import { FirmarDocumentosHabilitantesComponent } from './vistas/firmar-documentos-habilitantes/firmar-documentos-habilitantes.component';
-import {SharedModule} from "../shared/shared.module";
+import {EstadoSolicitudComponent} from './vistas/estado-solicitud/estado-solicitud.component';
+import {FirmarDocumentosHabilitantesComponent} from './vistas/firmar-documentos-habilitantes/firmar-documentos-habilitantes.component';
+import {SharedModule} from '../shared/shared.module';
 import {TerminosComponent} from './vistas/terminos/terminos.component';
 import {SolicitudCreditoComponent} from './vistas/creditos-autonomos/solicitud-credito/solicitud-credito.component';
 import {
     ResumenRequisitosCreditoComponent
 } from './vistas/creditos-autonomos/resumen-requisitos-credito/resumen-requisitos-credito.component';
 import {ValidacionDatosComponent} from './vistas/creditos-autonomos/validacion-datos/validacion-datos.component';
-import { PagoEmpleadosComponent } from './vistas/pago-empleados/pago-empleados.component';
-import { TransaccionesCreditoComponent } from './vistas/transacciones-credito/transacciones-credito.component';
-import {CreditosAutonomosDigitalComponent} from './vistas/creditos-autonomos-digital/creditos-autonomos-digital.component';
-import {
-    ValidacionDatosDigitalComponent
-} from './vistas/creditos-autonomos-digital/validacion-datos-digital/validacion-datos-digital.component';
+import {PagoEmpleadosComponent} from './vistas/pago-empleados/pago-empleados.component';
+import {TransaccionesCreditoComponent} from './vistas/transacciones-credito/transacciones-credito.component';
 import {SolicitudCreditosDigitalComponent} from './vistas/solicitud-creditos-digital/solicitud-creditos-digital.component';
 import {EstadoSolicitudDigitalComponent} from './vistas/estado-solicitud-digital/estado-solicitud-digital.component';
+import {
+    SolicitudConsumoDigitalComponent
+} from './vistas/credito-consumo-digital/solicitud-consumo-digital/solicitud-consumo-digital.component';
+import {CreditoConsumoDigitalComponent} from './vistas/credito-consumo-digital/credito-consumo-digital.component';
+import {
+    ExplicacionConsumoDigitalComponent
+} from './vistas/credito-consumo-digital/explicacion-credito-automotriz/explicacion-consumo-digital.component';
+import {
+    ResumenConsumoDigitalComponent
+} from './vistas/credito-consumo-digital/resumen-requisitos-credito-automotriz/resumen-consumo-digital.component';
 
 const maskConfig: Partial<IConfig> = {
     validation: false,
@@ -194,18 +200,18 @@ const routes = [
             {path: '', redirectTo: 'solicitar-credito-digital', pathMatch: 'full'},
             {
                 path: 'solicitar-credito-digital',
-                component: CreditosAutonomosDigitalComponent,
+                component: CreditoConsumoDigitalComponent,
                 data: {roles: [Role.SuperMonedas], activacion: [8, 0]},
                 canActivate: [AuthGuard],
                 // data: { animation: 'auth' }
             },
-            {
-                path: 'validacion-datos-digital',
-                component: ValidacionDatosDigitalComponent,
-                data: {roles: [Role.SuperMonedas], activacion: [8, 0]},
-                canActivate: [AuthGuard]
-                // data: { animation: 'auth' }
-            },
+            // {
+            //     path: 'validacion-datos-digital',
+            //     component: ValidacionDatosDigitalComponent,
+            //     data: {roles: [Role.SuperMonedas], activacion: [8, 0]},
+            //     canActivate: [AuthGuard]
+            //     // data: { animation: 'auth' }
+            // },
         ],
     },
     {
@@ -423,7 +429,7 @@ const routes = [
         PerfilUsuarioComponent,
         PagarConSuperMonedasComponent,
         CreditosAutonomosComponent,
-        CreditosAutonomosDigitalComponent,
+        CreditoConsumoDigitalComponent,
         VideoExplicativoAutComponent,
         PerfilPersonaAutComponent,
         EstablecimientosComercialesAutComponent,
@@ -453,11 +459,13 @@ const routes = [
         FirmarDocumentosHabilitantesComponent,
         TerminosComponent,
         SolicitudCreditoComponent,
+        SolicitudConsumoDigitalComponent,
         ResumenRequisitosCreditoComponent,
         ValidacionDatosComponent,
-        ValidacionDatosDigitalComponent,
         PagoEmpleadosComponent,
         TransaccionesCreditoComponent,
+        ExplicacionConsumoDigitalComponent,
+        ResumenConsumoDigitalComponent
     ],
     imports: [
         CoreCommonModule,
