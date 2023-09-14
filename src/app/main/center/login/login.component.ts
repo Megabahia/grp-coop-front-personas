@@ -275,6 +275,74 @@ export class LoginComponent implements OnInit, OnDestroy {
                             });
 
                             break;
+                        case 'credito-automotriz-digital':
+                            this._creditosPreAprobadosService.obtenerListaCreditos({
+                                page: 0,
+                                page_size: 10,
+                                user_id: data.id
+                            }).subscribe((info) => {
+                                if (info.cont === 0) {
+                                    if (localStorage.getItem('credito') !== null && JSON.parse(localStorage.getItem('credito')).tipoCredito.includes('Pymes')) {
+                                        console.log('inhreso..');
+                                        this._router.navigate(['/personas/solucitudCreditoDigital']);
+                                    } else {
+                                        this._router.navigate(['/personas/creditos-automotriz-digital/solicitar-credito-digital']);
+                                    }
+                                    return;
+                                }
+                                const aprobado = info.info.find((item) => {
+                                    if (item?.estado === 'Aprobado') {
+                                        localStorage.setItem('estadoCredito', 'aprobado');
+                                        return true;
+                                    }
+                                });
+                                if (aprobado) {
+                                    this._router.navigate(['/personas/estado-solicitud-credito-digital']);
+                                    return;
+                                }
+                                const negado = info.info.find((item) => {
+                                    if (item?.estado === 'Negado') {
+                                        localStorage.setItem('estadoCredito', 'negado');
+                                        this._router.navigate(['/personas/estado-solicitud-credito-digital']);
+                                        return true;
+                                    }
+                                });
+                                if (negado) {
+                                    this._router.navigate(['/personas/estado-solicitud-credito-digital']);
+                                    return;
+                                }
+                                const pendiente = info.info.find((item) => {
+                                    if (item?.estado === 'Por completar') {
+                                        localStorage.setItem('estadoCredito', 'pendiente');
+                                        localStorage.setItem('motivo', item.motivo);
+                                        this._router.navigate(['/personas/estado-solicitud-credito-digital']);
+                                        return true;
+                                    }
+                                });
+                                if (pendiente) {
+                                    this._router.navigate(['/personas/estado-solicitud-credito-digital']);
+                                    return;
+                                }
+                                const nuevo = info.info.find((item) => {
+                                    if (item?.estado === 'Nuevo') {
+                                        localStorage.setItem('estadoCredito', 'pendiente');
+                                        localStorage.setItem('motivo', item.motivo);
+                                        this._router.navigate(['/personas/estado-solicitud-credito-digital']);
+                                        return;
+                                    }
+                                });
+                                if (nuevo) {
+                                    this._router.navigate(['/personas/estado-solicitud-credito-digital']);
+                                    return;
+                                }
+                                if (localStorage.getItem('credito') !== null && JSON.parse(localStorage.getItem('credito')).tipoCredito.includes('Pymes')) {
+                                    this._router.navigate(['/personas/solucitudCreditoDigital']);
+                                } else {
+                                    this._router.navigate(['/personas/creditos-automotriz-digital/solicitar-credito-digital']);
+                                }
+                            });
+
+                            break;
                         default:
                             const usuario = this._coreMenuService.grpPersonasUser;
                             this._creditosPreAprobadosService.obtenerListaCreditos({

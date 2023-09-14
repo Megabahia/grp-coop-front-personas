@@ -27,6 +27,7 @@ import {ApprovedEndConsumerBpComponent} from './approved-end-consumer-bp/approve
 import {
     PreApprovedCreditConsumerDigtalComponent
 } from './pre-approved-credit-consumer-digital/pre-approved-credit-consumer-digtal.component';
+import {ConfirmacionGaranteComponent} from './confirmacion-garante/confirmacion-garante.component';
 
 // routing
 const routes: Routes = [
@@ -101,7 +102,16 @@ const routes: Routes = [
         loadChildren: () =>
             import('./simulador-automotriz/similador-automotriz.module').then((m) => m.SimiladorAutomotrizModule)
     },
-
+    {
+        path: 'confirmacion-garante/:id',
+        component: ConfirmacionGaranteComponent,
+        data: {animation: 'misc'},
+    },
+    {
+        path: 'credito-automotriz-digital',
+        loadChildren: () =>
+            import('./simulador-automotriz-digital/similador-automotriz-digital.module').then((m) => m.SimiladorAutomotrizDigitalModule)
+    },
 ];
 
 @NgModule({
@@ -117,6 +127,7 @@ const routes: Routes = [
         CreditRequirementsBpComponent,
         ApprovedEndConsumerBpComponent,
         PreApprovedCreditConsumerBpComponent,
+        ConfirmacionGaranteComponent,
     ],
 
     imports: [
