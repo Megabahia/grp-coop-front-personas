@@ -73,7 +73,7 @@ export class ResumenConsumoDigitalComponent implements OnInit {
             estadoCivil = 'SOLTERO';
             this.soltero = true;
         }
-        this.tipoPersona = `CREDITO_AUTOMOTRIZ_REQUISITOS_${tipoPersona}_${estadoCivil}_CREDICOMPRA`;
+        this.tipoPersona = `CREDITO_CONSUMO_DIGITAL_REQUISITOS_${tipoPersona}_${estadoCivil}`;
     }
 
     ngOnInit(): void {
@@ -110,6 +110,7 @@ export class ResumenConsumoDigitalComponent implements OnInit {
             apellidos: '',
             numeroIdentificacion: '',
             user: '',
+            alcance: 'LOCAL',
         };
     }
 
@@ -117,10 +118,9 @@ export class ResumenConsumoDigitalComponent implements OnInit {
         this.paramService.obtenerListaPadresSinToken(this.tipoPersona).subscribe((info) => {
             this.requisitos = info[0];
             this.checks = this.requisitos.config.map(item => {
-                if (!this.soltero) {
-                    return {'label': item, 'valor': false};
-                }
+                return {'label': item, 'valor': false};
             });
+            console.log('this.checks', this.checks);
             this.checks.push({'label': 'Autorización y validación de información', 'valor': true});
         });
         this.paramService.obtenerListaPadresSinToken('CREDITO_CONSUMO_DIGITAL_TITULO_REQUISITOS_ULTIMA_PANTALLA')
