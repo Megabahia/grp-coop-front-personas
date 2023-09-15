@@ -28,6 +28,13 @@ import {
     PreApprovedCreditConsumerDigtalComponent
 } from './pre-approved-credit-consumer-digital/pre-approved-credit-consumer-digtal.component';
 import {ConfirmacionGaranteComponent} from './confirmacion-garante/confirmacion-garante.component';
+import {
+    SimulatorCrediCompraDigitalComponent
+} from './simulador-microcreditos-digitales/simulator-credi-compra-digital/simulator-credi-compra-digital.component';
+import {
+    CreditRequirementsDigitalComponent
+} from './simulador-microcreditos-digitales/credit-requirements-digital/credit-requirements-digital.component';
+import {CreditRequestDigitalComponent} from './simulador-microcreditos-digitales/credit-request-digital/credit-request-digital.component';
 
 // routing
 const routes: Routes = [
@@ -55,6 +62,11 @@ const routes: Routes = [
         path: 'microcreditos',
         loadChildren: () =>
             import('./simulador-microcreditos/similador-microcreditos.module').then((m) => m.SimiladorMicrocreditosModule)
+    },
+    {
+        path: 'microcreditos-digitales',
+        loadChildren: () =>
+            import('./simulador-microcreditos-digitales/similador-microcreditos-digital.module').then((m) => m.SimiladorMicrocreditosDigitalModule)
     },
     {
         path: 'preApprovedCreditLine',
