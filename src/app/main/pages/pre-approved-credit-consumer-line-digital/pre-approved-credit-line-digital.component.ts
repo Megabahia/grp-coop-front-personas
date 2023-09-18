@@ -90,7 +90,7 @@ export class PreApprovedCreditLineDigitalComponent implements OnInit {
                 localStorage.setItem('montoCreditoFinal', data.monto);
                 localStorage.setItem('tipoPersona', data.tipoPersona);
                 localStorage.setItem('estadoCivil', data.estadoCivil);
-                localStorage.setItem('simulador', 'ok');
+                localStorage.setItem('simulador', 'Lineas Credito Digital');
                 localStorage.setItem('credito', JSON.stringify(data));
                 this._router.navigate([
                     `/pages/preApprovedEndConsumer`], {queryParams: data}

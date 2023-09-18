@@ -94,6 +94,7 @@ import {
 import {
     ResumenConsumoDigitalComponent
 } from './vistas/credito-consumo-digital/resumen-requisitos-credito-automotriz/resumen-consumo-digital.component';
+import {RequisitiosCreditoDigitalComponent} from './vistas/requisitios-credito-digital/requisitios-credito-digital.component';
 
 const maskConfig: Partial<IConfig> = {
     validation: false,
@@ -224,6 +225,7 @@ const routes = [
             // },
         ],
     },
+
     {
         path: 'creditos-automotriz-digital/solicitar-credito-digital',
         component: CreditoAutomotrizDigitalComponent,
@@ -334,6 +336,13 @@ const routes = [
     {
         path: 'requisitosCredito/:monto',
         component: RequisitiosCreditoComponent,
+        data: {activacion: [8, 1, 2, 3, 4, 5, 6, 7]},
+        canActivate: [AuthGuard],
+        // data: { animation: 'auth' }
+    },
+    {
+        path: 'requisitosCreditoDigitales/:monto',
+        component: RequisitiosCreditoDigitalComponent,
         data: {activacion: [8, 1, 2, 3, 4, 5, 6, 7]},
         canActivate: [AuthGuard],
         // data: { animation: 'auth' }
@@ -469,6 +478,7 @@ const routes = [
         OldUserComponent,
         PerfilCompletarComponent,
         RequisitiosCreditoComponent,
+        RequisitiosCreditoDigitalComponent,
         FinalizarSolicitudComponent,
         EstadoSolicitudComponent,
         EstadoSolicitudDigitalComponent,
