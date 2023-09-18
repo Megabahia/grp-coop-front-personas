@@ -1,0 +1,257 @@
+<div class="row justify-content-center">
+    <section class="text-LP">
+        <div class="container pb-5">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-12 text-center ">
+                    <img class="my-3" src="/assets/images/logo/logos-png-grande.png" width="350" alt="">
+                </div>
+                <div class="col-md-12 text-center">
+                    <div class="justify-content-center row mx-2 mb-4">
+                        <p class="text-center">
+                           Señor (a): <a class="text-uppercase"> {{credito?.user.garante?.nombres}} {{credito?.user.garante?.apellidos}}</a>.
+                        </p>
+                        <p class="text-center">
+                            &nbsp;El señor (a): <a class="text-uppercase">  {{credito?.user.nombres}} {{credito?.user.apellidos}} </a> MARIA CRUZ ha entregado su información para que usted <strong>GARANTICE</strong>
+                        </p>
+                        <p class="text-center">
+                            la compra de productos a través de
+                            <a href="www.credicompra.com" target="_blank" style="color: blue !important;">credicompra.com</a>
+                            a través de un crédito otorgado por una Cooperativa de Ahorro y Crédito regulada del Ecuador.
+                        </p>
+                        <p class="text-center">
+                            <a class="text-uppercase"> {{credito?.user.nombres}} {{credito?.user.apellidos}}</a>
+                            <strong> NO RECIBIRÁ DINERO EN EFECTIVO </strong>, lo que usted GARANTIZA es la compra de
+                            productos en los locales afiliados a credicompra.com
+                            Por favor, revise la información y dé click en el botón Confirmar Información para continuar
+                            con el proceso.
+
+                            Por favor confirmar sus datos para continuar con el proceso.
+                        </p>
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Tipo de identificación</label>
+                                    <input class="form-control" value="{{credito?.user.garante?.tipoIdentificacion}}"
+                                           disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Número de identificación</label>
+                                    <input class="form-control" value="{{credito?.user.garante?.identificacion}}"
+                                           disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Nombres de la Madrina o Padrino</label>
+                                    <input class="form-control" value="{{credito?.user.garante?.nombres}}" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Apellidos de la Madrina o Padrino</label>
+                                    <input class="form-control" value="{{credito?.user.garante?.apellidos}}" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>País de residencia</label>
+                                    <input class="form-control" value="{{credito?.user.garante?.pais}}" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Provincia de residencia
+                                    </label>
+                                    <input class="form-control" value="{{credito?.user.garante?.provincia}}" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Ciudad de residencia</label>
+                                    <input class="form-control" value="{{credito?.user.garante?.ciudad}}" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>
+                                        Dirección del Domicilio de la Madrina o Padrino:
+                                    </label>
+                                    <input class="form-control" value="{{credito?.user.garante?.direccion}}" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>
+                                        Madrina o Padrino tiene:
+                                    </label>
+                                    <input class="form-control" value="{{credito?.user.garante?.tipoPersona}}" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>
+                                        País de Trabajo de la Madrina o Padrino:
+                                    </label>
+                                    <input class="form-control" value="{{credito?.user.garante?.paisTipoPersona}}"
+                                           disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>
+                                        Provincia de Trabajo de la Madrina o Padrino:
+                                    </label>
+                                    <input class="form-control" value="{{credito?.user.garante?.provinciaTipoPersona}}"
+                                           disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>
+                                        Ciudad de Trabajo de la Madrina o Padrino:
+                                    </label>
+                                    <input class="form-control" value="{{credito?.user.garante?.ciudadTipoPersona}}"
+                                           disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>
+                                        Dirección de Trabajo de la Madrina o Padrino:
+                                    </label>
+                                    <input class="form-control" value="{{credito?.user.garante?.direccionTipoPersona}}"
+                                           disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>
+                                        Correo de la madrina/padrino:
+                                    </label>
+                                    <input class="form-control" value="{{credito?.user.garante?.correoGarante}}"
+                                           disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3" *ngIf="garanteNegocio">
+                                <div class="form-group">
+                                    <label>
+                                        RUC del Negocio de la Madrina o Padrino:
+                                    </label>
+                                    <input class="form-control" value="{{credito?.user.garante?.rucGarante}}" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3" *ngIf="garanteNegocio">
+                                <div class="form-group">
+                                    <label>
+                                        Nombre del Negocio de la Madrina o Padrino:
+                                    </label>
+                                    <input class="form-control" value="{{credito?.user.garante?.nombreNegocioGarante}}"
+                                           disabled>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="mt-1 mb-2 d-flex justify-content-center h5">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck2"
+                                       [(ngModel)]="autorizacion">
+                                <label class="custom-control-label" for="customCheck2"><a href="#" target="_self"
+                                                                                          (click)="mostrarTerminos($event, modalTerminos)">Autorización
+                                    de revisión y tratamiento de información</a></label>
+                                <div *ngIf="!autorizacion" class="invalid-feedback"
+                                     style="display: block;">
+                                    <div>Es necesario aceptar</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mx-2 text-center d-flex justify-content-center">
+                        <div class="d-flex justify-content-center">
+                            <button class=" float-right btn btn-primary mb-sm-0 mr-0 mr-sm-1"
+                                    style="color: black !important;"
+                                    (click)="confirmarGarante($event, modalConfInformacion)">
+                                Confirmar Información
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Need-info -->
+                    <app-need-info [href]="'https://wa.link/bqfcnh'"></app-need-info>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!--<div class="footer-LP justify-content-center"></div>-->
+
+<app-footer></app-footer>
+
+<!-- Buynow Button-->
+<app-need-help [href]="'https://walink.co/9e8a9d'"></app-need-help>
+
+<ng-template #modalTerminos let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Autorización de revisión y tratamiento de información</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss( 'Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div style="text-align: center;">
+            <p>
+                Al autorizar el tratamiento de su información, usted acepta que la empresa Corporación OmniGlobal y
+                todas sus marcas y/o productos a validar su información en las plataformas pertinentes.
+            </p>
+            <p>
+                Al autorizar el tratamiento de su información, usted acepta que la empresa revise su información de Buró
+                de Crédito para confirmar su estado crediticio.
+            </p>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.dismiss( 'Cross click')">Salir</button>
+    </div>
+</ng-template>
+
+<ng-template #modalConfInformacion let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Gracias por confirmar su información.</h4>
+        <button type="button" class="close" aria-label="Close" (click)="redcredicompra()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div style="text-align: center;">
+            <p>
+                Su apadrinad@ estará feliz de poder realizar sus compras.
+            </p>
+            <p>
+                Para acceder a un Crédito de Consumo y, realizar compras en los mejores Locales Comerciales del país, haga click en el botón CrediCompra
+            </p>
+        </div>
+    </div>
+    <div class=" d-flex justify-content-center">
+        <div class="modal-footer">
+            <button type="button" class="btn btn-yellow2 text-azul2" (click)="redcredicompra()">CrediCompra</button>
+        </div>
+    </div>
+
+</ng-template>

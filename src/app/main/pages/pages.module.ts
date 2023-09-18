@@ -27,6 +27,20 @@ import {ApprovedEndConsumerBpComponent} from './approved-end-consumer-bp/approve
 import {
     PreApprovedCreditConsumerDigtalComponent
 } from './pre-approved-credit-consumer-digital/pre-approved-credit-consumer-digtal.component';
+import {ConfirmacionGaranteComponent} from './confirmacion-garante/confirmacion-garante.component';
+import {
+    SimulatorCrediCompraDigitalComponent
+} from './simulador-microcreditos-digitales/simulator-credi-compra-digital/simulator-credi-compra-digital.component';
+import {
+    CreditRequirementsDigitalComponent
+} from './simulador-microcreditos-digitales/credit-requirements-digital/credit-requirements-digital.component';
+import {CreditRequestDigitalComponent} from './simulador-microcreditos-digitales/credit-request-digital/credit-request-digital.component';
+import {
+    PreApprovedCreditConsumoAutomotrizDigitalBpComponent
+} from './pre-approved-credit-consumo-automotriz-digital-bp/pre-approved-credit-consumo-automotriz-digital-bp.component';
+import {
+    PreApprovedCreditLineDigitalComponent
+} from './pre-approved-credit-consumer-line-digital/pre-approved-credit-line-digital.component';
 
 // routing
 const routes: Routes = [
@@ -56,8 +70,18 @@ const routes: Routes = [
             import('./simulador-microcreditos/similador-microcreditos.module').then((m) => m.SimiladorMicrocreditosModule)
     },
     {
+        path: 'microcreditos-digitales',
+        loadChildren: () =>
+            import('./simulador-microcreditos-digitales/similador-microcreditos-digital.module').then((m) => m.SimiladorMicrocreditosDigitalModule)
+    },
+    {
         path: 'preApprovedCreditLine',
         component: PreApprovedCreditLineComponent,
+        data: {animation: 'misc'},
+    },
+    {
+        path: 'preApprovedCreditLineDigital',
+        component: PreApprovedCreditLineDigitalComponent,
         data: {animation: 'misc'},
     },
     {
@@ -101,7 +125,21 @@ const routes: Routes = [
         loadChildren: () =>
             import('./simulador-automotriz/similador-automotriz.module').then((m) => m.SimiladorAutomotrizModule)
     },
-
+    {
+        path: 'confirmacion-garante/:id',
+        component: ConfirmacionGaranteComponent,
+        data: {animation: 'misc'},
+    },
+    {
+        path: 'credito-automotriz-digital',
+        loadChildren: () =>
+            import('./simulador-automotriz-digital/similador-automotriz-digital.module').then((m) => m.SimiladorAutomotrizDigitalModule)
+    },
+    {
+        path: 'preApprovedAutomotrizDigital',
+        component: PreApprovedCreditConsumoAutomotrizDigitalBpComponent,
+        data: {animation: 'misc'},
+    },
 ];
 
 @NgModule({
@@ -110,6 +148,7 @@ const routes: Routes = [
         MensajeProductosComponent,
         MensajeProductosFreeComponent,
         PreApprovedCreditLineComponent,
+        PreApprovedCreditLineDigitalComponent,
         PreApprovedCreditConsumerDigtalComponent,
         ApprovedEndConsumerComponent,
         CreditRequestBpComponent,
@@ -117,6 +156,8 @@ const routes: Routes = [
         CreditRequirementsBpComponent,
         ApprovedEndConsumerBpComponent,
         PreApprovedCreditConsumerBpComponent,
+        ConfirmacionGaranteComponent,
+        PreApprovedCreditConsumoAutomotrizDigitalBpComponent,
     ],
 
     imports: [

@@ -1,17 +1,17 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import Decimal from 'decimal.js';
 import {Router} from '@angular/router';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {ParametrizacionesService} from '../../../personas/servicios/parametrizaciones.service';
 import {CoreConfigService} from '../../../../../@core/services/config.service';
+import {ParametrizacionesService} from '../../../personas/servicios/parametrizaciones.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import Decimal from 'decimal.js';
 
 @Component({
-    selector: 'app-simulator-credi-compra',
-    templateUrl: './simulator-credi-compra.component.html',
-    styleUrls: ['./simulator-credi-compra.component.scss']
+    selector: 'app-simulador',
+    templateUrl: './simulador.component.html',
+    styleUrls: ['./simulador.component.scss']
 })
-export class SimulatorCrediCompraComponent implements OnInit {
+export class SimuladorComponent implements OnInit {
 
     @ViewChild('modalAviso') modalAviso;
     public mensaje;
@@ -81,13 +81,13 @@ export class SimulatorCrediCompraComponent implements OnInit {
     }
 
     listCombosbox() {
-        this.paramService.obtenerListaPadresSinToken('TIPO_PERSONA').subscribe((info) => {
+        this.paramService.obtenerListaPadresSinToken('CREDITO_AUTOMOTRIZ_TIPO_PERSONA').subscribe((info) => {
             this.listTipoPersona = info;
         });
-        this.paramService.obtenerListaPadresSinToken('ESTADO_CIVIL').subscribe((info) => {
+        this.paramService.obtenerListaPadresSinToken('CREDITO_AUTOMOTRIZ_ESTADO_CIVIL').subscribe((info) => {
             this.listEstadoCivil = info;
         });
-        this.paramService.obtenerListaPadresSinToken('VALORES_CALCULAR_CREDITO_CONSUMO_DIGITAL').subscribe((info) => {
+        this.paramService.obtenerListaPadresSinToken('CREDITO_AUTOMOTRIZ_DIGITAL_VALORES_CALCULAR_CREDITO_CREDICOMPRA').subscribe((info) => {
             info.map(item => {
                 if (item.nombre === 'PORCENTAJE_CONYUGE') {
                     this.porcentajeConyuge = new Decimal(item.valor).toNumber();
@@ -168,12 +168,13 @@ export class SimulatorCrediCompraComponent implements OnInit {
         } else {
             montoCreditoFinal = montoCreditoRedondeado;
         }
+
         localStorage.setItem('montoInteres', this.tasaInteres.toString());
         localStorage.setItem('coutaMensual', cuotaMensual.toString());
         localStorage.setItem('montoCreditoFinal', montoCreditoFinal.toString());
         localStorage.setItem('estadoCivil', this.infoCreditForm.value['estadoCivil']);
         localStorage.setItem('tipoPersona', this.infoCreditForm.value['tipoPersona']);
-        this._router.navigate(['/pages/credito-consumo-digital/requisitos']);
+        this._router.navigate(['/pages/credito-automotriz-digital/requisitos']);
     }
 
     abrirModalLg(modal) {

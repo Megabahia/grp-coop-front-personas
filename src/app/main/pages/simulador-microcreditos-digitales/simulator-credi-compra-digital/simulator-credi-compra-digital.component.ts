@@ -1,22 +1,24 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import Decimal from 'decimal.js';
 import {Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {ParametrizacionesService} from '../../../personas/servicios/parametrizaciones.service';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
+import {ToastrService} from 'ngx-toastr';
 import {CoreConfigService} from '../../../../../@core/services/config.service';
+import {ParametrizacionesService} from '../../../personas/servicios/parametrizaciones.service';
 
 @Component({
-    selector: 'app-simulator-credi-compra',
-    templateUrl: './simulator-credi-compra.component.html',
-    styleUrls: ['./simulator-credi-compra.component.scss']
+    selector: 'app-simulator-credi-compra-digital',
+    templateUrl: './simulator-credi-compra-digital.component.html',
+    styleUrls: ['./simulator-credi-compra-digital.component.scss']
 })
-export class SimulatorCrediCompraComponent implements OnInit {
+export class SimulatorCrediCompraDigitalComponent implements OnInit, OnDestroy {
 
     @ViewChild('modalAviso') modalAviso;
     public mensaje;
     public infoCreditForm: FormGroup;
-    public listTipoPersona = [];
     public listEstadoCivil = [];
     public porcentajeConyuge = 2;
     public porcentajeCapacidaPago = 0.80;
@@ -29,6 +31,10 @@ export class SimulatorCrediCompraComponent implements OnInit {
     public submittedSimulador = false;
     public estadoCivil = false;
 
+    public coreConfig: any;
+    // Private
+    private _unsubscribeAll: Subject<any>;
+
 
     constructor(
         private _router: Router,
@@ -36,7 +42,9 @@ export class SimulatorCrediCompraComponent implements OnInit {
         private _coreConfigService: CoreConfigService,
         private paramService: ParametrizacionesService,
         private modalService: NgbModal,
+        private toastr: ToastrService,
     ) {
+        this._unsubscribeAll = new Subject();
         if (localStorage.getItem('pagina') !== 'https://credicompra.com/') {
             this._router.navigate([
                 `/grp/login`,
@@ -64,6 +72,16 @@ export class SimulatorCrediCompraComponent implements OnInit {
     ngOnInit(): void {
         this.initInfoCreditForm();
         this.listCombosbox();
+        // Subscribe to config changes
+        this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
+            this.coreConfig = config;
+        });
+    }
+
+    ngOnDestroy(): void {
+        // Unsubscribe from all subscriptions
+        this._unsubscribeAll.next();
+        this._unsubscribeAll.complete();
     }
 
     get infoCredit() {
@@ -72,7 +90,6 @@ export class SimulatorCrediCompraComponent implements OnInit {
 
     initInfoCreditForm() {
         this.infoCreditForm = this._formBuilder.group({
-            tipoPersona: ['', Validators.required],
             ingresosMensuales: ['', Validators.required],
             estadoCivil: ['', Validators.required],
             ingresosConyuge: [0],
@@ -81,13 +98,10 @@ export class SimulatorCrediCompraComponent implements OnInit {
     }
 
     listCombosbox() {
-        this.paramService.obtenerListaPadresSinToken('TIPO_PERSONA').subscribe((info) => {
-            this.listTipoPersona = info;
-        });
         this.paramService.obtenerListaPadresSinToken('ESTADO_CIVIL').subscribe((info) => {
             this.listEstadoCivil = info;
         });
-        this.paramService.obtenerListaPadresSinToken('VALORES_CALCULAR_CREDITO_CONSUMO_DIGITAL').subscribe((info) => {
+        this.paramService.obtenerListaPadresSinToken('VALORES_CALCULAR_CREDITO_CREDICOMPRA_DIGITAL_MICROCREDITOS').subscribe((info) => {
             info.map(item => {
                 if (item.nombre === 'PORCENTAJE_CONYUGE') {
                     this.porcentajeConyuge = new Decimal(item.valor).toNumber();
@@ -130,6 +144,8 @@ export class SimulatorCrediCompraComponent implements OnInit {
     calcular() {
         this.submittedSimulador = true;
         if (this.infoCreditForm.invalid) {
+            this.toastr.warning('Al parecer existe un error con la información que ingresó, por favor revise y vuelva a intentar.',
+                'Alerta');
             return;
         }
         // Formula para el calculo interes
@@ -168,12 +184,12 @@ export class SimulatorCrediCompraComponent implements OnInit {
         } else {
             montoCreditoFinal = montoCreditoRedondeado;
         }
+
         localStorage.setItem('montoInteres', this.tasaInteres.toString());
         localStorage.setItem('coutaMensual', cuotaMensual.toString());
         localStorage.setItem('montoCreditoFinal', montoCreditoFinal.toString());
         localStorage.setItem('estadoCivil', this.infoCreditForm.value['estadoCivil']);
-        localStorage.setItem('tipoPersona', this.infoCreditForm.value['tipoPersona']);
-        this._router.navigate(['/pages/credito-consumo-digital/requisitos']);
+        this._router.navigate(['/pages/microcreditos-digitales/requisitos']);
     }
 
     abrirModalLg(modal) {

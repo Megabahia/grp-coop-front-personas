@@ -402,7 +402,7 @@ export class SolicitudCreditosDigitalComponent implements OnInit {
         localStorage.setItem('estadoCivil', this.formSolicitud.value.esatdo_civil);
         this._serviceUpdateEmpresa.actualiarEmpresa(values).subscribe((valor) => {
             console.log('guardado', valor);
-            this._router.navigate([`/personas/requisitosCredito/${localStorage.getItem('montoCreditoFinal')}`]);
+            this._router.navigate([`/personas/requisitosCreditoDigitales/${localStorage.getItem('montoCreditoFinal')}`]);
         });
         console.log('values', this.formSolicitud.value, values);
         // this._perfilUsuarioService

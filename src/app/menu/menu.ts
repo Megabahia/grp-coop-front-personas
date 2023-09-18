@@ -139,7 +139,7 @@ export const menu: CoreMenu[] = [
     //               // translate: 'MENU.APPS.EMAIL',
     //               type: 'item',
     //               icon: 'circle',
-    //               url: 'personas/supermonedas/compartir-publicaciones'
+    //               upreApprovedCreditLinerl: 'personas/supermonedas/compartir-publicaciones'
     //             },
     //             {
     //               id: 'monedasOtorgadas',
