@@ -104,14 +104,15 @@ export class ResumenRequisitosCreditoAutomotrizDigitalComponent implements OnIni
             cuota: this.coutaMensual,
             plazo: 12,
             user_id: this.usuario.id,
-            canal: this.tiposNormales['Credito Automotriz Digital ' + localStorage.getItem('tipoPersona')] === 'null' ? 'Credito Automotriz Digital ' + localStorage.getItem('tipoPersona') : 'Credito Automotriz Digital Negocio propio',
-            tipoCredito: this.tiposNormales['Credito Automotriz Digital ' + localStorage.getItem('tipoPersona')] === 'null' ? 'null' : 'Credito Automotriz Digital Negocio propio',
-            concepto: this.tiposNormales['Credito Automotriz Digital ' + localStorage.getItem('tipoPersona')] === 'null' ? 'Credito Automotriz Digital ' + localStorage.getItem('tipoPersona') : 'Credito Automotriz Digital Negocio propio',
+            canal: this.tiposNormales['Credito Automotriz Digital ' + localStorage.getItem('tipoPersona')] === 'null' ? 'Credito Automotriz Digital ' + localStorage.getItem('tipoPersona') : this.tiposNormales['Credito Automotriz Digital ' + localStorage.getItem('tipoPersona')] || 'Credito Automotriz Digital Negocio propio',
+            tipoCredito: this.tiposNormales['Credito Automotriz Digital ' + localStorage.getItem('tipoPersona')] || 'Credito Automotriz Digital Negocio propio',
+            concepto: this.tiposNormales['Credito Automotriz Digital ' + localStorage.getItem('tipoPersona')] === 'null' ? 'Credito Automotriz Digital ' + localStorage.getItem('tipoPersona') : this.tiposNormales['Credito Automotriz Digital ' + localStorage.getItem('tipoPersona')] || 'Credito Automotriz Digital Negocio propio',
             cargarOrigen: 'IFIS',
             nombres: '',
             apellidos: '',
             numeroIdentificacion: '',
             user: '',
+            alcance: 'LOCAL',
         };
     }
 
@@ -119,9 +120,7 @@ export class ResumenRequisitosCreditoAutomotrizDigitalComponent implements OnIni
         this.paramService.obtenerListaPadresSinToken(this.tipoPersona).subscribe((info) => {
             this.requisitos = info[0];
             this.checks = this.requisitos.config.map(item => {
-                if (!this.soltero) {
-                    return {'label': item, 'valor': false };
-                }
+                return {'label': item, 'valor': false };
             });
             this.checks.push({'label': 'Autorización y validación de información', 'valor': true});
         });
