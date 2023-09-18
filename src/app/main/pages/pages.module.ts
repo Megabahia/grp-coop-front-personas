@@ -35,6 +35,9 @@ import {
     CreditRequirementsDigitalComponent
 } from './simulador-microcreditos-digitales/credit-requirements-digital/credit-requirements-digital.component';
 import {CreditRequestDigitalComponent} from './simulador-microcreditos-digitales/credit-request-digital/credit-request-digital.component';
+import {
+    PreApprovedCreditLineDigitalComponent
+} from './pre-approved-credit-consumer-line-digital/pre-approved-credit-line-digital.component';
 
 // routing
 const routes: Routes = [
@@ -71,6 +74,11 @@ const routes: Routes = [
     {
         path: 'preApprovedCreditLine',
         component: PreApprovedCreditLineComponent,
+        data: {animation: 'misc'},
+    },
+    {
+        path: 'preApprovedCreditLineDigital',
+        component: PreApprovedCreditLineDigitalComponent,
         data: {animation: 'misc'},
     },
     {
@@ -132,6 +140,7 @@ const routes: Routes = [
         MensajeProductosComponent,
         MensajeProductosFreeComponent,
         PreApprovedCreditLineComponent,
+        PreApprovedCreditLineDigitalComponent,
         PreApprovedCreditConsumerDigtalComponent,
         ApprovedEndConsumerComponent,
         CreditRequestBpComponent,
