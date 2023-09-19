@@ -1,0 +1,100 @@
+<!-- Error page-->
+<div>
+    <section class="text-LP">
+        <div class="container pb-5">
+            <div class="row justify-content-center align-items-center py-5">
+                <div class="col-md-12 text-center mb-4">
+                    <img src="/assets/images/logo/logos-png.png" alt="brand-logo" width="375"/>
+                    <h1 class="azul2 mt-4 text-bold">CrediCompra - Big Puntos</h1>
+                    <h3 class="user-name text-center">
+                        Con CrediCompra puedes realizar tus compras con Créditos otorgador por Cooperativas de Ahorro
+                        y Crédito reguladas en los mejores Locales Comerciales del país.
+                    </h3>
+                    <h3 class="user-name text-center">
+                        Y, gana Big Puntos con los que puedes canjear tus productos favoritos en establecimientos
+                        afiliados.
+                    </h3>
+                </div>
+                <div class="col-md-12 text-center">
+                    <h2 class="user-name font-weight-bolder text-center"> ¡FELICIDADES! </h2>
+
+
+                    <h3 class="user-name font-weight-bolder text-center">
+                        Ingresa el código enviado a tu correo para acceder a tu crédito pre aprobado y realizar compras
+                        en los mejores Locales Comerciales del país
+                    </h3>
+
+                </div>
+                <div class="align-items-center mt-2" style="text-align: center;  ">
+
+                    <form [formGroup]="envioForm" (ngSubmit)="sentCode()">
+                        <div class="row align-items-center ">
+                            <div class="form-group align-items-center">
+                                <span class="user-name font-weight-bolder">Ingresa el código que recibiste:</span>
+                                <input size="50" formControlName="code" type="text" class="form-control" name="code">
+                                <div *ngIf="submittedSimulador && getsimuladorForm.code.errors"
+                                     class="invalid-feedback" style="display: block;">
+                                    <div *ngIf="getsimuladorForm.code.errors.required">Código es requerido</div>
+                                    <div *ngIf="getsimuladorForm.code.errors.pattern">Solo se aceptan números</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="form-group ">
+                                <span class="user-name font-weight-bolder">Ingresa tu número de cédula:</span>
+                                <input size="50" formControlName="document" type="text" class="form-control"
+                                       name="document">
+                                <div *ngIf="submittedSimulador && getsimuladorForm.document.errors"
+                                     class="invalid-feedback" style="display: block;">
+                                    <div *ngIf="getsimuladorForm.document.errors.required">Cédula es requerido</div>
+                                </div>
+                                <div *ngIf="submittedSimulador && getsimuladorForm.document.errors"
+                                     class="invalid-feedback"
+                                     style="display: block;">
+                                    <div *ngIf="submittedSimulador && getsimuladorForm.document.errors.required">Es
+                                        requerido
+                                    </div>
+                                    <div
+                                            *ngIf="getsimuladorForm.document.errors.minlength || getsimuladorForm.document.errors.maxlength ||getsimuladorForm.document.errors.min">
+                                        Ingrese 10 dígitos y solo numéricos
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <a class=" btn btn-primary "
+                               (click)="sentCode()"
+                            >
+                                Continuar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-12 mb-4">
+                    <div class="col-md-12 ">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<!--<div class="footer-LP"></div>-->
+
+<app-footer > </app-footer>
+
+<ng-template #mensajeModal let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Mensaje</h5>
+        <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+        <div [innerHTML]="mensaje"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="cerrarModal()">Cerrar</button>
+    </div>
+</ng-template>

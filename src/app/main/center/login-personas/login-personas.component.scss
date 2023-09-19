@@ -1,0 +1,46 @@
+@import '@core/scss/base/bootstrap-extended/include'; // Bootstrap includes
+@import '@core/scss/base/pages/page-auth.scss';
+.auth-help-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.text-primary {
+    color: #385e8c !important;
+}
+
+.btn-primary {
+    color: #385e8c !important;
+}
+
+.btn-primary:hover {
+    background-color: #385e8c !important;
+    box-shadow: 0 8px 25px -8px white !important;
+    color: white !important;
+    border-color: #385e8c !important;
+}
+.boton-fb{
+    text-align: center;
+}
+.appear{
+  display: none;
+}
+
+@media all and (max-width: 992px) {
+  /*Dropdown Automatic*/
+  .brand-logo.disapear {
+    display: none !important;
+  }
+  .appear{
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+}
+
+.relieve {
+  border: 1px solid #ced4da;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+}

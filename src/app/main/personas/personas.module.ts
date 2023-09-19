@@ -57,21 +57,44 @@ import {CreateComponent} from './vistas/registro-proveedores/create/create.compo
 import {ValidarResultadosComponent} from './vistas/validar-resultados/validar-resultados.component';
 import {RegistroFirmaElectronicaComponent} from './vistas/registro-firma-electronica/registro-firma-electronica.component';
 import {OldUserComponent} from './vistas/old-user/old-user.component';
-import { PerfilCompletarComponent } from './vistas/perfil-completar/perfil-completar.component';
-import { RequisitiosCreditoComponent } from './vistas/requisitios-credito/requisitios-credito.component';
-import { FinalizarSolicitudComponent } from './vistas/finalizar-solicitud/finalizar-solicitud.component';
+import {PerfilCompletarComponent} from './vistas/perfil-completar/perfil-completar.component';
+import {RequisitiosCreditoComponent} from './vistas/requisitios-credito/requisitios-credito.component';
+import {FinalizarSolicitudComponent} from './vistas/finalizar-solicitud/finalizar-solicitud.component';
 import {IConfig, NgxMaskModule} from 'ngx-mask';
-import { EstadoSolicitudComponent } from './vistas/estado-solicitud/estado-solicitud.component';
-import { FirmarDocumentosHabilitantesComponent } from './vistas/firmar-documentos-habilitantes/firmar-documentos-habilitantes.component';
-import {SharedModule} from "../shared/shared.module";
+import {EstadoSolicitudComponent} from './vistas/estado-solicitud/estado-solicitud.component';
+import {FirmarDocumentosHabilitantesComponent} from './vistas/firmar-documentos-habilitantes/firmar-documentos-habilitantes.component';
+import {SharedModule} from '../shared/shared.module';
 import {TerminosComponent} from './vistas/terminos/terminos.component';
 import {SolicitudCreditoComponent} from './vistas/creditos-autonomos/solicitud-credito/solicitud-credito.component';
 import {
     ResumenRequisitosCreditoComponent
 } from './vistas/creditos-autonomos/resumen-requisitos-credito/resumen-requisitos-credito.component';
 import {ValidacionDatosComponent} from './vistas/creditos-autonomos/validacion-datos/validacion-datos.component';
-import { PagoEmpleadosComponent } from './vistas/pago-empleados/pago-empleados.component';
-import { TransaccionesCreditoComponent } from './vistas/transacciones-credito/transacciones-credito.component';
+import {PagoEmpleadosComponent} from './vistas/pago-empleados/pago-empleados.component';
+import {TransaccionesCreditoComponent} from './vistas/transacciones-credito/transacciones-credito.component';
+import {SolicitudCreditosDigitalComponent} from './vistas/solicitud-creditos-digital/solicitud-creditos-digital.component';
+import {EstadoSolicitudDigitalComponent} from './vistas/estado-solicitud-digital/estado-solicitud-digital.component';
+import {CreditoAutomotrizDigitalComponent} from './vistas/credito-automotriz-digital/credito-automotriz-digital.component';
+import {
+    ExplicacionCreditoAutomotrizDigitalComponent
+} from './vistas/credito-automotriz-digital/explicacion-credito-automotriz/explicacion-credito-automotriz-digital.component';
+import {
+    SolicitudCreditoAutomotrizDigitalComponent
+} from './vistas/credito-automotriz-digital/solicitud-credito-automotriz/solicitud-credito-automotriz-digital.component';
+import {
+    ResumenRequisitosCreditoAutomotrizDigitalComponent
+} from './vistas/credito-automotriz-digital/resumen-requisitos-credito-automotriz/resumen-requisitos-credito-automotriz-digital.component';
+import {
+    SolicitudConsumoDigitalComponent
+} from './vistas/credito-consumo-digital/solicitud-consumo-digital/solicitud-consumo-digital.component';
+import {CreditoConsumoDigitalComponent} from './vistas/credito-consumo-digital/credito-consumo-digital.component';
+import {
+    ExplicacionConsumoDigitalComponent
+} from './vistas/credito-consumo-digital/explicacion-credito-automotriz/explicacion-consumo-digital.component';
+import {
+    ResumenConsumoDigitalComponent
+} from './vistas/credito-consumo-digital/resumen-requisitos-credito-automotriz/resumen-consumo-digital.component';
+import {RequisitiosCreditoDigitalComponent} from './vistas/requisitios-credito-digital/requisitios-credito-digital.component';
 
 const maskConfig: Partial<IConfig> = {
     validation: false,
@@ -183,6 +206,33 @@ const routes = [
         ],
     },
     {
+        path: 'creditos-autonomos-digital',
+        children: [
+            {path: '', redirectTo: 'solicitar-credito-digital', pathMatch: 'full'},
+            {
+                path: 'solicitar-credito-digital',
+                component: CreditoConsumoDigitalComponent,
+                data: {roles: [Role.SuperMonedas], activacion: [8, 0]},
+                canActivate: [AuthGuard],
+                // data: { animation: 'auth' }
+            },
+            // {
+            //     path: 'validacion-datos-digital',
+            //     component: ValidacionDatosDigitalComponent,
+            //     data: {roles: [Role.SuperMonedas], activacion: [8, 0]},
+            //     canActivate: [AuthGuard]
+            //     // data: { animation: 'auth' }
+            // },
+        ],
+    },
+
+    {
+        path: 'creditos-automotriz-digital/solicitar-credito-digital',
+        component: CreditoAutomotrizDigitalComponent,
+        data: {roles: [Role.SuperMonedas], activacion: [8, 0]},
+        canActivate: [AuthGuard]
+    },
+    {
         path: 'creditos-empleados',
         children: [
             {path: '', redirectTo: 'creditos-pre-aprobados', pathMatch: 'full'},
@@ -276,8 +326,23 @@ const routes = [
         // data: { animation: 'auth' }
     },
     {
+        path: 'solucitudCreditoDigital',
+        component: SolicitudCreditosDigitalComponent,
+        data: {activacion: [1, 2, 3, 4, 5, 6, 7]},
+        canActivate: [AuthGuard],
+
+        // data: { animation: 'auth' }
+    },
+    {
         path: 'requisitosCredito/:monto',
         component: RequisitiosCreditoComponent,
+        data: {activacion: [8, 1, 2, 3, 4, 5, 6, 7]},
+        canActivate: [AuthGuard],
+        // data: { animation: 'auth' }
+    },
+    {
+        path: 'requisitosCreditoDigitales/:monto',
+        component: RequisitiosCreditoDigitalComponent,
         data: {activacion: [8, 1, 2, 3, 4, 5, 6, 7]},
         canActivate: [AuthGuard],
         // data: { animation: 'auth' }
@@ -356,7 +421,13 @@ const routes = [
         component: EstadoSolicitudComponent,
         data: {activacion: [2]},
         canActivate: [AuthGuard],
-
+        // data: { animation: 'auth' }
+    },
+    {
+        path: 'estado-solicitud-credito-digital',
+        component: EstadoSolicitudDigitalComponent,
+        data: {activacion: [2]},
+        canActivate: [AuthGuard],
         // data: { animation: 'auth' }
     },
     {
@@ -383,6 +454,7 @@ const routes = [
         PerfilUsuarioComponent,
         PagarConSuperMonedasComponent,
         CreditosAutonomosComponent,
+        CreditoConsumoDigitalComponent,
         VideoExplicativoAutComponent,
         PerfilPersonaAutComponent,
         EstablecimientosComercialesAutComponent,
@@ -396,6 +468,7 @@ const routes = [
         listadoPagoCuotas,
         RegistroDatosPagosProvedoresComponent,
         SolicitudCreditosComponent,
+        SolicitudCreditosDigitalComponent,
         RegistroProveedoresComponent,
         PagoProvedorsComponent,
         SaldoProveedoresComponent,
@@ -405,15 +478,24 @@ const routes = [
         OldUserComponent,
         PerfilCompletarComponent,
         RequisitiosCreditoComponent,
+        RequisitiosCreditoDigitalComponent,
         FinalizarSolicitudComponent,
         EstadoSolicitudComponent,
+        EstadoSolicitudDigitalComponent,
         FirmarDocumentosHabilitantesComponent,
         TerminosComponent,
         SolicitudCreditoComponent,
+        SolicitudConsumoDigitalComponent,
         ResumenRequisitosCreditoComponent,
         ValidacionDatosComponent,
         PagoEmpleadosComponent,
         TransaccionesCreditoComponent,
+        CreditoAutomotrizDigitalComponent,
+        ExplicacionCreditoAutomotrizDigitalComponent,
+        SolicitudCreditoAutomotrizDigitalComponent,
+        ResumenRequisitosCreditoAutomotrizDigitalComponent,
+        ExplicacionConsumoDigitalComponent,
+        ResumenConsumoDigitalComponent
     ],
     imports: [
         CoreCommonModule,

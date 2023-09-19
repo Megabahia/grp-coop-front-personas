@@ -8,6 +8,7 @@ export class CompletarPerfil {
     whatsapp: string;
     user_id: string;
 }
+
 export class InformacionBasica {
     genero: string;
     fechaNacimiento: string;
@@ -25,6 +26,7 @@ export class InformacionBasica {
     youtube: string;
     user_id: string;
 }
+
 export class InformacionCompleta {
     created_at: string;
     identificacion: string;
@@ -47,6 +49,7 @@ export class InformacionCompleta {
     tiktok: string;
     youtube: string;
 }
+
 export class SolicitarCredito {
     _id: string;
     monto: number;
@@ -71,7 +74,9 @@ export class SolicitarCredito {
     razonSocial?: string;
     rucEmpresa?: string;
     cargarOrigen?: string;
+    alcance?: string;
 }
+
 export class RucPersona {
     actividadComercial: string;
     antiguedadRuc: number;
@@ -87,6 +92,7 @@ export class RucPersona {
     ventaMensual: number;
     _id: string;
 }
+
 export class HistorialLaboral {
     fechaInicio: string;
     imagen: string;
