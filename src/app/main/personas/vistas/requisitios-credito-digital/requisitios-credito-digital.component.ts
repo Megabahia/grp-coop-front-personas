@@ -152,14 +152,17 @@ export class RequisitiosCreditoDigitalComponent implements OnInit {
             cuota: new Decimal(localStorage.getItem('coutaMensual')).toNumber(),
             plazo: 12,
             user_id: '',
-            canal: localStorage.getItem('credito') !== null ? 'Pymes-PreAprobado' : 'Pymes-Normales',
-            tipoCredito: localStorage.getItem('credito') !== null ? 'Pymes-PreAprobado' : 'Pymes-Normales',
-            concepto: localStorage.getItem('credito') !== null ? 'Pymes-PreAprobado' : 'Pymes-Normales',
+            canal: localStorage.getItem('credito') !== null ? 'Lineas Credito Digital Pymes-PreAprobado' : 'Lineas Credito Digital Pymes-Normales',
+            tipoCredito: localStorage.getItem('credito') !== null ? 'Lineas Credito Digital Pymes-PreAprobado' : 'Lineas Credito Digital Pymes-Normales',
+            concepto: localStorage.getItem('credito') !== null ? 'Lineas Credito Digital Pymes-PreAprobado' : 'Lineas Credito Digital Pymes-Normales',
             nombres: '',
             apellidos: '',
             numeroIdentificacion: '',
             empresaInfo: JSON.parse(localStorage.getItem('grpPersonasUser')).persona.empresaInfo,
             estadoCivil: JSON.parse(localStorage.getItem('grpPersonasUser')).persona.estadoCivil,
+            checks: [],
+            cargarOrigen: 'IFIS',
+            alcance: 'LOCAL',
         };
     }
 

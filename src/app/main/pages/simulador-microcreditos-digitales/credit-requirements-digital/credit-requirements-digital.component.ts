@@ -134,7 +134,7 @@ export class CreditRequirementsDigitalComponent implements OnInit, OnDestroy {
 
     simulador() {
         console.log('entro');
-        localStorage.setItem('simulador', 'ok');
+        localStorage.setItem('simulador', 'Lineas Credito Digital');
         this._router.navigate([
             `/personas/solucitudCredito`,
         ]);
