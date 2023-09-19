@@ -218,7 +218,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                                         console.log('if', localStorage.getItem('credito'));
                                     } else {
                                         console.log('else', localStorage.getItem('credito'));
-                                        this._router.navigate(['/personas/creditos-autonomos/solicitar-credito']);
+                                        this._router.navigate(['/personas/solucitudCreditoDigital']);
                                     }
                                     return;
                                 }
@@ -271,7 +271,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                                     this._router.navigate(['/personas/solucitudCreditoDigital']);
                                 } else {
                                     console.log('else 2');
-                                    this._router.navigate(['/personas/creditos-autonomos/solicitar-credito']);
+                                    this._router.navigate(['/personas/solucitudCreditoDigital']);
                                 }
                             });
 
