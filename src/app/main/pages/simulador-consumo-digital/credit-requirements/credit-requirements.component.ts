@@ -35,7 +35,7 @@ export class CreditRequirementsComponent implements OnInit {
     ) {
         if (localStorage.getItem('pagina') !== 'https://credicompra.com/') {
             this._router.navigate([
-                `/grp/login`,
+                `/grp/login-personas`,
             ]);
             localStorage.clear();
             return;
