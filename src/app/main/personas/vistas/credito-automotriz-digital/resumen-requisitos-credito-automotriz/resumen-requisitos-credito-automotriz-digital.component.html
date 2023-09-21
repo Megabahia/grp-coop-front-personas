@@ -5,10 +5,44 @@
                 <div class="col-md-12 text-center">
                     <img src="/assets/images/logo/logos-png.png" alt="brand-logo" width="300"/>
                 </div>
+                <form [formGroup]="formulario">
                 <div class="col-md-12 text-center">
                     <div class="row mx-2 justify-content-center align-items-center py-2">
                         <p [innerHTML]="descripcion.valor"></p>
                     </div>
+                    <div class="row mx-2 justify-content-center align-items-center py-2">
+                        <img src="/assets/images/alerta.png">
+                        <div class="justify-content">
+                            <p><b>Nota: Usted puede realizar UNA SOLA COMPRA con el Crédito Aprobado en cualquiera de
+                                los Locales Comerciales Afiliados a:</b></p>
+                            <a href="https://credicompra.com/locales-afiliados/" target="_blank" class="mt-2">
+                                https://credicompra.com/locales-afiliados/</a>
+                        </div>
+                        <div class="justify-content">
+                            <p style="color: red">Usted puede acceder a un Crédito de Consumo Digital HASTA {{montoCreditoFinal}}</p>
+                            <label>Ingrese el Monto al que desea aplicar:</label>
+
+                            <input type="number" class="form-control " formControlName="monto"/>
+                            <div *ngIf="Form?.monto.errors"
+                                 class="invalid-feedback" style="display: block;">
+                                <div *ngIf="Form.monto.errors.required">
+                                    Ingrese monto es requerido
+                                </div>
+                                <div *ngIf="Form.monto.errors.pattern">
+                                    Ingrese solo numeros
+                                </div>
+                                <div *ngIf="Form.monto.errors.max">
+                                    El valor es mayor a {{this.montoCreditoFinal}}
+                                </div>
+                                <div *ngIf="Form.monto.errors.min">
+                                    El valor es menor a {{this.valorMinimo}}
+                                </div>
+                            </div>
+                            <p>A un Plazo de {{ plazo }} meses</p>
+
+                        </div>
+                    </div>
+
                     <div class="row mx-2 justify-content-center align-items-center py-2">
                         <div class="col-12">
                             <button type="submit" rippleEffect class="btn btn-primary mr-1" (click)="guardarCredito()" style="color: black !important;">ENVIAR SOLICITUD
@@ -41,6 +75,7 @@
                         </div>
                     </div>
                 </div>
+                </form>
             </div>
         </div>
     </section>
@@ -49,3 +84,18 @@
 
 <!-- Buynow Button-->
 <app-need-help [href]="'https://walink.co/9e8a9d'"> </app-need-help>
+<ng-template #modalAviso let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Aviso</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss( 'Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div style="text-align: center;" [innerHTML]="mensaje">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.dismiss( 'Cross click')">Salir</button>
+    </div>
+</ng-template>

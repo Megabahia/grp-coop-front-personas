@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ParametrizacionesService} from '../../../servicios/parametrizaciones.service';
 import {SolicitarCredito} from '../../../models/persona';
 import {CoreMenuService} from '../../../../../../@core/components/core-menu/core-menu.service';
@@ -8,6 +8,8 @@ import {CoreConfigService} from '../../../../../../@core/services/config.service
 import {Subject} from 'rxjs';
 import {jsPDF} from 'jspdf';
 import {CreditoConsumoDigitalService} from '../credito-consumo-digital.service';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-resumen-requisitos-consumo-digital',
@@ -15,12 +17,16 @@ import {CreditoConsumoDigitalService} from '../credito-consumo-digital.service';
     styleUrls: ['./resumen-requisitos-consumo-digital.component.scss']
 })
 export class ResumenConsumoDigitalComponent implements OnInit {
-
+    @ViewChild('modalAviso') modalAviso;
+    public mensaje = '';
+    public plazo = 12;
+    public formulario: FormGroup;
     public coreConfig: any;
     private _unsubscribeAll: Subject<any>;
     public solicitarCredito;
     public coutaMensual;
     public montoCreditoFinal;
+    public valorMinimo;
     public requisitos = {
         valor: '',
         config: [],
@@ -52,6 +58,7 @@ export class ResumenConsumoDigitalComponent implements OnInit {
         private _creditosAutomotrizService: CreditoConsumoDigitalService,
         private _coreMenuService: CoreMenuService,
         private _coreConfigService: CoreConfigService,
+        private modalService: NgbModal,
     ) {
         this._unsubscribeAll = new Subject();
         this.usuario = this._coreMenuService.grpPersonasUser;
@@ -74,6 +81,15 @@ export class ResumenConsumoDigitalComponent implements OnInit {
             this.soltero = true;
         }
         this.tipoPersona = `CREDITO_CONSUMO_DIGITAL_REQUISITOS_${tipoPersona}_${estadoCivil}`;
+        this.formulario = new FormGroup({
+            monto: new FormControl(this.montoCreditoFinal, [
+                Validators.required, Validators.pattern('^([0-9])+$'), Validators.max(this.montoCreditoFinal)
+            ]),
+        });
+    }
+
+    get Form() {
+        return this.formulario.controls;
     }
 
     ngOnInit(): void {
@@ -129,9 +145,32 @@ export class ResumenConsumoDigitalComponent implements OnInit {
                 this.descripcion.valor = this.descripcion.valor.replace('${{montoCreditoFinal}}', this.montoCreditoFinal);
                 this.descripcion.valor = this.descripcion.valor.replace('${{coutaMensual}}', this.coutaMensual);
             });
+        this.paramService.obtenerListaPadresSinToken('VALOR_MINIMO_SOLICITAR_CREDITO_CONSUMO_DIGITAL').subscribe((info) => {
+            this.valorMinimo = info[0].valor;
+            this.formulario.get('monto').setValidators([
+                Validators.required, Validators.pattern('^([0-9])+$'),
+                Validators.max(this.montoCreditoFinal), Validators.min(this.valorMinimo)
+            ]);
+            this.formulario.get('monto').updateValueAndValidity();
+        });
+        this.paramService.obtenerParametroNombreTipo('TIEMPO_PLAZO', 'VALORES_CALCULAR_CREDITO_CREDICOMPRA').subscribe((info) => {
+            this.plazo = info.valor;
+        });
+    }
+
+    abrirModalLg(modal) {
+        this.modalService.open(modal, {
+            size: 'lg'
+        });
     }
 
     guardarCredito() {
+        if (this.formulario.invalid) {
+            this.mensaje = 'El valor ingresado no es permitido';
+            this.abrirModalLg(this.modalAviso);
+            return;
+        }
+        console.log('paso');
         // Agregar informacion al credito
         this.solicitarCredito.nombres = this.usuario.persona.nombres;
         this.solicitarCredito.apellidos = this.usuario.persona.apellidos;
@@ -166,7 +205,7 @@ export class ResumenConsumoDigitalComponent implements OnInit {
         const formData: FormData = new FormData();
         formData.append('autorizacion', pdfBlob, 'autorizacion.pdf');
         formData.append('_id', _id);
-        this._creditosAutomotrizService.updateCreditoFormData(formData).subscribe((info) => {
+        this._creditosAutomotrizService.updateCreditoFormData(formData).subscribe(() => {
             localStorage.clear();
             this._router.navigate([
                 `/personas/creditos-autonomos/validacion-datos`,
