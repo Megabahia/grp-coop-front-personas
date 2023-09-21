@@ -204,6 +204,7 @@ export class ResumenRequisitosCreditoComponent implements OnInit {
             this.abrirModalLg(this.modalAviso);
             return;
         }
+        this.solicitarCredito.monto = this.Form.monto.value;
         // Agregar informacion al credito
         this.solicitarCredito.alcance = 'LOCAL';
         this.solicitarCredito.nombres = this.usuario.persona.nombres;

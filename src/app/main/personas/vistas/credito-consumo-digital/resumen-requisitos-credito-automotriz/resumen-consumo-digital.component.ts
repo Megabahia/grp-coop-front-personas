@@ -170,7 +170,7 @@ export class ResumenConsumoDigitalComponent implements OnInit {
             this.abrirModalLg(this.modalAviso);
             return;
         }
-        console.log('paso');
+        this.solicitarCredito.monto = this.Form.monto.value;
         // Agregar informacion al credito
         this.solicitarCredito.nombres = this.usuario.persona.nombres;
         this.solicitarCredito.apellidos = this.usuario.persona.apellidos;
