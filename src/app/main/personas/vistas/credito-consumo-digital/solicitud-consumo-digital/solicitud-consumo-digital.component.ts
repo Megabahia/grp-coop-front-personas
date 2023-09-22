@@ -304,6 +304,7 @@ export class SolicitudConsumoDigitalComponent implements OnInit, AfterViewInit {
             this.ciudades = this.ciudadGarante = this.ciudadEmpresa = this.ciudadReferido1 = this.ciudadReferido2 = this.ciudadReferido3 = info;
         });
     }
+
     obtenerPaisOpciones(event = null, variablePais) {
         const idPadre = this.paises.find(item => item.nombre === event?.target.value)?._id;
         this[variablePais] = this.paises.filter(item => item.idPadre === idPadre);
@@ -656,6 +657,10 @@ export class SolicitudConsumoDigitalComponent implements OnInit, AfterViewInit {
         return true;
     }
 
+    changesForm() {
+        this.calcularEdad();
+        this.calculos();
+    }
 
     continuar() {
         console.log('no valido ', this.personaForm);
@@ -667,7 +672,7 @@ export class SolicitudConsumoDigitalComponent implements OnInit, AfterViewInit {
         if (this.personaForm.value.tipoIdentificacion === 'Pasaporte') {
             this.validadorDePasaporte(this.personaForm.value.documento);
         }
-        this.calcularEdad();
+
         this.submittedPersona = true;
         // console.log('antes de validar', this.personaForm);
 
@@ -678,7 +683,6 @@ export class SolicitudConsumoDigitalComponent implements OnInit, AfterViewInit {
             return;
         }
 
-        this.calculos();
         if (!this.calcularCredito()) {
             return;
         }

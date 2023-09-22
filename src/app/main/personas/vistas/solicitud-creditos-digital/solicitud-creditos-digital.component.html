@@ -29,7 +29,7 @@
                             <div class="card">
                                 <div class="card-body text-left">
 
-                                    <form class="auth-login-form mt-2" [formGroup]="formSolicitud">
+                                    <form class="auth-login-form mt-2" [formGroup]="formSolicitud" (change)="calcularCredito()">
                                         <h3>
                                             DATOS GENERALES DE SU EMPRESA O NEGOCIO
                                         </h3>
