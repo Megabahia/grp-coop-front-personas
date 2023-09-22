@@ -11,14 +11,14 @@ import Decimal from 'decimal.js';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ValidacionesPropias} from '../../../../../../utils/customer.validators';
 import {ToastrService} from 'ngx-toastr';
-import {CreditoAutomotrizDigitalService} from '../credito-automotriz-digital.service';
+import {CreditoAutomotrizService} from '../credito-automotriz.service';
 
 @Component({
-    selector: 'app-solicitud-credito-automotriz-digital',
-    templateUrl: './solicitud-credito-automotriz-digital.component.html',
-    styleUrls: ['./solicitud-credito-automotriz-digital.component.scss']
+    selector: 'app-solicitud-credito-automotriz',
+    templateUrl: './solicitud-credito-automotriz.component.html',
+    styleUrls: ['./solicitud-credito-automotriz.component.scss']
 })
-export class SolicitudCreditoAutomotrizDigitalComponent implements OnInit, AfterViewInit {
+export class SolicitudCreditoAutomotrizComponent implements OnInit, AfterViewInit {
     @Output() estado = new EventEmitter<number>();
     @ViewChild('modalAviso') modalAviso;
 
@@ -88,7 +88,7 @@ export class SolicitudCreditoAutomotrizDigitalComponent implements OnInit, After
     public alfa = false;
 
     constructor(
-        private _creditosAutomotrizService: CreditoAutomotrizDigitalService,
+        private _creditosAutomotrizService: CreditoAutomotrizService,
         private paramService: ParametrizacionesService,
         private _coreMenuService: CoreMenuService,
         private _coreConfigService: CoreConfigService,
@@ -103,7 +103,6 @@ export class SolicitudCreditoAutomotrizDigitalComponent implements OnInit, After
             const grpPersonasUser = JSON.parse(localStorage.getItem('grpPersonasUser'));
             grpPersonasUser.persona = info;
             localStorage.setItem('grpPersonasUser', JSON.stringify(grpPersonasUser));
-
         });
         this.obtenerListas();
     }

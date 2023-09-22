@@ -1,14 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ParametrizacionesService} from '../../../servicios/parametrizaciones.service';
 import {CreditosAutonomosService} from '../creditos-autonomos.service';
 import {SolicitarCredito} from '../../../models/persona';
 import {CoreMenuService} from '../../../../../../@core/components/core-menu/core-menu.service';
 import {Router} from '@angular/router';
-import {Parser} from '@angular/compiler';
 import {takeUntil} from 'rxjs/operators';
 import {CoreConfigService} from '../../../../../../@core/services/config.service';
 import {Subject} from 'rxjs';
 import {jsPDF} from 'jspdf';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-resumen-requisitos-credito',
@@ -16,7 +17,11 @@ import {jsPDF} from 'jspdf';
     styleUrls: ['./resumen-requisitos-credito.component.scss']
 })
 export class ResumenRequisitosCreditoComponent implements OnInit {
-
+    @ViewChild('modalAviso') modalAviso;
+    public mensaje = '';
+    public plazo = 12;
+    public formulario: FormGroup;
+    public valorMinimo;
     public coreConfig: any;
     private _unsubscribeAll: Subject<any>;
     public solicitarCredito;
@@ -83,6 +88,7 @@ export class ResumenRequisitosCreditoComponent implements OnInit {
         private _creditosAutonomosService: CreditosAutonomosService,
         private _coreMenuService: CoreMenuService,
         private _coreConfigService: CoreConfigService,
+        private modalService: NgbModal,
     ) {
         this._unsubscribeAll = new Subject();
         this.usuario = this._coreMenuService.grpPersonasUser;
@@ -118,6 +124,14 @@ export class ResumenRequisitosCreditoComponent implements OnInit {
             this.soltero = true;
         }
         this.tipoPersona = `REQUISITOS_${tipoPersona}_${estadoCivil}_CREDICOMPRA`;
+        this.formulario = new FormGroup({
+            monto: new FormControl(this.montoCreditoFinal, [
+                Validators.required, Validators.pattern('^([0-9])+$'), Validators.max(this.montoCreditoFinal)
+            ]),
+        });
+    }
+    get Form() {
+        return this.formulario.controls;
     }
 
     ngOnInit(): void {
@@ -166,9 +180,31 @@ export class ResumenRequisitosCreditoComponent implements OnInit {
             this.descripcion.valor = this.descripcion.valor.replace('${{montoCreditoFinal}}', this.montoCreditoFinal);
             this.descripcion.valor = this.descripcion.valor.replace('${{coutaMensual}}', this.coutaMensual);
         });
+        this.paramService.obtenerListaPadresSinToken('VALOR_MINIMO_SOLICITAR_CREDITO_CONSUMO').subscribe((info) => {
+            this.valorMinimo = info[0].valor;
+            this.formulario.get('monto').setValidators([
+                Validators.required, Validators.pattern('^([0-9])+$'),
+                Validators.max(this.montoCreditoFinal), Validators.min(this.valorMinimo)
+            ]);
+            this.formulario.get('monto').updateValueAndValidity();
+        });
+        this.paramService.obtenerParametroNombreTipo('TIEMPO_PLAZO', 'VALORES_CALCULAR_CREDITO_CREDICOMPRA').subscribe((info) => {
+            this.plazo = info.valor;
+        });
+    }
+    abrirModalLg(modal) {
+        this.modalService.open(modal, {
+            size: 'lg'
+        });
     }
 
     guardarCredito() {
+        if (this.formulario.invalid) {
+            this.mensaje = 'El valor ingresado no es permitido';
+            this.abrirModalLg(this.modalAviso);
+            return;
+        }
+        this.solicitarCredito.monto = this.Form.monto.value;
         // Agregar informacion al credito
         this.solicitarCredito.alcance = 'LOCAL';
         this.solicitarCredito.nombres = this.usuario.persona.nombres;
@@ -214,7 +250,7 @@ export class ResumenRequisitosCreditoComponent implements OnInit {
         const formData: FormData = new FormData();
         formData.append('autorizacion', pdfBlob, 'autorizacion.pdf');
         formData.append('_id', _id);
-        this._creditosAutonomosService.updateCreditoFormData(formData).subscribe((info) => {
+        this._creditosAutonomosService.updateCreditoFormData(formData).subscribe(() => {
             localStorage.clear();
             this._router.navigate([
                 `/personas/creditos-autonomos/validacion-datos`,

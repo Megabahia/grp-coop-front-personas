@@ -7,16 +7,16 @@ import {takeUntil} from 'rxjs/operators';
 import {CoreConfigService} from '../../../../../../@core/services/config.service';
 import {Subject} from 'rxjs';
 import {jsPDF} from 'jspdf';
-import {CreditoAutomotrizDigitalService} from '../credito-automotriz-digital.service';
+import {CreditoAutomotrizService} from '../credito-automotriz.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-    selector: 'app-resumen-requisitos-credito-automotriz-digital',
-    templateUrl: './resumen-requisitos-credito-automotriz-digital.component.html',
-    styleUrls: ['./resumen-requisitos-credito-automotriz-digital.component.scss']
+    selector: 'app-resumen-requisitos-credito-automotriz',
+    templateUrl: './resumen-requisitos-credito-automotriz.component.html',
+    styleUrls: ['./resumen-requisitos-credito-automotriz.component.scss']
 })
-export class ResumenRequisitosCreditoAutomotrizDigitalComponent implements OnInit {
+export class ResumenRequisitosCreditoAutomotrizComponent implements OnInit {
     @ViewChild('modalAviso') modalAviso;
     public mensaje = '';
     public plazo = 12;
@@ -44,18 +44,18 @@ export class ResumenRequisitosCreditoAutomotrizDigitalComponent implements OnIni
     public checks;
     public soltero = false;
     public tiposNormales = {
-        'Credito Automotriz Digital Empleado': 'Credito Automotriz Digital Empleado',
-        'Credito Automotriz Digital Alfa': 'null'
+        'Credito Automotriz Empleado': 'Credito Automotriz Empleado',
+        'Credito Automotriz Alfa': 'null'
     };
     public tiposPreaprobados = {
-        'Credito Automotriz Digital Empleado': 'Credito Automotriz Digital Empleado-PreAprobado',
-        'Credito Automotriz Digital Alfa': 'null'
+        'Credito Automotriz Empleado': 'Credito Automotriz Empleado-PreAprobado',
+        'Credito Automotriz Alfa': 'null'
     };
 
     constructor(
         private _router: Router,
         private paramService: ParametrizacionesService,
-        private _creditosAutomotrizService: CreditoAutomotrizDigitalService,
+        private _creditosAutomotrizService: CreditoAutomotrizService,
         private _coreMenuService: CoreMenuService,
         private _coreConfigService: CoreConfigService,
         private modalService: NgbModal,
@@ -80,7 +80,7 @@ export class ResumenRequisitosCreditoAutomotrizDigitalComponent implements OnIni
             estadoCivil = 'SOLTERO';
             this.soltero = true;
         }
-        this.tipoPersona = `CREDITO_AUTOMOTRIZ_DIGITAL_REQUISITOS_${tipoPersona}_${estadoCivil}_CREDICOMPRA`;
+        this.tipoPersona = `CREDITO_AUTOMOTRIZ_REQUISITOS_${tipoPersona}_${estadoCivil}_CREDICOMPRA`;
         this.formulario = new FormGroup({
             monto: new FormControl(this.montoCreditoFinal, [
                 Validators.required, Validators.pattern('^([0-9])+$'), Validators.max(this.montoCreditoFinal)
@@ -92,8 +92,8 @@ export class ResumenRequisitosCreditoAutomotrizDigitalComponent implements OnIni
         this.getInfo();
         if (localStorage.getItem('credito') !== null) {
             this.solicitarCredito = JSON.parse(localStorage.getItem('credito'));
-            this.solicitarCredito.canal = this.tiposPreaprobados['Credito Automotriz Digital ' + localStorage.getItem('tipoPersona')] || 'Credito Automotriz Digital Negocio-PreAprobado';
-            this.solicitarCredito.tipoCredito = this.tiposPreaprobados['Credito Automotriz Digital ' + localStorage.getItem('tipoPersona')] === 'null' ? 'null' : 'Credito Automotriz Digital Negocio-PreAprobado';
+            this.solicitarCredito.canal = this.tiposPreaprobados['Credito Automotriz ' + localStorage.getItem('tipoPersona')] || 'Credito Automotriz Negocio-PreAprobado';
+            this.solicitarCredito.tipoCredito = this.tiposPreaprobados['Credito Automotriz ' + localStorage.getItem('tipoPersona')] === 'null' ? 'null' : 'Credito Automotriz Negocio-PreAprobado';
         } else {
             this.solicitarCredito = this.inicialidarSolicitudCredito();
         }
@@ -114,9 +114,9 @@ export class ResumenRequisitosCreditoAutomotrizDigitalComponent implements OnIni
             cuota: this.coutaMensual,
             plazo: 12,
             user_id: this.usuario.id,
-            canal: this.tiposNormales['Credito Automotriz Digital ' + localStorage.getItem('tipoPersona')] === 'null' ? 'Credito Automotriz Digital ' + localStorage.getItem('tipoPersona') : this.tiposNormales['Credito Automotriz Digital ' + localStorage.getItem('tipoPersona')] || 'Credito Automotriz Digital Negocio propio',
-            tipoCredito: this.tiposNormales['Credito Automotriz Digital ' + localStorage.getItem('tipoPersona')] || 'Credito Automotriz Digital Negocio propio',
-            concepto: this.tiposNormales['Credito Automotriz Digital ' + localStorage.getItem('tipoPersona')] === 'null' ? 'Credito Automotriz Digital ' + localStorage.getItem('tipoPersona') : this.tiposNormales['Credito Automotriz Digital ' + localStorage.getItem('tipoPersona')] || 'Credito Automotriz Digital Negocio propio',
+            canal: this.tiposNormales['Credito Automotriz ' + localStorage.getItem('tipoPersona')] === 'null' ? 'Credito Automotriz ' + localStorage.getItem('tipoPersona') : this.tiposNormales['Credito Automotriz ' + localStorage.getItem('tipoPersona')] || 'Credito Automotriz Negocio propio',
+            tipoCredito: this.tiposNormales['Credito Automotriz ' + localStorage.getItem('tipoPersona')] || 'Credito Automotriz Negocio propio',
+            concepto: this.tiposNormales['Credito Automotriz ' + localStorage.getItem('tipoPersona')] === 'null' ? 'Credito Automotriz ' + localStorage.getItem('tipoPersona') : this.tiposNormales['Credito Automotriz ' + localStorage.getItem('tipoPersona')] || 'Credito Automotriz Negocio propio',
             cargarOrigen: 'IFIS',
             nombres: '',
             apellidos: '',
@@ -134,13 +134,13 @@ export class ResumenRequisitosCreditoAutomotrizDigitalComponent implements OnIni
             });
             this.checks.push({'label': 'Autorización y validación de información', 'valor': true});
         });
-        this.paramService.obtenerListaPadresSinToken('CREDITO_AUTOMOTRIZ_DIGITAL_TITULO_REQUISITOS_CREDICOMPRA_ULTIMA_PANTALLA')
+        this.paramService.obtenerListaPadresSinToken('CREDITO_AUTOMOTRIZ_TITULO_REQUISITOS_CREDICOMPRA_ULTIMA_PANTALLA')
             .subscribe((info) => {
             this.descripcion = info[0];
             this.descripcion.valor = this.descripcion.valor.replace('${{montoCreditoFinal}}', this.montoCreditoFinal);
             this.descripcion.valor = this.descripcion.valor.replace('${{coutaMensual}}', this.coutaMensual);
         });
-        this.paramService.obtenerListaPadresSinToken('VALOR_MINIMO_SOLICITAR_CREDITO_AUTOMOTRIZ_DIGITAL').subscribe((info) => {
+        this.paramService.obtenerListaPadresSinToken('VALOR_MINIMO_SOLICITAR_CREDITO_AUTOMOTRIZ').subscribe((info) => {
             this.valorMinimo = info[0].valor;
             this.formulario.get('monto').setValidators([
                 Validators.required, Validators.pattern('^([0-9])+$'),

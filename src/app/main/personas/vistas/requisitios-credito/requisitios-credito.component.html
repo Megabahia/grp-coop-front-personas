@@ -1,58 +1,115 @@
 <div class="content-wrapper">
-  <div class="content-header row">
-  </div>
-  <div class="content-body">
-    <!-- Error page-->
-    <div class="misc-wrapper">
-
-      <div class="card">
-        <div class="card-body">
-          <div class="misc-inner">
-            <div class="text-center">
-              <a href="javascript:void(0);">
-                <img src="assets/images/logo/san-jose-v.png" alt="brand-logo" width="300"/>
-              </a>
-            </div>
-          </div>
-          <br>
-          <div class=" mb-2 text-center">
-            <h4>
-              {{tiutlo}}
-            </h4>
-          </div>
-          <div class="content-body">
-            <section class="app-user-list">
-              <div class="card">
-                <div class="card-body text-center">
-
-                  <div class="mt-2">
-                    <ul class="list-group ">
-                      <li class="list-group-item" *ngFor="let item of requisitos.config">{{item}}</li>
-                    </ul>
-                  </div>
-                    <h3 class="mt-2" style="color: red;"><b>Aplique YA a su línea de crédito dando click en CONTINUAR</b></h3>
-                    <br>
-                  <div *ngIf="requisitos.config.length>0" class="mt-2">
-                    <a (click)="crearCredito()" [href]="'#/personas/finalizar-credito'" class="btn btn-primary" style="color: black !important;">CONTINUAR</a>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
-          <div class="swiper-responsive-breakpoints swiper-container px-4 py-2">
-            <div class="swiper-wrapper mb-2">
-            </div>
-            <!-- Add Arrows -->
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-          </div>
-        </div>
-      </div>
+    <div class="content-header row">
     </div>
-    <!-- / Error page-->
-  </div>
+    <div class="content-body">
+        <!-- Error page-->
+        <div class="misc-wrapper">
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="misc-inner">
+                        <div class="text-center">
+                            <a href="javascript:void(0);">
+                                <img src="assets/images/logo/san-jose-v.png" alt="brand-logo" width="300"/>
+                            </a>
+                        </div>
+                    </div>
+                    <br>
+                    <div class=" mb-2 text-center">
+                        <h4>
+                            {{tiutlo}}
+                        </h4>
+                    </div>
+                    <div class="content-body">
+                        <section class="app-user-list">
+                            <div class="card">
+                                <div class="card-body text-center">
+
+                                    <div class="mt-2">
+                                        <ul class="list-group ">
+                                            <li class="list-group-item"
+                                                *ngFor="let item of requisitos.config">{{item}}</li>
+                                        </ul>
+                                    </div>
+                                    <h3 class="mt-2" style="color: red;"><b>Aplique YA a su línea de crédito dando click
+                                        en CONTINUAR</b></h3>
+                                    <br>
+                                    <form [formGroup]="formulario">
+                                        <div class="row mx-2 justify-content-center align-items-center py-2">
+                                            <img src="/assets/images/alerta.png">
+                                            <div class="justify-content">
+                                                <p><b>Nota: Usted puede realizar UNA SOLA COMPRA con el Crédito Aprobado en cualquiera de
+                                                    los Locales Comerciales Afiliados a:</b></p>
+                                                <a href="https://credicompra.com/locales-afiliados/" target="_blank" class="mt-2">
+                                                    https://credicompra.com/locales-afiliados/</a>
+                                            </div>
+                                            <div class="justify-content">
+                                                <p style="color: red">Usted puede acceder a un Crédito de Consumo Digital HASTA {{montoCreditoFinal}}</p>
+                                                <label>Ingrese el Monto al que desea aplicar:</label>
+
+                                                <input type="number" class="form-control " formControlName="monto"/>
+                                                <div *ngIf="Form?.monto.errors"
+                                                     class="invalid-feedback" style="display: block;">
+                                                    <div *ngIf="Form.monto.errors.required">
+                                                        Ingrese monto es requerido
+                                                    </div>
+                                                    <div *ngIf="Form.monto.errors.pattern">
+                                                        Ingrese solo numeros
+                                                    </div>
+                                                    <div *ngIf="Form.monto.errors.max">
+                                                        El valor es mayor a {{this.montoCreditoFinal}}
+                                                    </div>
+                                                    <div *ngIf="Form.monto.errors.min">
+                                                        El valor es menor a {{this.valorMinimo}}
+                                                    </div>
+                                                </div>
+                                                <p>A un Plazo de {{ plazo }} meses</p>
+
+                                            </div>
+                                        </div>
+                                        <div *ngIf="requisitos.config.length>0" class="mt-2">
+                                            <button (click)="crearCredito()"
+                                               class="btn btn-primary" style="color: black !important;">CONTINUAR</button>
+                                        </div>
+
+                                    </form>
+
+
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="swiper-responsive-breakpoints swiper-container px-4 py-2">
+                        <div class="swiper-wrapper mb-2">
+                        </div>
+                        <!-- Add Arrows -->
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- / Error page-->
+    </div>
 </div>
 
 <div class="text-center mt-3">
-  <app-footer></app-footer>
+    <app-footer></app-footer>
 </div>
+
+<ng-template #modalAviso let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Aviso</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss( 'Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div style="text-align: center;" [innerHTML]="mensaje">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.dismiss( 'Cross click')">Salir</button>
+    </div>
+</ng-template>
+
