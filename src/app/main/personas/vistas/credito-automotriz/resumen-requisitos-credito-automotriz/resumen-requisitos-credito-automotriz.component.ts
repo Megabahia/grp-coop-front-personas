@@ -44,7 +44,7 @@ export class ResumenRequisitosCreditoAutomotrizComponent implements OnInit {
     public checks;
     public soltero = false;
     public tiposNormales = {
-        'Credito Automotriz Empleado': 'Credito Automotriz  Empleado',
+        'Credito Automotriz Empleado': 'Credito Automotriz Empleado',
         'Credito Automotriz Alfa': 'null'
     };
     public tiposPreaprobados = {
