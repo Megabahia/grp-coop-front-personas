@@ -95,6 +95,16 @@ import {
     ResumenConsumoDigitalComponent
 } from './vistas/credito-consumo-digital/resumen-requisitos-credito-automotriz/resumen-consumo-digital.component';
 import {RequisitiosCreditoDigitalComponent} from './vistas/requisitios-credito-digital/requisitios-credito-digital.component';
+import {CreditoAutomotrizComponent} from './vistas/credito-automotriz/credito-automotriz.component';
+import {
+    ExplicacionCreditoAutomotrizComponent
+} from './vistas/credito-automotriz/explicacion-credito-automotriz/explicacion-credito-automotriz.component';
+import {
+    SolicitudCreditoAutomotrizComponent
+} from './vistas/credito-automotriz/solicitud-credito-automotriz/solicitud-credito-automotriz.component';
+import {
+    ResumenRequisitosCreditoAutomotrizComponent
+} from './vistas/credito-automotriz/resumen-requisitos-credito-automotriz/resumen-requisitos-credito-automotriz.component';
 
 const maskConfig: Partial<IConfig> = {
     validation: false,
@@ -225,7 +235,12 @@ const routes = [
             // },
         ],
     },
-
+    {
+        path: 'creditos-automotriz/solicitar-credito',
+        component: CreditoAutomotrizComponent,
+        data: {roles: [Role.SuperMonedas], activacion: [8, 0]},
+        canActivate: [AuthGuard]
+    },
     {
         path: 'creditos-automotriz-digital/solicitar-credito-digital',
         component: CreditoAutomotrizDigitalComponent,
@@ -490,6 +505,10 @@ const routes = [
         ValidacionDatosComponent,
         PagoEmpleadosComponent,
         TransaccionesCreditoComponent,
+        CreditoAutomotrizComponent,
+        ExplicacionCreditoAutomotrizComponent,
+        SolicitudCreditoAutomotrizComponent,
+        ResumenRequisitosCreditoAutomotrizComponent,
         CreditoAutomotrizDigitalComponent,
         ExplicacionCreditoAutomotrizDigitalComponent,
         SolicitudCreditoAutomotrizDigitalComponent,
