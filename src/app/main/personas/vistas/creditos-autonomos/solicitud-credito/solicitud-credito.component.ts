@@ -640,7 +640,10 @@ export class SolicitudCreditoComponent implements OnInit {
         localStorage.setItem('montoCreditoFinal', montoCreditoFinal.toString());
         return true;
     }
-
+    changesForm() {
+        this.calcularEdad();
+        this.calculos();
+    }
 
     continuar() {
         console.log('no valido ', this.personaForm);
@@ -652,7 +655,7 @@ export class SolicitudCreditoComponent implements OnInit {
         if (this.personaForm.value.tipoIdentificacion === 'Pasaporte') {
             this.validadorDePasaporte(this.personaForm.value.documento);
         }
-        this.calcularEdad();
+
         this.submittedPersona = true;
         // console.log('antes de validar', this.personaForm);
 
@@ -663,7 +666,7 @@ export class SolicitudCreditoComponent implements OnInit {
             return;
         }
 
-        this.calculos();
+
         if (!this.calcularCredito()) {
             return;
         }

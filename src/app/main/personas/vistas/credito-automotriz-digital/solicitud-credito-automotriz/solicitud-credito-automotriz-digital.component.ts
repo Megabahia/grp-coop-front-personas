@@ -656,6 +656,10 @@ export class SolicitudCreditoAutomotrizDigitalComponent implements OnInit, After
         return true;
     }
 
+    changesForm() {
+        this.calcularEdad();
+        this.calculos();
+    }
 
     continuar() {
         console.log('no valido ', this.personaForm);
@@ -667,7 +671,7 @@ export class SolicitudCreditoAutomotrizDigitalComponent implements OnInit, After
         if (this.personaForm.value.tipoIdentificacion === 'Pasaporte') {
             this.validadorDePasaporte(this.personaForm.value.documento);
         }
-        this.calcularEdad();
+
         this.submittedPersona = true;
         // console.log('antes de validar', this.personaForm);
 
@@ -678,7 +682,6 @@ export class SolicitudCreditoAutomotrizDigitalComponent implements OnInit, After
             return;
         }
 
-        this.calculos();
         if (!this.calcularCredito()) {
             return;
         }

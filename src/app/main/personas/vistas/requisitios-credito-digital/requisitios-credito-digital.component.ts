@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {RegistroDatosPagoProvedoresService} from '../requisito-solicitud-microcreditos/registro-datos-pago-provedores.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {SolicitarCredito} from '../../models/persona';
@@ -10,6 +10,8 @@ import {Subject} from 'rxjs';
 import {CoreConfigService} from '../../../../../@core/services/config.service';
 import {ParametrizacionesService} from '../../servicios/parametrizaciones.service';
 import {jsPDF} from 'jspdf';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-requisitios-credito',
@@ -17,7 +19,12 @@ import {jsPDF} from 'jspdf';
     styleUrls: ['./requisitios-credito-digital.component.scss']
 })
 export class RequisitiosCreditoDigitalComponent implements OnInit {
-
+    @ViewChild('modalAviso') modalAviso;
+    public mensaje = '';
+    public plazo = 12;
+    public formulario: FormGroup;
+    public montoCreditoFinal;
+    public valorMinimo;
     private _unsubscribeAll: Subject<any>;
     tiutlo;
     public requisitos = {
@@ -43,7 +50,9 @@ export class RequisitiosCreditoDigitalComponent implements OnInit {
         private _creditosAutonomosService: CreditosAutonomosService,
         private rutaActiva: ActivatedRoute,
         private paramService: ParametrizacionesService,
+        private modalService: NgbModal,
     ) {
+        this.montoCreditoFinal = +localStorage.getItem('montoCreditoFinal');
         this.usuario = this._coreMenuService.grpPersonasUser;
         const casados = ['UNIÓN LIBRE', 'CASADO'];
         if (casados.find(item => item === localStorage.getItem('estadoCivil').toUpperCase())) {
@@ -134,13 +143,37 @@ export class RequisitiosCreditoDigitalComponent implements OnInit {
         } else {
             this.solicitarCredito = this.inicialidarSolicitudCredito();
         }
+        this.formulario = new FormGroup({
+            monto: new FormControl(this.montoCreditoFinal, [
+                Validators.required, Validators.pattern('^([0-9])+$'), Validators.max(this.montoCreditoFinal)
+            ]),
+        });
     }
 
     ngOnInit(): void {
+        this.paramService.obtenerListaPadresSinToken('VALOR_MINIMO_SOLICITAR_MICROCREDITOS_DIGITAL').subscribe((info) => {
+            this.valorMinimo = info[0].valor;
+            this.formulario.get('monto').setValidators([
+                Validators.required, Validators.pattern('^([0-9])+$'),
+                Validators.max(this.montoCreditoFinal), Validators.min(this.valorMinimo)
+            ]);
+            this.formulario.get('monto').updateValueAndValidity();
+        });
+        this.paramService.obtenerParametroNombreTipo('TIEMPO_PLAZO', 'VALORES_CALCULAR_CREDITO_CREDICOMPRA').subscribe((info) => {
+            this.plazo = info.valor;
+        });
 
         // this.usuario = this._coreMenuService.grpPersonasUser;
     }
+    get Form() {
+        return this.formulario.controls;
+    }
 
+    abrirModalLg(modal) {
+        this.modalService.open(modal, {
+            size: 'lg'
+        });
+    }
     inicialidarSolicitudCredito(): SolicitarCredito {
         return {
             _id: '',
@@ -167,6 +200,12 @@ export class RequisitiosCreditoDigitalComponent implements OnInit {
     }
 
     crearCredito() {
+        if (this.formulario.invalid) {
+            this.mensaje = 'El valor ingresado no es permitido';
+            this.abrirModalLg(this.modalAviso);
+            return;
+        }
+        this.solicitarCredito.monto = this.Form.monto.value;
         // Agregar informacion al credito
         this.solicitarCredito.user_id = this.usuario.id;
         this.solicitarCredito.nombres = this.usuario.persona.nombres;
