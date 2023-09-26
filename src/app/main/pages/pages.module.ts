@@ -41,6 +41,10 @@ import {
 import {
     PreApprovedCreditLineDigitalComponent
 } from './pre-approved-credit-consumer-line-digital/pre-approved-credit-line-digital.component';
+import {
+    PreApprovedCreditConsumerAutomotiveComponent
+} from './pre-approved-credit-consumer-automotive/pre-approved-credit-consumer-automotive.component';
+import {ApprovedEndConsumerAutomitiveComponent} from './approved-end-consumer-automitive/approved-end-consumer-automitive.component';
 
 // routing
 const routes: Routes = [
@@ -136,6 +140,16 @@ const routes: Routes = [
             import('./simulador-automotriz-digital/similador-automotriz-digital.module').then((m) => m.SimiladorAutomotrizDigitalModule)
     },
     {
+        path: 'preApprovedCreditConsumerAutomotive',
+        component: PreApprovedCreditConsumerAutomotiveComponent,
+        data: {animation: 'misc'},
+    },
+    {
+        path: 'preApprovedEndConsumerAutomotive',
+        component: ApprovedEndConsumerAutomitiveComponent,
+        data: {animation: 'misc'},
+    },
+    {
         path: 'preApprovedAutomotrizDigital',
         component: PreApprovedCreditConsumoAutomotrizDigitalBpComponent,
         data: {animation: 'misc'},
@@ -158,6 +172,8 @@ const routes: Routes = [
         PreApprovedCreditConsumerBpComponent,
         ConfirmacionGaranteComponent,
         PreApprovedCreditConsumoAutomotrizDigitalBpComponent,
+        PreApprovedCreditConsumerAutomotiveComponent,
+        ApprovedEndConsumerAutomitiveComponent,
     ],
 
     imports: [
