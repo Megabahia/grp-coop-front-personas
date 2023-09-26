@@ -74,11 +74,11 @@ export class ResumenRequisitosCreditoComponent implements OnInit {
     public checks;
     public soltero = false;
     public tiposNormales = {
-        'Empleado': 'Credito Consumo Empleado',
+        'Empleado': 'Empleado',
         'Alfa': 'null'
     };
     public tiposPreaprobados = {
-        'Empleado': 'Credito Consumo Empleado-PreAprobado',
+        'Empleado': 'Empleado-PreAprobado',
         'Alfa': 'null'
     };
 
@@ -138,8 +138,8 @@ export class ResumenRequisitosCreditoComponent implements OnInit {
         this.getInfo();
         if (localStorage.getItem('credito') !== null) {
             this.solicitarCredito = JSON.parse(localStorage.getItem('credito'));
-            this.solicitarCredito.canal = this.tiposPreaprobados[localStorage.getItem('tipoPersona')] || 'Credito Consumo Negocio-PreAprobado';
-            this.solicitarCredito.tipoCredito = this.tiposPreaprobados[localStorage.getItem('tipoPersona')] || 'Credito Consumo Negocio-PreAprobado';
+            this.solicitarCredito.canal = this.tiposPreaprobados[localStorage.getItem('tipoPersona')] || 'Negocio-PreAprobado';
+            this.solicitarCredito.tipoCredito = this.tiposPreaprobados[localStorage.getItem('tipoPersona')] || 'Negocio-PreAprobado';
         } else {
             this.solicitarCredito = this.inicialidarSolicitudCredito();
         }
@@ -160,9 +160,9 @@ export class ResumenRequisitosCreditoComponent implements OnInit {
             cuota: this.coutaMensual,
             plazo: 12,
             user_id: this.usuario.id,
-            canal: this.tiposNormales[localStorage.getItem('tipoPersona')] || 'Credito Consumo Negocio propio',
-            tipoCredito: this.tiposNormales[localStorage.getItem('tipoPersona')] || 'Credito Consumo Negocio propio',
-            concepto: this.tiposNormales[localStorage.getItem('tipoPersona')] || 'Credito Consumo Negocio propio',
+            canal: this.tiposNormales[localStorage.getItem('tipoPersona')] || 'Negocio propio',
+            tipoCredito: this.tiposNormales[localStorage.getItem('tipoPersona')] || 'Negocio propio',
+            concepto: this.tiposNormales[localStorage.getItem('tipoPersona')] || 'Negocio propio',
             cargarOrigen: 'BIGPUNTOS',
             nombres: '',
             apellidos: '',
