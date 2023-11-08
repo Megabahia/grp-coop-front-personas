@@ -13,6 +13,19 @@ import {ValidacionesPropias} from '../../../../../../utils/customer.validators';
 import {ToastrService} from 'ngx-toastr';
 import {CreditoAutomotrizDigitalService} from '../credito-automotriz-digital.service';
 
+/**
+ * COOP
+ * Personas
+ * ESta pantalla sirve para mostrar la solicitud del credito
+ * Rutas:
+ * `${environment.apiUrl}/personas/personas/listOne/${id}`
+ * `${environment.apiUrl}/central/param/listar/tipo/todos`,
+ * `${environment.apiUrl}/central/param/list/tipo/todos/`,
+ * `${environment.apiUrl}/central/param/list/filtro/nombre`,
+ * `${environment.apiUrl}/central/param/list/tipo/todos/free`,
+ * `${environment.apiUrl}/personas/personas/updateSinImagen/${datos.user_id}`,
+ */
+
 @Component({
     selector: 'app-solicitud-credito-automotriz-digital',
     templateUrl: './solicitud-credito-automotriz-digital.component.html',
@@ -304,6 +317,7 @@ export class SolicitudCreditoAutomotrizDigitalComponent implements OnInit, After
             this.ciudades = this.ciudadGarante = this.ciudadEmpresa = this.ciudadReferido1 = this.ciudadReferido2 = this.ciudadReferido3 = info;
         });
     }
+
     obtenerPaisOpciones(event = null, variablePais) {
         const idPadre = this.paises.find(item => item.nombre === event?.target.value)?._id;
         this[variablePais] = this.paises.filter(item => item.idPadre === idPadre);

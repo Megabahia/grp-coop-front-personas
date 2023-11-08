@@ -5,10 +5,19 @@ import {Router} from '@angular/router';
 import {AuthenticationService} from '../../../../auth/service';
 import {PagoProvedorsService} from './pago-provedors.service';
 import {ToastrService} from 'ngx-toastr';
-import {log} from 'util';
 import {CoreConfigService} from '../../../../../@core/services/config.service';
 import {CoreMenuService} from '../../../../../@core/components/core-menu/core-menu.service';
 import {User} from '../../../../auth/models';
+
+/**
+ * COOP
+ * Personas
+ * ESta pantalla sirve para pagar a los proveedores
+ * Rutas:
+ * `${environment.apiUrl}/personas/proveedores/list/`,
+ * `${environment.apiUrl}/personas/proveedores/listOne/${data}`
+ * `${environment.apiUrl}/corp/pagoProveedores/create/`,
+ */
 
 @Component({
     selector: 'app-pago-provedors',

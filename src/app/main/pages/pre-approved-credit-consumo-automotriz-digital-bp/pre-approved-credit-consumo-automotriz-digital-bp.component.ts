@@ -4,10 +4,17 @@ import {CoreConfigService} from '../../../../@core/services/config.service';
 import {Router} from '@angular/router';
 import {PreArpovedCreditServiceBp} from '../pre-approved-credit-bp/pre-arpoved-credit.service-bp';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import Decimal from 'decimal.js';
 import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
+
+/**
+ * COOP
+ * Personas
+ * Esta pantalla sirve para consultar el codigo del credito preaprobado
+ * Rutas:
+ * `${environment.apiUrl}/corp/creditoPersonas/creditoPreaprobado/codigo`,
+ */
 
 @Component({
     selector: 'app-pre-approved-credit-consumer-bp',
@@ -17,7 +24,6 @@ import {ToastrService} from 'ngx-toastr';
 export class PreApprovedCreditConsumoAutomotrizDigitalBpComponent implements OnInit {
     public envioForm: FormGroup;
     public submittedSimulador = false;
-    public pathSent;
     @ViewChild('mensajeModal') mensajeModal;
     public mensaje = '';
     public coreConfig: any;

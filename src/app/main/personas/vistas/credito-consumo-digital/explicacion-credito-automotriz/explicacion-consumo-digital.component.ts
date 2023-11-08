@@ -1,13 +1,21 @@
 import {Component, OnInit, ViewChild, Output, EventEmitter, OnDestroy} from '@angular/core';
 import {Subject} from 'rxjs';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {takeUntil} from 'rxjs/operators';
 import {FlatpickrOptions} from 'ng2-flatpickr';
 import {CoreConfigService} from '../../../../../../@core/services/config.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {ParametrizacionesService} from '../../../servicios/parametrizaciones.service';
+
+/**
+ * COOP
+ * Personas
+ * Esta pantalla sirve para mostrar los requerimientos
+ * Rutas:
+ * `${environment.apiUrl}/central/param/list/tipo/todos/free`,
+ */
 
 @Component({
     selector: 'app-explicacion-credito-consumo-digital',

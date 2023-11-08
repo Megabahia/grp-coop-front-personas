@@ -13,6 +13,19 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ValidacionesPropias} from '../../../../../../utils/customer.validators';
 import {ToastrService} from 'ngx-toastr';
 
+/**
+ * COOP
+ * Personas
+ * ESta pantalla sirve para mostrar la solicitud del credito
+ * Rutas:
+ * `${environment.apiUrl}/personas/personas/listOne/${id}`
+ * `${environment.apiUrl}/central/param/listar/tipo/todos`,
+ * `${environment.apiUrl}/central/param/list/tipo/todos/`,
+ * `${environment.apiUrl}/central/param/list/filtro/nombre`,
+ * `${environment.apiUrl}/central/param/list/tipo/todos/free`,
+ * `${environment.apiUrl}/personas/personas/updateSinImagen/${datos.user_id}`,
+ */
+
 @Component({
     selector: 'app-solicitud-credito',
     templateUrl: './solicitud-credito.component.html',
@@ -32,7 +45,6 @@ export class SolicitudCreditoComponent implements OnInit {
     public tipoParentesco = [];
     public fecha;
     public tipoIdentificacion = [];
-    public menorEdad = false;
     private _unsubscribeAll: Subject<any>;
     public nombreDueno = false;
     public casado = false;
@@ -300,6 +312,7 @@ export class SolicitudCreditoComponent implements OnInit {
             this.ciudades = this.ciudadEmpresa = this.ciudadReferido1 = this.ciudadReferido2 = this.ciudadReferido3 = info;
         });
     }
+
     obtenerPaisOpciones(event = null, variablePais) {
         const idPadre = this.paises.find(item => item.nombre === event?.target.value)?._id;
         this[variablePais] = this.paises.filter(item => item.idPadre === idPadre);
@@ -417,11 +430,7 @@ export class SolicitudCreditoComponent implements OnInit {
 
     valoresLocalStorage() {
         this.estadoCivilStorage = localStorage.getItem('estadoCivil');
-        if (this.estadoCivilStorage === 'Casado' || this.estadoCivilStorage === 'Unión libre') {
-            this.casado = true;
-        } else {
-            this.casado = false;
-        }
+        this.casado = this.estadoCivilStorage === 'Casado' || this.estadoCivilStorage === 'Unión libre';
         this.tipoPersonaStorage = localStorage.getItem('tipoPersona');
         this.montoCreditoFinalStorage = localStorage.getItem('montoCreditoFinal');
         this.coutaMensualStorage = localStorage.getItem('coutaMensual');
@@ -500,7 +509,7 @@ export class SolicitudCreditoComponent implements OnInit {
     }
 
     validadorDeCedula(cedula: String) {
-        let cedulaCorrecta = false;
+        let cedulaCorrecta: boolean;
         if (cedula.length === 10) {
             const tercerDigito = parseInt(cedula.substring(2, 3), 10);
             if (tercerDigito < 6) {
@@ -640,6 +649,7 @@ export class SolicitudCreditoComponent implements OnInit {
         localStorage.setItem('montoCreditoFinal', montoCreditoFinal.toString());
         return true;
     }
+
     changesForm() {
         this.calcularEdad();
         this.calculos();

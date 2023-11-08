@@ -17,6 +17,21 @@ import {Router} from '@angular/router';
 import {ParametrizacionesService} from '../../personas/servicios/parametrizaciones.service';
 import {ToastrService} from 'ngx-toastr';
 
+/*
+* IFIS
+* PErsonas
+* Esta pantalla sirve para registar el perfil del usuario
+* Rutas:
+* `${environment.apiUrl}/personas/personas/listOne/${id}`
+* `${environment.apiUrl}/personas/historialLaboral/listOne/${user_id}`
+* `${environment.apiUrl}/central/usuarios/update/${datos.id}`
+* `${environment.apiUrl}/personas/personas/update/${datos.user_id}`
+* `${environment.apiUrl}/personas/personas/update/imagen/${id}`
+* `${environment.apiUrl}/central/param/list/tipo/todos/`,
+* `${environment.apiUrl}/central/param/list/filtro/nombre`,
+* `${environment.apiUrl}/personas/historialLaboral/update/${user_id}`
+* */
+
 @Component({
     selector: 'app-perfil-usuario',
     templateUrl: './perfil-usuario.component.html',
@@ -35,7 +50,6 @@ export class PerfilUsuarioComponent implements OnInit, OnDestroy {
     public personaForm: FormGroup;
     public datosTrabajo: HistorialLaboral;
     public datosTrabajoForm: FormGroup;
-    public datosRepresentanteForm: FormGroup;
     public informacionBasica: InformacionBasica;
     public persona;
     public imagen;
@@ -71,7 +85,6 @@ export class PerfilUsuarioComponent implements OnInit, OnDestroy {
         private _router: Router,
         private paramService: ParametrizacionesService,
         private toastr: ToastrService,
-
     ) {
         this.informacionBasica = {
             pais: '',
@@ -222,8 +235,7 @@ export class PerfilUsuarioComponent implements OnInit, OnDestroy {
     }
 
     transformarFecha(fecha) {
-        const nuevaFecha = this.datePipe.transform(fecha, 'yyyy-MM-dd');
-        return nuevaFecha;
+        return this.datePipe.transform(fecha, 'yyyy-MM-dd');
     }
 
     omitirContinuar() {

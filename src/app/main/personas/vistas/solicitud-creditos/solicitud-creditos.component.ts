@@ -5,12 +5,22 @@ import {CoreMenuService} from '../../../../../@core/components/core-menu/core-me
 import {SolicitudCreditosService} from './solicitud-creditos.service';
 import {Router} from '@angular/router';
 import {ParametrizacionesService} from '../../servicios/parametrizaciones.service';
-import {takeUntil} from 'rxjs/operators';
 import {CoreConfigService} from '../../../../../@core/services/config.service';
 import {Subject} from 'rxjs';
 import {ValidacionesPropias} from '../../../../../utils/customer.validators';
 import Decimal from 'decimal.js';
 import {ToastrService} from 'ngx-toastr';
+
+/**
+ * COOP
+ * PErsonas
+ * Esta pantalla sirve para crear una solicitud de credito
+ * Rutas:
+ * `${environment.apiUrl}/central/param/list/tipo/todos/free`,
+ * `${environment.apiUrl}/central/param/list/tipo/todos/`,
+ * `${environment.apiUrl}/central/param/listar/tipo/todos`,
+ * `${environment.apiUrl}/personas/personas/infoEmpresa/${data.user_id}`,
+ */
 
 
 @Component({
@@ -69,7 +79,6 @@ export class SolicitudCreditosComponent implements OnInit {
         private _serviceUpdateEmpresa: SolicitudCreditosService,
         private _router: Router,
         private toastr: ToastrService,
-
     ) {
         this.usuario = this._coreMenuService.grpPersonasUser;
         this._unsubscribeAll = new Subject();
@@ -298,6 +307,7 @@ export class SolicitudCreditosComponent implements OnInit {
             this.ciudades = this.ciudadEmpresa = this.ciudadReferido1 = this.ciudadReferido2 = this.ciudadReferido3 = info;
         });
     }
+
     obtenerPaisOpciones(event = null, variablePais) {
         const idPadre = this.paises.find(item => item.nombre === event?.target.value)?._id;
         this[variablePais] = this.paises.filter(item => item.idPadre === idPadre);

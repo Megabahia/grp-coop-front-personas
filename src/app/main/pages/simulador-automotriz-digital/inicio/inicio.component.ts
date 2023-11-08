@@ -2,6 +2,14 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {CoreConfigService} from '../../../../../@core/services/config.service';
 
+/**
+ * coop
+ * PErsonas
+ * Esta pantalla sirve para mostrar los pasos para la solicitud del credito
+ * Rutas:
+ * No tiene llamado a rutas
+ */
+
 @Component({
     selector: 'app-inicio',
     template: `

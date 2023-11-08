@@ -6,6 +6,14 @@ import {ParametrizacionesService} from '../../../personas/servicios/parametrizac
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import Decimal from 'decimal.js';
 
+/**
+ * COOP
+ * PErsonas
+ * ESta pantalla sirve para simular el credito
+ * Rutas:
+ * `${environment.apiUrl}/central/param/list/tipo/todos/free`,
+ */
+
 @Component({
     selector: 'app-simulador',
     templateUrl: './simulador.component.html',

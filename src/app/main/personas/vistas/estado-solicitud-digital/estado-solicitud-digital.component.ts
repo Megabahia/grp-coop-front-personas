@@ -6,6 +6,14 @@ import {AuthenticationService} from '../../../../auth/service';
 import {CoreMenuService} from '../../../../../@core/components/core-menu/core-menu.service';
 import {CreditosPreAprobadosService} from '../creditos-pre-aprobados/creditos-pre-aprobados.service';
 
+/**
+ * COOP
+ * PErsonas
+ * ESta pantalla sirve para mostar el estado de solicitud
+ * Rutas:
+ * `${environment.apiUrl}/corp/creditoPersonas/listOne/usuario/${datos.id}`,
+ */
+
 @Component({
     selector: 'app-estado-solicitud',
     templateUrl: './estado-solicitud-digital.component.html',

@@ -9,6 +9,14 @@ import {ToastrService} from 'ngx-toastr';
 import {CoreConfigService} from '../../../../../@core/services/config.service';
 import {ParametrizacionesService} from '../../../personas/servicios/parametrizaciones.service';
 
+/**
+ * COOP
+ * PErsonas
+ * ESta pantalla sirve para simular el credito
+ * Rutas:
+ * `${environment.apiUrl}/central/param/list/tipo/todos/free`,
+ */
+
 @Component({
     selector: 'app-simulator-credi-compra',
     templateUrl: './simulator-credi-compra.component.html',

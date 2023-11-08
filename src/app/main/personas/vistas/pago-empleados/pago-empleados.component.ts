@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {NgbModal, NgbPagination} from '@ng-bootstrap/ng-bootstrap';
-import {Subject} from 'rxjs';
 import {DatePipe} from '@angular/common';
 import {CoreMenuService} from '../../../../../@core/components/core-menu/core-menu.service';
 import {PagoEmpleadosService} from './pago-empleados.service';
@@ -9,6 +8,16 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ValidacionesPropias} from '../../../../../utils/customer.validators';
 import {jsPDF} from 'jspdf';
 import {CreditosPreAprobadosService} from '../creditos-pre-aprobados/creditos-pre-aprobados.service';
+
+/**
+ * COOP
+ * Personas
+ * ESta pantalla sirve para pagar a los personas
+ * Rutas:
+ * `${environment.apiUrl}/personas/proveedores/list/`,
+ * `${environment.apiUrl}/personas/proveedores/listOne/${data}`
+ * `${environment.apiUrl}/corp/pagoProveedores/create/`,
+ */
 
 @Component({
     selector: 'app-pago-empleados',
@@ -30,7 +39,6 @@ export class PagoEmpleadosComponent implements OnInit, AfterViewInit {
     public collectionSize;
 
     public listaPagoEmpleados = [];
-    private _unsubscribeAll: Subject<any>;
     public usuario;
     public observacion = '';
     public idPagoEmpleado = '';
@@ -46,7 +54,7 @@ export class PagoEmpleadosComponent implements OnInit, AfterViewInit {
     public monto = '';
     public empleado = '';
     public firmarFormData = new FormData();
-    private message: any;
+    public message: any;
 
     constructor(
         private _coreSidebarService: CoreSidebarService,

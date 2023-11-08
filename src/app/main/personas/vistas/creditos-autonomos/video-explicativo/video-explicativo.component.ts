@@ -1,21 +1,29 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { Subject } from 'rxjs';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { takeUntil } from 'rxjs/operators';
-import { FlatpickrOptions } from 'ng2-flatpickr';
-import moment from 'moment';
-import { CoreConfigService } from '../../../../../../@core/services/config.service';
-import { DomSanitizer } from '@angular/platform-browser';
+import {Component, OnInit, ViewChild, Output, EventEmitter, AfterViewInit, OnDestroy} from '@angular/core';
+import {Subject} from 'rxjs';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {takeUntil} from 'rxjs/operators';
+import {FlatpickrOptions} from 'ng2-flatpickr';
+import {CoreConfigService} from '../../../../../../@core/services/config.service';
+import {DomSanitizer} from '@angular/platform-browser';
 import {ParametrizacionesService} from '../../../servicios/parametrizaciones.service';
+
+/**
+ * COOP
+ * Personas
+ * Esta pantalla sirve para mostrar los requerimientos
+ * Rutas:
+ * `${environment.apiUrl}/central/param/list/tipo/todos/free`,
+ */
+
 
 @Component({
     selector: 'app-video-explicativo-aut',
     templateUrl: './video-explicativo.component.html',
     styleUrls: ['./video-explicativo.component.scss']
 })
-export class VideoExplicativoAutComponent implements OnInit {
+export class VideoExplicativoAutComponent implements OnInit, AfterViewInit, OnDestroy {
     @Output() estado = new EventEmitter<number>();
 
     @ViewChild('startDatePicker') startDatePicker;
@@ -41,16 +49,6 @@ export class VideoExplicativoAutComponent implements OnInit {
     public video;
     public requisitos;
 
-    /**
-     * Constructor
-     *
-     * @param {CoreConfigService} _coreConfigService
-     * @param sanitizer
-     * @param _router
-     * @param _formBuilder
-     * @param modalService
-     * @param paramService
-     */
     constructor(
         private _coreConfigService: CoreConfigService,
         private sanitizer: DomSanitizer,
@@ -86,7 +84,7 @@ export class VideoExplicativoAutComponent implements OnInit {
             // console.log('typeof', this.requisitos.config);
             this.requisitos.config = this.requisitos.config.map(item => {
                 return item.replace('${{montoCreditoFinal}}', montoCreditoFinal)
-                  .replace('${{cuotaMensual}}', cuotaMensual);
+                    .replace('${{cuotaMensual}}', cuotaMensual);
             });
         });
     }
@@ -142,16 +140,16 @@ export class VideoExplicativoAutComponent implements OnInit {
 
     subirImagen(event: any) {
         if (event.target.files && event.target.files[0]) {
-            let nuevaImagen = event.target.files[0];
+            const nuevaImagen = event.target.files[0];
 
-            let reader = new FileReader();
+            const reader = new FileReader();
 
             reader.onload = (event: any) => {
                 this.imagen = event.target.result;
             };
 
             reader.readAsDataURL(event.target.files[0]);
-            let imagen = new FormData();
+            const imagen = new FormData();
             imagen.append('imagen', nuevaImagen, nuevaImagen.name);
             // this._creditosAutonomosService.subirImagenRegistro(this.usuario.id, imagen).subscribe((info) => {
             // });

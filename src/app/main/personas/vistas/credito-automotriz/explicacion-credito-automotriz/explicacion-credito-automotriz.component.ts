@@ -9,6 +9,14 @@ import {CoreConfigService} from '../../../../../../@core/services/config.service
 import {DomSanitizer} from '@angular/platform-browser';
 import {ParametrizacionesService} from '../../../servicios/parametrizaciones.service';
 
+/**
+ * COOP
+ * Personas
+ * Esta pantalla sirve para mostrar los requerimientos
+ * Rutas:
+ * `${environment.apiUrl}/central/param/list/tipo/todos/free`,
+ */
+
 @Component({
     selector: 'app-explicacion-credito-automotriz',
     template: `

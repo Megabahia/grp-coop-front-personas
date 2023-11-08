@@ -6,6 +6,14 @@ import {AuthenticationService} from '../../../../auth/service';
 import {CoreMenuService} from '../../../../../@core/components/core-menu/core-menu.service';
 import {CreditosPreAprobadosService} from '../creditos-pre-aprobados/creditos-pre-aprobados.service';
 
+/**
+ * COOP
+ * PErsonas
+ * ESta pantalla sirve para mostar el estado de solicitud
+ * Rutas:
+ * `${environment.apiUrl}/corp/creditoPersonas/listOne/usuario/${datos.id}`,
+ */
+
 @Component({
     selector: 'app-estado-solicitud',
     templateUrl: './estado-solicitud.component.html',
@@ -20,7 +28,7 @@ export class EstadoSolicitudComponent implements OnInit {
     public usuario;
     private _unsubscribeAll: Subject<any>;
     private coreConfig: any;
-    private credito: any;
+    public credito: any;
 
     constructor(
         private _coreConfigService: CoreConfigService,

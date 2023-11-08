@@ -6,13 +6,23 @@ import {FlatpickrOptions} from 'ng2-flatpickr';
 import {Subject} from 'rxjs';
 import {CoreConfigService} from '../../../../../@core/services/config.service';
 import {CoreMenuService} from '../../../../../@core/components/core-menu/core-menu.service';
-import {CreditosAutonomosService} from '../creditos-autonomos/creditos-autonomos.service';
 import {BienvenidoService} from '../bienvenido/bienvenido.service';
 import {Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {takeUntil} from 'rxjs/operators';
 import moment from 'moment/moment';
 import {CreditoAutomotrizDigitalService} from './credito-automotriz-digital.service';
+
+/**
+ * COOP
+ * Personas
+ * ESta pantalla sirve para solicitar el credito
+ * Rutas:
+ * `${environment.apiUrl}/personas/personas/listOne/${id}`
+ * `${environment.apiUrl}/personas/personas/updateSinImagen/${datos.user_id}`,
+ * `${environment.apiUrl}/central/usuarios/update/${datos.id}`,
+ * `${environment.apiUrl}/corp/creditoPersonas/create/`,
+ */
 
 @Component({
     selector: 'app-credito-automotriz-digital',
@@ -30,7 +40,6 @@ export class CreditoAutomotrizDigitalComponent implements OnInit, AfterViewInit,
     public loading = false;
     public submitted = false;
     public usuario: User;
-    public idEmpresa = '';
     public proceso = 1;
     public solicitarCredito: SolicitarCredito;
     public startDateOptions: FlatpickrOptions = {
@@ -198,22 +207,6 @@ export class CreditoAutomotrizDigitalComponent implements OnInit, AfterViewInit,
 
             this.proceso = value;
         }
-    }
-
-    obtenerIdIfi(value) {
-        console.log(value);
-        this.solicitarCredito.empresaIfis_id = value;
-    }
-
-    obtenerEstablecimiento(value) {
-        this.solicitarCredito.empresaComercial_id = value;
-        this.idEmpresa = value;
-    }
-
-    obtenerMonto(value) {
-        this.solicitarCredito.plazo = value.plazo;
-        this.solicitarCredito.monto = value.monto;
-        this.solicitarCredito.aceptaTerminos = value.aceptaTerminos ? 1 : 0;
     }
 
     abrirModal(modal) {

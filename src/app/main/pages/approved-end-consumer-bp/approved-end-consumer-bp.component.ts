@@ -4,9 +4,16 @@ import {CoreConfigService} from '../../../../@core/services/config.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PreArpovedCreditServiceBp} from '../pre-approved-credit-bp/pre-arpoved-credit.service-bp';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import Decimal from 'decimal.js';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
+
+/**
+ * COOP
+ * Personas
+ * Esta pantalla sirve para mostrar la informacion final de la solicitud de credito
+ * Rutas:
+ * No tiene rutas
+ */
 
 @Component({
     selector: 'app-approved-end-consumer',

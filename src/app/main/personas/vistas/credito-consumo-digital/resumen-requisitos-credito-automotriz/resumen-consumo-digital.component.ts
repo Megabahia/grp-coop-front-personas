@@ -11,6 +11,18 @@ import {CreditoConsumoDigitalService} from '../credito-consumo-digital.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
+/**
+ * COOP
+ * PErsonas
+ * ESta pantalla sirve para mostrar los requisitos para la solicitos de creditos
+ * Rutas:
+ * `${environment.apiUrl}/central/param/list/tipo/todos/free`,
+ * `${environment.apiUrl}/central/param/list/listOne`,
+ * `${environment.apiUrl}/corp/creditoPersonas/update/${datos._id}`,
+ * `${environment.apiUrl}/corp/creditoPersonas/create/`,
+ * `${environment.apiUrl}/corp/creditoPersonas/update/${datos.get('_id')}`,
+ */
+
 @Component({
     selector: 'app-resumen-requisitos-consumo-digital',
     templateUrl: './resumen-requisitos-consumo-digital.component.html',

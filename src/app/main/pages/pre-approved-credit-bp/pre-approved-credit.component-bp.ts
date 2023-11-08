@@ -1,14 +1,21 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { CoreConfigService } from '../../../../@core/services/config.service';
-import { NavigationExtras, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {CoreConfigService} from '../../../../@core/services/config.service';
+import {Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import Decimal from 'decimal.js';
-import { ParametrizacionesService } from '../../personas/servicios/parametrizaciones.service';
-import { PreArpovedCreditServiceBp } from './pre-arpoved-credit.service-bp';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {PreArpovedCreditServiceBp} from './pre-arpoved-credit.service-bp';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {ToastrService} from 'ngx-toastr';
+
+/**
+ * COOP
+ * Personas
+ * Esta pantalla sirve para consultar el credito se le preaprueba
+ * Rutas:
+ * `${environment.apiUrl}/corp/creditoPersonas/creditoPreaprobado/codigo`,
+ */
 
 @Component({
     selector: 'app-pre-approved-credit',
@@ -18,7 +25,6 @@ import {ToastrService} from 'ngx-toastr';
 export class PreApprovedCreditComponentBp implements OnInit {
     public envioForm: FormGroup;
     public submittedSimulador = false;
-    public pathSent;
     @ViewChild('mensajeModal') mensajeModal;
     public mensaje = '';
     public coreConfig: any;
@@ -108,7 +114,7 @@ export class PreApprovedCreditComponentBp implements OnInit {
 
     ngOnInit(): void {
         this.envioForm = this._formBuilder.group({
-            code:  [
+            code: [
                 '',
                 [
                     Validators.required,
@@ -116,7 +122,7 @@ export class PreApprovedCreditComponentBp implements OnInit {
                     Validators.min(1),
                 ],
             ],
-            document:  [
+            document: [
                 '',
                 [
                     Validators.required,
@@ -128,6 +134,7 @@ export class PreApprovedCreditComponentBp implements OnInit {
             ],
         });
     }
+
     actionContinue() {
         this._router.navigate([
             `/pages/simulador`,

@@ -13,6 +13,19 @@ import {ValidacionesPropias} from '../../../../../../utils/customer.validators';
 import {ToastrService} from 'ngx-toastr';
 import {CreditoConsumoDigitalService} from '../credito-consumo-digital.service';
 
+/**
+ * COOP
+ * Personas
+ * ESta pantalla sirve para mostrar la solicitud del credito
+ * Rutas:
+ * `${environment.apiUrl}/personas/personas/listOne/${id}`
+ * `${environment.apiUrl}/central/param/listar/tipo/todos`,
+ * `${environment.apiUrl}/central/param/list/tipo/todos/`,
+ * `${environment.apiUrl}/central/param/list/filtro/nombre`,
+ * `${environment.apiUrl}/central/param/list/tipo/todos/free`,
+ * `${environment.apiUrl}/personas/personas/updateSinImagen/${datos.user_id}`,
+ */
+
 @Component({
     selector: 'app-solicitud-consumo-digital',
     templateUrl: './solicitud-consumo-digital.component.html',

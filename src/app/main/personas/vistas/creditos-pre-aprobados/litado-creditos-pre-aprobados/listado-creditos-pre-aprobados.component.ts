@@ -1,7 +1,7 @@
-import {Component, OnInit, ViewChild, ChangeDetectorRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ChangeDetectorRef, AfterViewInit, OnDestroy} from '@angular/core';
 import {Subject} from 'rxjs';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {NgbModal, NgbPagination} from '@ng-bootstrap/ng-bootstrap';
 import {BienvenidoService} from '../../bienvenido/bienvenido.service';
 import {takeUntil} from 'rxjs/operators';
@@ -17,6 +17,20 @@ import {DatePipe} from '@angular/common';
 import {ParametrizacionesService} from '../../../servicios/parametrizaciones.service';
 import {ToastrService} from 'ngx-toastr';
 
+/**
+ * COOP
+ * PErsonas
+ * Esta pantalla sirve para listar los creditos preaprobados
+ * Rutas:
+ * `${environment.apiUrl}/personas/personas/listOne/${id}`
+ * `${environment.apiUrl}/central/param/list/tipo/todos/`,
+ * `${environment.apiUrl}/central/param/list/filtro/nombre`,
+ * `${environment.apiUrl}/corp/creditoPersonas/list/`,
+ * `${environment.apiUrl}/personas/personas/updateSinImagen/${datos.user_id}`,
+ * `${environment.apiUrl}/corp/creditoPersonas/update/${datos.id}`,
+ * `${environment.apiUrl}/corp/empresas/list/empresas/array/`,
+ */
+
 @Component({
     selector: 'app-listado-creditos-pre-aprobados',
     templateUrl: './listado-creditos-pre-aprobados.component.html',
@@ -24,7 +38,7 @@ import {ToastrService} from 'ngx-toastr';
     providers: [DatePipe]
 
 })
-export class ListadoCreditosPreAprobadosComponent implements OnInit {
+export class ListadoCreditosPreAprobadosComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild('establecimientoSeleccionadoMdl') establecimientoSeleccionadoMdl;
     @ViewChild('datosContactoMdl') datosContactoMdl;
     @ViewChild('startDatePicker') startDatePicker;
@@ -69,11 +83,6 @@ export class ListadoCreditosPreAprobadosComponent implements OnInit {
     // Private
     private _unsubscribeAll: Subject<any>;
 
-    /**
-     * Constructor
-     *
-     * @param {CoreConfigService} _coreConfigService
-     */
     constructor(
         private _coreConfigService: CoreConfigService,
         private _coreMenuService: CoreMenuService,
@@ -201,8 +210,7 @@ export class ListadoCreditosPreAprobadosComponent implements OnInit {
     }
 
     transformarFecha(fecha) {
-        const nuevaFecha = this.datePipe.transform(fecha, 'yyyy-MM-dd');
-        return nuevaFecha;
+        return this.datePipe.transform(fecha, 'yyyy-MM-dd');
     }
 
     obtenerPaisOpciones() {

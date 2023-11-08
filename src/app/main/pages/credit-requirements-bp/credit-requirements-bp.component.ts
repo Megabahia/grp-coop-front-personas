@@ -4,6 +4,14 @@ import {ParametrizacionesService} from '../../personas/servicios/parametrizacion
 import {CoreConfigService} from '../../../../@core/services/config.service';
 import {Router} from '@angular/router';
 
+/**
+ * COOP
+ * PErsonas
+ * ESta pantalla sirve para informar los paso de la solicitud de credito
+ * Rutas:
+ * No tiene llamada a rutas
+ */
+
 @Component({
     selector: 'app-credit-requirements-bp',
     templateUrl: './credit-requirements-bp.component.html',

@@ -13,6 +13,17 @@ import {takeUntil} from 'rxjs/operators';
 import moment from 'moment/moment';
 import {CreditoAutomotrizService} from './credito-automotriz.service';
 
+/**
+ * COOP
+ * Personas
+ * ESta pantalla sirve para solicitar el credito
+ * Rutas:
+ * `${environment.apiUrl}/personas/personas/listOne/${id}`
+ * `${environment.apiUrl}/personas/personas/updateSinImagen/${datos.user_id}`,
+ * `${environment.apiUrl}/central/usuarios/update/${datos.id}`,
+ * `${environment.apiUrl}/corp/creditoPersonas/create/`,
+ */
+
 @Component({
     selector: 'app-credito-automotriz',
     templateUrl: './credito-automotriz.component.html',
