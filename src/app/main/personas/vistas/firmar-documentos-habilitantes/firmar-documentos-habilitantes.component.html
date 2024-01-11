@@ -17,7 +17,7 @@
                         <p class="text-justify">
                             Para hacer uso de su Línea de Crédito debe firmar electrónicamente los documentos
                             habilitantes que se muestran a continuación. Para obtener una guía de ayuda, presione
-                            en el siguiente <a [href]="['/personas/firmar-documentos']">ENLACE DE AYUDA</a>
+                            en el siguiente <a [href]="['#/personas/firmar-documentos']">ENLACE DE AYUDA</a>
                         </p>
                     </div>
                     <div class="content-body">
@@ -34,7 +34,7 @@
                                 </div>
                                 <div class="flex-basis">
                                     <h4>
-                                        Solicitud credito
+                                        Solicitud crédito
                                     </h4>
                                     <div class="text-center">
                                         <a *ngIf="credito?.solicitudCredito && !credito?.solicitudCreditoFirmado"
@@ -98,7 +98,7 @@
                                 </div>
                                 <div class="flex-basis">
                                     <h4>
-                                        Contratos cuenta
+                                        Contratos de cuenta
                                     </h4>
                                     <div class="text-center">
                                         <a *ngIf="credito?.contratosCuenta" href="{{credito?.contratosCuenta}}"
@@ -230,7 +230,7 @@
         </form>
         <div class="modal-footer">
             <button type="button" class="btn btn-primary"
-                    (click)="continuarCickPago()">Accept
+                    (click)="continuarCickPago()">Firmar
             </button>
         </div>
     </div>
