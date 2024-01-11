@@ -10,6 +10,13 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {environment} from '../../../../environments/environment';
 import {ToastrService} from 'ngx-toastr';
 
+/*
+* IFIS
+* Personas
+* Este pantalla sirve para registar a un usuario
+* Rutas:
+* `${environment.apiUrl}/central/usuarios/create/`,
+* */
 
 @Component({
     selector: 'app-registro',
@@ -29,8 +36,6 @@ export class RegistroComponent implements OnInit, OnDestroy {
     public mensajeConfirm = '';
     public error = '';
     public passwordTextType: boolean;
-    public confirmPasswordTextType: boolean;
-    public passwordSimilar: boolean;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -39,11 +44,6 @@ export class RegistroComponent implements OnInit, OnDestroy {
     public email = '';
     public nombre = '';
 
-    /**
-     * Constructor
-     *
-     * @param {CoreConfigService} _coreConfigService
-     */
     constructor(
         private _coreConfigService: CoreConfigService,
         private _registroService: RegistroService,
@@ -91,10 +91,6 @@ export class RegistroComponent implements OnInit, OnDestroy {
         this.passwordTextType = !this.passwordTextType;
     }
 
-    toggleConfirmPasswordTextType() {
-        this.confirmPasswordTextType = !this.confirmPasswordTextType;
-    }
-
     registrarUsuario() {
         this.submitted = true;
 
@@ -118,7 +114,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
             }
         ).subscribe((info) => {
 
-                if (info.email == 'Ya existe usuarios con este email.') {
+                if (info.email === 'Ya existe usuarios con este email.') {
                     this.error = null;
                     this.loading = false;
                     this.mensaje = info.email;
@@ -170,14 +166,6 @@ export class RegistroComponent implements OnInit, OnDestroy {
         this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
             this.coreConfig = config;
         });
-    }
-
-    compararPassword() {
-        if (this.f.password.value == this.f.confirmPassword.value) {
-            this.passwordSimilar = true;
-        } else {
-            this.passwordSimilar = false;
-        }
     }
 
     abrirModal(modal) {

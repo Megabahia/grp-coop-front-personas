@@ -4,6 +4,14 @@ import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {CoreConfigService} from '../../../../../@core/services/config.service';
 
+/**
+ * COOP
+ * PErsonas
+ * Esta pantalla sirve para mostrar los pasos para la solicitud del credito
+ * Rutas:
+ * No tiene llamado a rutas
+ */
+
 @Component({
   selector: 'app-credit-request',
   templateUrl: './credit-request.component.html',

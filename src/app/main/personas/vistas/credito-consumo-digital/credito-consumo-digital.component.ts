@@ -13,6 +13,17 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {takeUntil} from 'rxjs/operators';
 import moment from 'moment/moment';
 
+/**
+ * Bigpuntos
+ * Personas
+ * ESta pantalla sirve para solicitar el credito
+ * Rutas:
+ * `${environment.apiUrl}/personas/personas/listOne/${id}`
+ * `${environment.apiUrl}/personas/personas/updateSinImagen/${datos.user_id}`,
+ * `${environment.apiUrl}/central/usuarios/update/${datos.id}`,
+ * `${environment.apiUrl}/corp/creditoPersonas/create/`,
+ */
+
 @Component({
     selector: 'app-credito-consumo-digital',
     templateUrl: './credito-consumo-digital.component.html',

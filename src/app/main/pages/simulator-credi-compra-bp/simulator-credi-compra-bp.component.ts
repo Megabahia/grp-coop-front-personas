@@ -7,6 +7,14 @@ import {Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
 
+/**
+ * COOP
+ * PErsonas
+ * ESta pantalla sirve para simular el credito
+ * Rutas:
+ * `${environment.apiUrl}/central/param/list/tipo/todos/free`,
+ */
+
 @Component({
     selector: 'app-simulator-credi-compra-bp',
     templateUrl: './simulator-credi-compra-bp.component.html',
@@ -38,7 +46,6 @@ export class SimulatorCrediCompraBpComponent implements OnInit {
         private paramService: ParametrizacionesService,
         private modalService: NgbModal,
         private toastr: ToastrService,
-
     ) {
         if (localStorage.getItem('pagina') !== 'https://credicompra.com/') {
             this._router.navigate([

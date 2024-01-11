@@ -1,19 +1,19 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {NgbModal, NgbPagination} from '@ng-bootstrap/ng-bootstrap';
-import {CompletarPerfil, InformacionCompleta, SolicitarCredito} from '../../models/persona';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {NgbPagination} from '@ng-bootstrap/ng-bootstrap';
 import {User} from '../../../../auth/models';
-import {FlatpickrOptions} from 'ng2-flatpickr';
 import {Subject} from 'rxjs';
 import {CoreConfigService} from '../../../../../@core/services/config.service';
 import {CoreMenuService} from '../../../../../@core/components/core-menu/core-menu.service';
-import {CreditosPreAprobadosService} from '../creditos-pre-aprobados/creditos-pre-aprobados.service';
-import {CreditosAutonomosService} from '../creditos-autonomos/creditos-autonomos.service';
-import {ParametrizacionesService} from '../../servicios/parametrizaciones.service';
-import {BienvenidoService} from '../bienvenido/bienvenido.service';
-import {Router} from '@angular/router';
 import {takeUntil} from 'rxjs/operators';
 import {TransaccionesCreditoService} from './transacciones-credito.service';
+
+/**
+ * COOP
+ * PErsonas
+ * Esta pantalla sirve para mostrar las transacciones de los creditos
+ * Rutas:
+ * `${environment.apiUrl}/corp/movimientoCobros/list/transacciones`,
+ */
 
 @Component({
     selector: 'app-transacciones-credito',

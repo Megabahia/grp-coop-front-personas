@@ -8,8 +8,16 @@ import {ValidacionesPropias} from '../../../../../utils/customer.validators';
 import {ToastrService} from 'ngx-toastr';
 import {Subject} from 'rxjs';
 import {CoreConfigService} from '../../../../../@core/services/config.service';
+import {environment} from 'environments/environment';
 
-
+/**
+ * COOP
+ * PERSonas
+ * Esta pantalla sirve para mostrar los documentos habilitantes que puedan firmar electronicamente
+ * Rutas:
+ * `${environment.apiUrl}/corp/creditoPersonas/update/${datos.get('_id')}`,
+ * `${environment.apiUrl}/corp/creditoPersonas/list/`,
+ */
 @Component({
     selector: 'app-firmar-documentos-habilitantes',
     templateUrl: './firmar-documentos-habilitantes.component.html',
@@ -79,23 +87,23 @@ export class FirmarDocumentosHabilitantesComponent implements OnInit {
         }
 
         this.firmaElectronica.append('claveFirma', this.documentoFirmaForm.value.claveFirma);
-        this.firmaElectronica.append('' + this.documentoAFimar, this.creditSelected.solicitudCredito.slice(40));
+        this.firmaElectronica.append('' + this.documentoAFimar, this.creditSelected.solicitudCredito.replace(environment.urlBucket, ''));
         this.firmaElectronica.append('_id', this.creditSelected._id);
         this.firmaElectronica.append('rucEmpresa', this.usuario.persona.empresaInfo.rucEmpresa);
         console.log('data', this.firmaElectronica.get('_id'));
         this._creditosPreAprobadosService.verificarPropietarioFirma(this.firmaElectronica).subscribe((data) => {
-                if (data?.message) {
-                    this.message = data?.message;
-                    this.abrirModal(this.mensajeModalConfirm);
-                } else {
-                    this._creditosPreAprobadosService.actualizarCredito(this.firmaElectronica).subscribe((info) => {
-                            this.obtenerCreditos();
-                        }, (error) => {
-                            this.message = error;
-                            this.abrirModal(this.mensajeModalConfirm);
-                        }
-                    );
-                }
+            if (data?.message) {
+                this.message = data?.message;
+                this.abrirModal(this.mensajeModalConfirm);
+            } else {
+                this._creditosPreAprobadosService.actualizarCredito(this.firmaElectronica).subscribe((info) => {
+                        this.obtenerCreditos();
+                    }, (error) => {
+                        this.message = error;
+                        this.abrirModal(this.mensajeModalConfirm);
+                    }
+                );
+            }
         });
     }
 

@@ -1,7 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subject} from 'rxjs';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {BienvenidoService} from '../bienvenido/bienvenido.service';
 import {takeUntil} from 'rxjs/operators';
@@ -10,7 +10,6 @@ import {FlatpickrOptions} from 'ng2-flatpickr';
 import {CoreConfigService} from '../../../../../@core/services/config.service';
 import {CoreMenuService} from '../../../../../@core/components/core-menu/core-menu.service';
 import {CompletarPerfil} from '../../models/persona';
-import moment from 'moment';
 import {User} from '../../../../auth/models/user';
 import {GanarSuperMoneda} from '../../models/supermonedas';
 import {ParametrizacionesService} from '../../servicios/parametrizaciones.service';
@@ -19,12 +18,28 @@ import {ValidacionesPropias} from '../../../../../utils/customer.validators';
 import {SolicitudCreditosService} from '../solicitud-creditos/solicitud-creditos.service';
 import {CreditosPreAprobadosService} from '../creditos-pre-aprobados/creditos-pre-aprobados.service';
 
+/**
+ * COOP
+ * PErsonas
+ * Esta pantalla sirve para mostrar el perfil del usuario
+ * Rutas:
+ * `${environment.apiUrl}/personas/personas/listOne/${id}`,
+ * `${environment.apiUrl}/central/param/list/listOne`,
+ * `${environment.apiUrl}/central/param/list/tipo/todos/`,
+ * `${environment.apiUrl}/corp/empresas/listOne/filtros/`,
+ * `${environment.apiUrl}/personas/personas/update/imagen/${id}`,
+ * `${environment.apiUrl}/personas/personas/update/${datos.user_id}`,
+ * `${environment.apiUrl}/central/usuarios/update/${datos.id}`,
+ * `${environment.apiUrl}/personas/personas/validarCodigo/`,
+ * `${environment.apiUrl}/core/monedas/create/`,
+ */
+
 @Component({
     selector: 'app-completar-perfil',
     templateUrl: './completar-perfil.component.html',
     styleUrls: ['./completar-perfil.component.scss']
 })
-export class CompletarPerfilComponent implements OnInit {
+export class CompletarPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild('startDatePicker') startDatePicker;
     @ViewChild('whatsapp') whatsapp;
     @ViewChild('mensajeModal') mensajeModal;
@@ -35,7 +50,6 @@ export class CompletarPerfilComponent implements OnInit {
     public coreConfig: any;
     public imagen;
     public superMonedas: GanarSuperMoneda;
-    public ganarMonedas;
     public mensaje = '';
     public registerForm: FormGroup;
     public loading = false;
@@ -53,11 +67,6 @@ export class CompletarPerfilComponent implements OnInit {
     private _unsubscribeAll: Subject<any>;
     public formSolicitud: FormGroup;
 
-    /**
-     * Constructor
-     *
-     * @param {CoreConfigService} _coreConfigService
-     */
     constructor(
         private _coreConfigService: CoreConfigService,
         private _coreMenuService: CoreMenuService,
@@ -159,7 +168,7 @@ export class CompletarPerfilComponent implements OnInit {
     }
 
     ngAfterViewInit(): void {
-        if (this.usuario.estado == '3') {
+        if (this.usuario.estado === '3') {
             this.modalWhatsapp(this.whatsapp);
         }
     }

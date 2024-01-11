@@ -13,6 +13,17 @@ import {CoreMenuService} from '../../../../../@core/components/core-menu/core-me
 import {CoreConfigService} from '../../../../../@core/services/config.service';
 import {ValidacionesPropias} from '../../../../../utils/customer.validators';
 
+/**
+ * COOP
+ * PErsonas
+ * Esta pantalla sirve para crear una solicitud de credito
+ * Rutas:
+ * `${environment.apiUrl}/central/param/list/tipo/todos/free`,
+ * `${environment.apiUrl}/central/param/list/tipo/todos/`,
+ * `${environment.apiUrl}/central/param/listar/tipo/todos`,
+ * `${environment.apiUrl}/personas/personas/infoEmpresa/${data.user_id}`,
+ */
+
 @Component({
     selector: 'app-solicitud-credito-consumo',
     templateUrl: './solicitud-credito-consumo.component.html',
@@ -32,7 +43,6 @@ export class SolicitudCreditoConsumoComponent implements OnInit {
     public tipoParentesco = [];
     public fecha;
     public tipoIdentificacion = [];
-    public menorEdad = false;
     private _unsubscribeAll: Subject<any>;
     public nombreDueno = false;
     public casado = false;

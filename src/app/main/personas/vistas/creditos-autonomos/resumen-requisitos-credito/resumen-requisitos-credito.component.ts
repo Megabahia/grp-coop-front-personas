@@ -11,6 +11,17 @@ import {jsPDF} from 'jspdf';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
+/**
+ * COOP
+ * PErsonas
+ * Esta pantalla sirve para mostrar el resumen de los requisitos
+ * Rutas:
+ * `${environment.apiUrl}/central/param/list/tipo/todos/free`,
+ * `${environment.apiUrl}/central/param/list/listOne`,
+ * `${environment.apiUrl}/corp/creditoPersonas/create/`,
+ * `${environment.apiUrl}/corp/creditoPersonas/update/${datos.get('_id')}`,
+ */
+
 @Component({
     selector: 'app-resumen-requisitos-credito',
     templateUrl: './resumen-requisitos-credito.component.html',
@@ -130,6 +141,7 @@ export class ResumenRequisitosCreditoComponent implements OnInit {
             ]),
         });
     }
+
     get Form() {
         return this.formulario.controls;
     }
@@ -192,6 +204,7 @@ export class ResumenRequisitosCreditoComponent implements OnInit {
             this.plazo = info.valor;
         });
     }
+
     abrirModalLg(modal) {
         this.modalService.open(modal, {
             size: 'lg'

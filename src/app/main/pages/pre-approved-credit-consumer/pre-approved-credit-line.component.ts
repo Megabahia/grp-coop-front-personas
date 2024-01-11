@@ -3,12 +3,18 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CoreConfigService} from '../../../../@core/services/config.service';
 import {Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import Decimal from 'decimal.js';
 import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {PreArpovedCreditLineService} from './pre-arpoved-credit-line.service';
 import {ToastrService} from 'ngx-toastr';
 
+/**
+ * COOP
+ * PErsonas
+ * ESta pantalla sirve para consultar el codigo del credito preaprobado
+ * Rutas:
+ * `${environment.apiUrl}/corp/creditoPersonas/creditoPreaprobado/codigo`,
+ */
 
 @Component({
     selector: 'app-pre-approved-credit-line',
@@ -18,7 +24,6 @@ import {ToastrService} from 'ngx-toastr';
 export class PreApprovedCreditLineComponent implements OnInit {
     public envioForm: FormGroup;
     public submittedSimulador = false;
-    public pathSent;
     @ViewChild('mensajeModal') mensajeModal;
     public mensaje = '';
     public coreConfig: any;

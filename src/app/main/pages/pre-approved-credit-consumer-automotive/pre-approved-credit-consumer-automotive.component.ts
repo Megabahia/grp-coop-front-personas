@@ -8,6 +8,14 @@ import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {PreArpovedCreditService} from './pre-arpoved-credit.service';
 
+/**
+ * COOP
+ * Personas
+ * Esta pantalla sirve para consultar el codigo del credito preaprobado
+ * Rutas:
+ * `${environment.apiUrl}/corp/creditoPersonas/creditoPreaprobado/codigo`,
+ */
+
 @Component({
     selector: 'app-pre-approved-credit-consumer-automotive',
     templateUrl: './pre-approved-credit-consumer-automotive.component.html',
@@ -16,7 +24,6 @@ import {PreArpovedCreditService} from './pre-arpoved-credit.service';
 export class PreApprovedCreditConsumerAutomotiveComponent implements OnInit {
     public envioForm: FormGroup;
     public submittedSimulador = false;
-    public pathSent;
     @ViewChild('mensajeModal') mensajeModal;
     public mensaje = '';
     public coreConfig: any;

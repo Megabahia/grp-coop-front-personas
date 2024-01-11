@@ -1,8 +1,6 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-
-import {takeUntil} from 'rxjs/operators';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subject} from 'rxjs';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 
 import {CoreConfigService} from '@core/services/config.service';
 import {Validators, FormBuilder, FormGroup} from '@angular/forms';
@@ -12,12 +10,23 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {PagesViewsService} from './pages-views.service';
 import moment from 'moment';
 
+/**
+ * COOP
+ * Personas
+ * ESta pantalla sirve para los productos que puedes canjear en los locales afiliados
+ * Rutas:
+ * `${environment.apiUrl}/central/param/list/tipo/todos/free`,
+ * `${environment.apiUrl}/central/productos/list-free/`,
+ * `${environment.apiUrl}/central/correosLanding/create/`,
+ * `${environment.apiUrl}/central/correosLanding/update/${datos.id}`,
+ */
+
 @Component({
     selector: 'app-pages-views',
     templateUrl: './pages-views.component.html',
     styleUrls: ['./pages-views.component.scss'],
 })
-export class PagesViewsComponent implements OnInit {
+export class PagesViewsComponent implements OnInit, OnDestroy {
     @ViewChild('mensajeModal') mensajeModal;
 
     public coreConfig: any;
@@ -30,11 +39,6 @@ export class PagesViewsComponent implements OnInit {
     submitted2 = false;
     public productos;
 
-    /**
-     * Constructor
-     *
-     * @param {CoreConfigService} _coreConfigService
-     */
     constructor(
         private _coreConfigService: CoreConfigService,
         private _router: Router,
@@ -95,8 +99,8 @@ export class PagesViewsComponent implements OnInit {
 
     codeConfir(code, codeaux: string) {
         return (group: FormGroup) => {
-            let Input = group.controls[code];
-            let InputAux = group.controls[codeaux];
+            const Input = group.controls[code];
+            const InputAux = group.controls[codeaux];
 
             if (Input.value !== InputAux.value) {
                 return Input.setErrors({

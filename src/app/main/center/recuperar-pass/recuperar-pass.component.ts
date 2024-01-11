@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CoreConfigService} from '@core/services/config.service';
 import {Subject} from 'rxjs';
@@ -6,19 +6,26 @@ import {takeUntil} from 'rxjs/operators';
 import {RecuperarPassService} from './recuperar-pass.service';
 import {Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {environment} from "../../../../environments/environment";
+import {environment} from '../../../../environments/environment';
 import {ToastrService} from 'ngx-toastr';
+
+/*
+* IFIS
+* Personas
+* Esta pantalla sirve para ingresar la contraseña por primero vez cuando se creen el usuario
+* Rutas:
+* `${environment.apiUrl}/central/auth/password_reset/`,
+* */
 
 @Component({
     selector: 'app-recuperar-pass',
     templateUrl: './recuperar-pass.component.html',
     styleUrls: ['./recuperar-pass.component.scss']
 })
-export class RecuperarPassComponent implements OnInit {
+export class RecuperarPassComponent implements OnInit, OnDestroy {
     @ViewChild('mensajeModalConfirm') mensajeModalConfirm;
 
     // Public
-    public emailVar;
     public coreConfig: any;
     public forgotPasswordForm: FormGroup;
     public submitted = false;
@@ -30,13 +37,6 @@ export class RecuperarPassComponent implements OnInit {
     public captcha: boolean;
     public siteKey: string;
 
-    /**
-     * Constructor
-     *
-     * @param {CoreConfigService} _coreConfigService
-     * @param {FormBuilder} _formBuilder
-     *
-     */
     constructor(
         private _coreConfigService: CoreConfigService,
         private _formBuilder: FormBuilder,
@@ -44,7 +44,6 @@ export class RecuperarPassComponent implements OnInit {
         private _recuperarPassService: RecuperarPassService,
         private _modalService: NgbModal,
         private toastr: ToastrService,
-
     ) {
         this.siteKey = environment.setKey;
         this._unsubscribeAll = new Subject();

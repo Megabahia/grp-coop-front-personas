@@ -1,6 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {log} from 'util';
 import {RegistroDatosPagoProvedoresService} from './registro-datos-pago-provedores.service';
+
+/**
+ * COOP
+ * Personas
+ * Esta pantalla sirve para mostrar los requisitos del microcredito
+ * Rutas:
+ * `${environment.apiUrl}/central/param/list/tipo/todos/free`,
+ * `${environment.apiUrl}/central/param/list/listOne`,
+ * `${environment.apiUrl}/corp/creditoPersonas/update/${datos._id}`,
+ * `${environment.apiUrl}/corp/creditoPersonas/create/`,
+ */
 
 @Component({
     selector: 'app-requisito-solicitud-microcreditos',

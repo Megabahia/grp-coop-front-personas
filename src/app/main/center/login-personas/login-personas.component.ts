@@ -3,22 +3,27 @@ import {Validators, FormBuilder, FormGroup} from '@angular/forms';
 import {first, takeUntil} from 'rxjs/operators';
 import {CoreConfigService} from '../../../../@core/services/config.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Observable, Subject, Subscription} from 'rxjs';
-import {AuthenticationService} from '../../../auth/service/authentication.service';
+import {Subject, Subscription} from 'rxjs';
+import {AuthenticationService} from '../../../auth/service';
 import {ToastrService} from 'ngx-toastr';
-import {ReCaptchaV3Service} from 'ngx-captcha';
 import {
-    FacebookLoginProvider,
     SocialAuthService,
-    SocialUser,
 } from 'angularx-social-login';
 import {RegistroService} from '../registro/registro.service';
-import {Role} from 'app/auth/models';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {CreditosPreAprobadosService} from '../../personas/vistas/creditos-pre-aprobados/creditos-pre-aprobados.service';
 import {CoreMenuService} from '../../../../@core/components/core-menu/core-menu.service';
-import {menu} from '../../../menu/menu';
 import {environment} from '../../../../environments/environment';
+
+/*
+* IFIS
+* Personas
+* ESta pantalla sirve para iniciar sesion en la aplicacion
+* Rutas:
+* `${environment.apiUrl}/central/auth/login/`
+* `${environment.apiUrl}/central/usuarios/create/`,
+* `${environment.apiUrl}/central/auth/loginFacebook/`
+*/
 
 @Component({
     selector: 'app-login',
@@ -41,8 +46,6 @@ export class LoginPersonasComponent implements OnInit, OnDestroy {
     public siteKey: string;
     public error = '';
     public passwordTextType: boolean;
-    private socialUser: SocialUser;
-    private isLoggedin: boolean = null;
     private logginSubs: Subscription;
 
     public startDateOptions = {
@@ -56,11 +59,6 @@ export class LoginPersonasComponent implements OnInit, OnDestroy {
     // Private
     private _unsubscribeAll: Subject<any>;
 
-    /**
-     * Constructor
-     *
-     * @param {CoreConfigService} _coreConfigService
-     */
     constructor(
         private _coreConfigService: CoreConfigService,
         private _formBuilder: FormBuilder,
@@ -282,21 +280,6 @@ export class LoginPersonasComponent implements OnInit, OnDestroy {
             );
     }
 
-    async loginWithFacebook() {
-        await this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
-        this.logginSubs = await this.socialAuthService.authState.subscribe(
-            (user) => {
-                this.socialUser = user;
-                this.isLoggedin = user != null;
-                this.loginForm.patchValue({
-                    email: user.email,
-                    password: user.id,
-                });
-                this.logginSocial();
-            }
-        );
-    }
-
     // Lifecycle Hooks
     // -----------------------------------------------------------------------------------------------------
     abrirModal(modal) {
@@ -325,36 +308,6 @@ export class LoginPersonasComponent implements OnInit, OnDestroy {
             .subscribe((config) => {
                 this.coreConfig = config;
             });
-    }
-
-    logginSocial() {
-        this._registroService
-            .registrarUsuario({
-                password: this.f.password.value,
-                roles: Role.SuperMonedas,
-                email: this.f.email.value,
-                estado: 1,
-                tipoUsuario: 'core',
-            })
-            .subscribe(
-                (info) => {
-                    if (info.email == 'Ya existe usuarios con este email.') {
-                        this.login();
-                    } else {
-                        this.error = null;
-                        this.loading = true;
-                        localStorage.setItem('grpPersonasUser', JSON.stringify(info));
-                        setTimeout(() => {
-                            window.location.href = '/';
-                        }, 1000);
-                    }
-                },
-                (error) => {
-                    this.login();
-
-                    // this.error = error.error.password;
-                }
-            );
     }
 
     login() {

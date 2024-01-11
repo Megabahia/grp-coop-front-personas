@@ -11,6 +11,14 @@ import {CoreMenuService} from '../../../../../@core/components/core-menu/core-me
 import {User} from '../../../../auth/models';
 import {CreditosPreAprobadosService} from '../creditos-pre-aprobados/creditos-pre-aprobados.service';
 
+/**
+ * COOP
+ * PErsonas
+ * Esta pantalla sirve para registrar la informacion de la firma electronica
+ * Rutas:
+ * `${environment.apiUrl}/corp/firmaElectronica/create/`,
+ */
+
 @Component({
     selector: 'app-registro-firma-electronica',
     templateUrl: './registro-firma-electronica.component.html',
@@ -20,7 +28,6 @@ export class RegistroFirmaElectronicaComponent implements OnInit {
     @ViewChild('mensajeModal') mensajeModal;
 
     public firmaForm: FormGroup;
-    public firmaFormData: FormData;
     public submitted = false;
     public mensaje = 'Su información ha sido almacenada con éxito.';
 

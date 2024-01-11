@@ -7,7 +7,8 @@ export const environment = {
   hmr: false,
   apiUrl: 'https://api-coop-test.bigpuntos.com',
   // apiUrl: 'http://127.0.0.1:8000',
-  setKey: '6LdGH6glAAAAALbaMNNz7mIzmWQH3sdfiUGHvyal'
+  setKey: '6LdGH6glAAAAALbaMNNz7mIzmWQH3sdfiUGHvyal',
+  urlBucket: 'https://grp-coop-test.s3.amazonaws.com/',
 };
 
 /*
